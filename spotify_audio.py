@@ -16,7 +16,7 @@ def setup_spotifyobject(file):
     return spotify
 
 def run_audio(sp):
-    print(sp.spotify.queue())
+    print(sp.spotify.current_playback()['item']['uri'])
     exit()
     searchQuery = "Coco Dababy"
     # Search for the Song.
@@ -26,8 +26,8 @@ def run_audio(sp):
     tracks_items = tracks_dict['items']
     song = tracks_items[0]['external_urls']['spotify']
     # Open the Song in Web Browser
+    song = 'spotify:track:18AXbzPzBS8Y3AkgSxzJPb'
     sp.queue_song(song)
-    print('Song has opened in your browser.')
 
 
 
