@@ -21,7 +21,7 @@ def run_audio(sp,frame):
 
 
 def search(sp):
-    searchQuery = "Coco Dababy"
+    searchQuery = "Bad Moon Rising"
     # Search for the Song.
     searchResults = sp.spotify.search(searchQuery, 1, 0, "track")
     # Get required data from JSON response.
