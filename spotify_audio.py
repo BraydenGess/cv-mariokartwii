@@ -15,9 +15,12 @@ def setup_spotifyobject(file):
                                     username=cred_dict['username']))
     return spotify
 
-def run_audio(sp):
+def run_audio(sp,frame):
     print(sp.spotify.current_playback()['item']['uri'])
     exit()
+
+
+def search(sp):
     searchQuery = "Coco Dababy"
     # Search for the Song.
     searchResults = sp.spotify.search(searchQuery, 1, 0, "track")
