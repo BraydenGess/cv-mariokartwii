@@ -19,7 +19,6 @@ def run_audio(sp,frame):
     print(sp.spotify.current_playback()['item']['uri'])
     exit()
 
-
 def search(sp):
     searchQuery = "Bad Moon Rising"
     # Search for the Song.
