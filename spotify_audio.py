@@ -1,6 +1,7 @@
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials,SpotifyOAuth
 from tools.utility import *
+from tools.deep_learning import predict
 
 def setup_spotifyobject(file):
     f = open(file,'r')
@@ -15,9 +16,16 @@ def setup_spotifyobject(file):
                                     username=cred_dict['username']))
     return spotify
 
-def run_audio(sp,frame):
-    print(sp.spotify.current_playback()['item']['uri'])
-    exit()
+def pause_toggle(sp,frame):
+    return None
+
+def get_course(frame,root_model,coordinates):
+    index,confidence = predict(frame,coordinates.course_coordinates,root_model,'imgtobinary')
+    return index,confidence
+
+def run_audio(sp,frame,root_model,coordinates):
+    pause_toggle(sp,frame)
+    course_name = get_course(frame,root_model,coordinates)
 
 def search(sp):
     searchQuery = "Bad Moon Rising"
