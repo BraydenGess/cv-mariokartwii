@@ -33,12 +33,6 @@ def freeze_session(session, keep_var_names=None, output_names=None, clear_device
             session, input_graph_def, output_names, freeze_var_names)
         return frozen_graph
 
-model = load_model()
-frozen_graph = freeze_session(K.get_session(),
-                              output_names=[out.op.name for out in model.outputs])
-tf.train.write_graph(frozen_graph, "some_directory", "my_model.pb", as_text=False)
-
-
 def imgtobinary(image):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     se = cv2.getStructuringElement(cv2.MORPH_RECT, (8, 8))
@@ -60,10 +54,16 @@ def single_conversion(frame):
     return array
 
 def predict():
-    model = load_model(filepath='models/coursedetectionmodel.h5')
+    model = load_model('models/coursedetectionmodel')
     img = cv2.imread('/Users/bradygess/PycharmProjects/mariokartwii/audio/traincourserecognition/coursenametrainingimages/CoconutMall3.png')
     img = imgtobinary(img)
     arr = single_conversion(img)
-    print(model.predict(arr))
+    print(model.predict(arr,verbose=False))
 
 predict()
+exit()
+
+import tensorflow as tf
+
+model = tf.keras.models.load_model('models/coursedetectionmodel.h5')
+tf.keras.Model.save(model, 'models/my_saved_model')
