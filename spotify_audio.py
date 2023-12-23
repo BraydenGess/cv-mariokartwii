@@ -25,7 +25,7 @@ def get_course(frame,root_model,coordinates):
 
 def run_audio(sp,frame,root_model,coordinates):
     pause_toggle(sp,frame)
-    course_name = get_course(frame,root_model,coordinates)
+    course_name,confidence = get_course(frame,root_model,coordinates)
 
 def search(sp):
     searchQuery = "Bad Moon Rising"
