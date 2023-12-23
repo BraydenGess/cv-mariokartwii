@@ -10,3 +10,5 @@ class SpotifyPlayer():
     def resume(self):
         if not self.spotify.current_playback()['is_playing']:
             self.spotify.start_playback(device_id=None)
+
+
