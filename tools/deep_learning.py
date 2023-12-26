@@ -3,7 +3,8 @@ import numpy as np
 
 def filter_frame(frame,coordinates,filter):
     [x0,x1,y0,y1] = coordinates
-    new_frame = frame[y0:y1,x0:x1].copy()
+    #new_frame = frame[y0:y1,x0:x1].copy()
+    new_frame = frame.copy()
     if filter == 'imgtobinary':
         new_frame = imgtobinary(new_frame)
     return new_frame
