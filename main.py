@@ -5,6 +5,8 @@ import cv2 as cv
 def main():
     spotify = setup_spotifyobject('credentials.txt')
     sp = SpotifyPlayer(spotify=spotify)
+    search(sp, "YouMakeMyDreams")
+    exit()
     root_model = initialize_rootmodel()
     coordinates = initialize_coordinates()
     cap = cv.VideoCapture(0)

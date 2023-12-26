@@ -27,8 +27,8 @@ def run_audio(sp,frame,root_model,coordinates):
     pause_toggle(sp,frame)
     course_name,confidence = get_course(frame,root_model,coordinates)
 
-def search(sp):
-    searchQuery = "Bad Moon Rising"
+def search(sp,song_name):
+    searchQuery = song_name
     # Search for the Song.
     searchResults = sp.spotify.search(searchQuery, 1, 0, "track")
     # Get required data from JSON response.
@@ -36,8 +36,8 @@ def search(sp):
     tracks_items = tracks_dict['items']
     song = tracks_items[0]['external_urls']['spotify']
     # Open the Song in Web Browser
-    song = 'spotify:track:18AXbzPzBS8Y3AkgSxzJPb'
     sp.queue_song(song)
+    print(sp.spotify.current_playback())
 
 
 

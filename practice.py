@@ -2,8 +2,6 @@ from keras.models import load_model
 import cv2
 import tensorflow as tf
 import numpy as np
-import h5py
-from keras import backend as K
 
 def single_conversion(frame):
     array = np.ones(shape = (1,len(frame)*len(frame[0])))
