@@ -16,14 +16,6 @@ def setup_spotifyobject(file):
                                     username=cred_dict['username']))
     return spotify
 
-def search(sp,song_name):
-    searchQuery = song_name
-    searchResults = sp.spotify.search(searchQuery, 1, 0, "track")
-    tracks_dict = searchResults['tracks']
-    tracks_items = tracks_dict['items']
-    song_uri = tracks_items[0]['external_urls']['spotify']
-    return song_uri
-
 def pause_toggle(sp,frame):
     return None
 
@@ -43,24 +35,11 @@ def course_tracker(sp,course_index):
         sp.course = course_index
         sp.course_count = 0
 
-def queue_newsong(sp,course_index):
-    song = sp.playlist[course_index].song_queue.get()
-    song_uri = None
-    if song in sp.songkey_dict:
-        song_uri = sp.songkey_dict[song]
-    else:
-        song_uri = search(sp, song)
-    sp.queue_song(song_uri)
-    sp.course_queued = course_index
-    sp.song_queued = song_uri
-    sp.playlist[course_index].song_queue.put(song)
-
 def play_music(sp,course_index):
     if sp.course_count == 3:
         if sp.course != sp.course_queued:
-            queue_newsong(sp,course_index)
-    if sp.spotify.current_playback()['item']['uri'] != sp.song_queued:
-        queue_newsong(sp,course_index)
+            sp.queue_newsong(course_index)
+    sp.auto_skip()
 
 def run_audio(sp,frame,root_model,coordinates):
     pause_toggle(sp,frame)
