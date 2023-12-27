@@ -2,6 +2,8 @@ import queue
 import random
 from keras.models import load_model
 from tools.utility import remove_newline
+from collections import deque
+
 
 class SpotifyPlayer():
     def __init__(self,spotify,course,course_count,course_queued,playlist,songkey_dict,song_queued):
@@ -13,7 +15,7 @@ class SpotifyPlayer():
         self.playlist = playlist
         self.songkey_dict = songkey_dict
     def queue_song(self,song):
-        self.spotify.add_to_queue(uri=song,device_id=None)
+        self.spotify.add_to_queue(uri=song, device_id=None)
         self.spotify.next_track()
     def pause(self):
         if self.spotify.current_playback()['is_playing']:
@@ -28,21 +30,35 @@ class SpotifyPlayer():
         tracks_items = tracks_dict['items']
         song_uri = tracks_items[0]['external_urls']['spotify']
         return song_uri
-    def queue_newsong(self,course_index):
-        song = self.playlist[course_index].song_queue.get()
-        song_uri = None
+    def get_uri(self,song):
         if song in self.songkey_dict:
             song_uri = self.songkey_dict[song]
         else:
             song_uri = self.search(song)
+        return song_uri
+    def queue_newsong(self,course_index):
+        song = self.playlist[course_index].song_queue.popleft()
+        next_song = self.playlist[course_index].song_queue.popleft()
+        song_uri = self.get_uri(song)
+        next_song_uri = self.get_uri(next_song)
         self.queue_song(song_uri)
+        self.spotify.add_to_queue(uri=next_song_uri, device_id=None)
         self.course_queued = course_index
         self.song_queued = song_uri
-        self.playlist[course_index].song_queue.put(song)
+        self.playlist[self.course_queued].song_queue.append(song)
+        self.playlist[self.course_queued].song_queue.appendleft(next_song)
+    def queue_skip(self):
+        current_song = self.playlist[self.course_queued].song_queue.popleft()
+        song = self.playlist[self.course_queued].song_queue.popleft()
+        song_uri = self.get_uri(song)
+        self.spotify.add_to_queue(uri=song_uri, device_id=None)
+        self.playlist[self.course_queued].song_queue.appendleft(song)
+        self.playlist[self.course_queued].song_queue.append(current_song)
     def auto_skip(self):
         if self.spotify.current_playback()['item']['uri'] != self.song_queued:
+            self.song_queued = self.spotify.current_playback()['item']['uri']
             if self.course_queued != None:
-                self.queue_newsong(self.course_queued)
+                self.queue_skip()
 
 class RootModel:
     def __init__(self,coursedetect_model=None):
@@ -79,9 +95,9 @@ def initialize_playlist(playlist_name):
         data[-1] = remove_newline(data[-1])
         course_songs = data[1:]
         random.shuffle(course_songs)
-        q = queue.Queue()
+        q = deque()
         for j in range(len(course_songs)):
-            q.put(course_songs[j])
+            q.append(course_songs[j])
         course_dict[i-1] = Course(course_name=course_name,song_queue=q)
     f.close()
     songkey_dict = dict()
