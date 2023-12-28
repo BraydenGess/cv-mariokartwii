@@ -3,6 +3,7 @@ from spotipy.oauth2 import SpotifyClientCredentials,SpotifyOAuth
 from tools.utility import *
 from tools.deep_learning import predict
 
+
 def setup_spotifyobject(file):
     f = open(file,'r')
     cred_dict = {'username':'None','client_id':'None','client_secret':'None','redirect_uri':'None'}
@@ -39,13 +40,16 @@ def play_music(sp,course_index):
     if sp.course_count == 3:
         if sp.course != sp.course_queued:
             sp.queue_newsong(course_index)
+            return True
+    return False
 
 def run_audio(sp,frame,root_model,coordinates):
-    sp.auto_skip()
     pause_toggle(sp,frame)
     course_index,confidence = get_course(frame,root_model,coordinates)
     course_tracker(sp,course_index)
-    play_music(sp,course_index)
+    change_flag = play_music(sp,course_index)
+    sp.auto_skip()
+
 
 
 
