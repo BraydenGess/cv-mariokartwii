@@ -36,4 +36,3 @@ def f(x):
 def g(y):
     return f(y)*f(y)
 
-print(g(6))

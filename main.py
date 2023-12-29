@@ -15,7 +15,7 @@ def main():
 
 def main2():
     spotify = setup_spotifyobject('credentials.txt')
-    course_dict,songkey_dict = initialize_playlist('rock')
+    course_dict,songkey_dict = initialize_playlist('throwback-pop')
     sp = SpotifyPlayer(spotify=spotify,course=33,course_count=0,course_queued=None,
                        song_queued=None,playlist=course_dict,songkey_dict=songkey_dict)
     root_model = initialize_rootmodel()
@@ -29,9 +29,7 @@ def main2():
                 '/Users/bradygess/PycharmProjects/mariokartwii/audio/traincourserecognition/coursenametrainingimages/PeachBeach1.png')
         if t2-t1 > 25:
             frame = cv.imread(
-                '/Users/bradygess/PycharmProjects/mariokartwii/audio/traincourserecognition/coursenametrainingimages/BowserCastle31.png')
+                '/Users/bradygess/PycharmProjects/mariokartwii/audio/traincourserecognition/coursenametrainingimages/WariosGoldMine1.png')
         run_audio(sp,frame,root_model,coordinates)
-
-    return 42
 
 main2()
