@@ -14,12 +14,8 @@ def main():
         run_audio(sp,frame,root_model,coordinates)
 
 def main2():
-    spotify = setup_spotifyobject('credentials.txt')
-    course_dict,songkey_dict = initialize_playlist('throwback-pop')
-    sp = SpotifyPlayer(spotify=spotify,course=33,course_count=0,course_queued=None,
-                       song_queued=None,playlist=course_dict,songkey_dict=songkey_dict)
+    sp,coordinates = audio_setup(genre='throwback-pop',credentials_file='credentials.txt')
     root_model = initialize_rootmodel()
-    coordinates = initialize_coordinates()
     frame = cv.imread('/Users/bradygess/PycharmProjects/mariokartwii/audio/traincourserecognition/coursenametrainingimages/Opening1.png')
     t1 = time.time()
     while True:

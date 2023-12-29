@@ -4,6 +4,7 @@ from keras.models import load_model
 from tools.utility import remove_newline
 from collections import deque
 import time
+from spotify_audio import setup_spotifyobject
 
 
 class SpotifyPlayer():
@@ -81,6 +82,14 @@ class Course:
         self.song_queue = song_queue
 
 ### SET UP ###
+def audio_setup(genre,credentials_file):
+    spotify = setup_spotifyobject(credentials_file)
+    coordinates = initialize_coordinates()
+    course_dict, songkey_dict = initialize_playlist(genre)
+    sp = SpotifyPlayer(spotify=spotify, course=33, course_count=0, course_queued=None,
+                       song_queued=None, playlist=course_dict, songkey_dict=songkey_dict)
+    return sp,coordinates
+
 def initialize_rootmodel():
     root_model = RootModel()
     root_model.coursedetect_model = load_model('models/coursedetectionmodel')
