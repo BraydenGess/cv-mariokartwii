@@ -29,11 +29,9 @@ class SpotifyPlayer():
     def resume(self):
         if not self.spotify.current_playback()['is_playing']:
             self.spotify.start_playback(device_id=None)
-    def search(self,song_name):
-        searchQuery = song_name
+    def search(self,searchQuery):
         searchResults = self.spotify.search(searchQuery, 1, 0, "track")
-        tracks_dict = searchResults['tracks']
-        tracks_items = tracks_dict['items']
+        tracks_items = searchResults['tracks']['items']
         song_uri = tracks_items[0]['external_urls']['spotify']
         return song_uri
     def get_uri(self,song):
@@ -63,10 +61,9 @@ class SpotifyPlayer():
             self.playlist[self.course_queued].song_queue.appendleft(next_song)
     def auto_skip(self):
         current_playback = self.spotify.queue()['currently_playing']['uri']
-        if current_playback != self.song_queued:
+        if ((current_playback != self.song_queued) and (self.course_queued != None)):
             self.song_queued = current_playback
-            if self.course_queued != None:
-                self.queue_skip()
+            self.queue_skip()
 
 class RootModel:
     def __init__(self,coursedetect_model=None):
