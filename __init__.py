@@ -35,7 +35,7 @@ class SpotifyPlayer():
         return song_uri
     def queue_song(self,songs):
         for song in songs:
-            self.spotify.add_to_queue(uri=song, device_id=None)
+            self.spotify.add_to_queue(uri=self.get_uri(song), device_id=None)
         for element in self.spotify.queue()['queue']:
             self.spotify.next_track()
             if songs[0] == element['uri']:
@@ -43,8 +43,7 @@ class SpotifyPlayer():
     def queue_newsong(self,course_index):
         song = self.playlist[course_index].song_queue.popleft()
         next_song = self.playlist[course_index].song_queue.popleft()
-        songs = [self.get_uri(song),self.get_uri(next_song)]
-        self.queue_song(songs)
+        self.queue_song(songs=[song,next_song])
         self.course_queued = course_index
         self.song_queued = self.get_uri(song)
         self.playlist[self.course_queued].song_queue.append(song)
@@ -70,7 +69,7 @@ class RootModel:
         self.coursedetect_model = coursedetect_model
 
 class Coordinates:
-    def __init__(self,course_coordinates=None):
+    def __init__(self):
         self.course_coordinates = [1020,1770,894,978]
 
 class Course:
