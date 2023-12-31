@@ -16,13 +16,6 @@ class SpotifyPlayer():
         self.song_queued = song_queued
         self.playlist = playlist
         self.songkey_dict = songkey_dict
-    def queue_song(self,songs):
-        for song in songs:
-            self.spotify.add_to_queue(uri=song, device_id=None)
-        for element in self.spotify.queue()['queue']:
-            self.spotify.next_track()
-            if songs[0] == element['uri']:
-                break
     def pause(self):
         if self.spotify.current_playback()['is_playing']:
             self.spotify.pause_playback(device_id=None)
@@ -40,6 +33,13 @@ class SpotifyPlayer():
         else:
             song_uri = self.search(song)
         return song_uri
+    def queue_song(self,songs):
+        for song in songs:
+            self.spotify.add_to_queue(uri=song, device_id=None)
+        for element in self.spotify.queue()['queue']:
+            self.spotify.next_track()
+            if songs[0] == element['uri']:
+                break
     def queue_newsong(self,course_index):
         song = self.playlist[course_index].song_queue.popleft()
         next_song = self.playlist[course_index].song_queue.popleft()

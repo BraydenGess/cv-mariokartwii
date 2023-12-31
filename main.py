@@ -14,7 +14,7 @@ def main():
         run_audio(sp,frame,root_model,coordinates)
 
 def main2():
-    sp,coordinates = audio_setup(genre='throwback-pop',credentials_file='credentials.txt')
+    sp,coordinates = audio_setup(genre='rock',credentials_file='credentials.txt')
     root_model = initialize_rootmodel()
     frame = cv.imread('/Users/bradygess/PycharmProjects/mariokartwii/audio/traincourserecognition/coursenametrainingimages/Opening1.png')
     t1 = time.time()
