@@ -1,1 +1,3 @@
+tools/deep_learning
+tools/imagemanipulation
 training_images
