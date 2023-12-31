@@ -16,7 +16,7 @@ class Parameters():
         self.num_epochs = num_epochs
 def set_homemodelparameters():
     coordinates = [135,490,80,180]
-    training_folder = 'training_images/home_trainingimages/'
+    training_folder = 'train_models/training_images/home_trainingimages/'
     label_key = {'None':'0','Home':'1'}
     binarydata_file = 'train_models/binary_imagedata/homeimages.csv'
     p = Parameters(layers=[16,8],activations=['sigmoid','sigmoid','softmax'],num_outnodes=len(label_key),
