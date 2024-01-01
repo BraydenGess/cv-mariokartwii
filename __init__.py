@@ -5,6 +5,7 @@ from tools.utility import remove_newline
 from collections import deque
 import time
 from spotify_audio import setup_spotifyobject
+import pygame
 
 
 class SpotifyPlayer():
@@ -120,5 +121,8 @@ def initialize_playlist(playlist_name):
         song_uri = remove_newline(data[1])
         songkey_dict[song_name] = song_uri
     return course_dict,songkey_dict
+
+def initialize_graphics():
+    pygame.init()
 
 

@@ -1,5 +1,6 @@
 from __init__ import *
 from spotify_audio import *
+from graphics.championship_graphics import champ_graphics
 import cv2 as cv
 import time
 
@@ -27,5 +28,12 @@ def main2():
             frame = cv.imread(
                 '/Users/bradygess/PycharmProjects/mariokartwii/audio/traincourserecognition/coursenametrainingimages/WariosGoldMine1.png')
         run_audio(sp,frame,root_model,coordinates)
+
+def main3():
+    sp, coordinates = audio_setup(genre='rock', credentials_file='credentials.txt')
+    root_model = initialize_rootmodel()
+    t1 = time.time()
+    while True:
+        champ_graphics(sp)
 
 main2()

@@ -5,3 +5,4 @@ cv_mariokartwii.egg-info/dependency_links.txt
 cv_mariokartwii.egg-info/top_level.txt
 tools/deep_learning.py
 tools/imagemanipulation.py
+tools/utility.py

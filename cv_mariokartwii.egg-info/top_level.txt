@@ -1,3 +1,4 @@
 tools/deep_learning
 tools/imagemanipulation
+tools/utility
 train_models
