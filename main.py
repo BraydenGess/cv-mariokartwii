@@ -32,8 +32,14 @@ def main2():
 def main3():
     sp, coordinates = audio_setup(genre='rock', credentials_file='credentials.txt')
     root_model = initialize_rootmodel()
+    display_surface, x, y = initialize_graphics()
     t1 = time.time()
     while True:
-        champ_graphics(sp)
+        t2 = time.time()
+        champ_graphics(sp,display_surface,x,y,t2-t1)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
 
-main2()
+main3()
