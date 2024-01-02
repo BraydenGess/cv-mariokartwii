@@ -60,7 +60,7 @@ class SpotifyPlayer():
         else:
             self.playlist[self.course_queued].song_queue.appendleft(next_song)
     def auto_skip(self):
-        current_playback = self.spotify.queue()['currently_playing']['uri']
+        current_playback = self.spotify.current_playback()['item']['uri']
         if ((current_playback != self.song_queued) and (self.course_queued != None)):
             self.song_queued = current_playback
             self.queue_skip()
