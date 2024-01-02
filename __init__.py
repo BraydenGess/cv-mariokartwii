@@ -9,7 +9,7 @@ import pygame
 
 
 class SpotifyPlayer():
-    def __init__(self,spotify,course,course_count,course_queued,playlist,songkey_dict,song_queued):
+    def __init__(self,spotify,course,course_count,course_queued,playlist,songkey_dict,song_queued,is_paused):
         self.spotify = spotify
         self.course = course
         self.course_count = course_count
@@ -17,6 +17,7 @@ class SpotifyPlayer():
         self.song_queued = song_queued
         self.playlist = playlist
         self.songkey_dict = songkey_dict
+        self.is_paused = is_paused
     def pause(self):
         if self.spotify.current_playback()['is_playing']:
             self.spotify.pause_playback(device_id=None)
@@ -66,12 +67,14 @@ class SpotifyPlayer():
             self.queue_skip()
 
 class RootModel:
-    def __init__(self,coursedetect_model=None):
+    def __init__(self,coursedetect_model=None,homedetect_model=None):
         self.coursedetect_model = coursedetect_model
+        self.homedetect_model = homedetect_model
 
 class Coordinates:
     def __init__(self):
         self.course_coordinates = [1020,1770,894,978]
+        self.home_coordinates = [135,490,80,180]
 
 class Course:
     def __init__(self,course_name=None,song_queue=None):
@@ -84,12 +87,13 @@ def audio_setup(genre,credentials_file):
     coordinates = initialize_coordinates()
     course_dict, songkey_dict = initialize_playlist(genre)
     sp = SpotifyPlayer(spotify=spotify, course=33, course_count=0, course_queued=None,
-                       song_queued=None, playlist=course_dict, songkey_dict=songkey_dict)
+                       song_queued=None, playlist=course_dict, songkey_dict=songkey_dict,is_paused=False)
     return sp,coordinates
 
 def initialize_rootmodel():
     root_model = RootModel()
     root_model.coursedetect_model = load_model('models/coursedetectionmodel')
+    root_model.homedetect_model = load_model('models/homedetectionmodel')
     return root_model
 
 def initialize_coordinates():

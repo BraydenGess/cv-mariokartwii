@@ -19,10 +19,11 @@ def set_homemodelparameters():
     training_folder = 'train_models/training_images/home_trainingimages/'
     label_key = {'None':'0','Home':'1'}
     binarydata_file = 'train_models/binary_imagedata/homeimages.csv'
-    p = Parameters(layers=[14,8],activations=['sigmoid','sigmoid','softmax'],num_outnodes=len(label_key),
+    model_path = 'models/homedetectionmodel'
+    p = Parameters(layers=[14,8],activations=['relu','sigmoid','softmax'],num_outnodes=len(label_key),
                    loss_function='sparse_categorical_crossentropy',
                  opt_function='adam',measure=['accuracy'],batch_size=12,num_epochs=110)
-    return coordinates,training_folder,label_key,binarydata_file,p
+    return model_path,coordinates,training_folder,label_key,binarydata_file,p
 
 def write_imgtobinary(f,label,image):
     f.write(label)
@@ -49,17 +50,18 @@ def prepare_data(coordinates,training_folder,label_key,binarydata_file):
         write_imgtobinary(f, label, image)
     f.close()
 
-def build_neuralnetwork(coordinates, training_folder, label_key, binarydata_file,p):
+def build_neuralnetwork(model_path,coordinates, training_folder, label_key, binarydata_file,p):
     prepare_data(coordinates, training_folder, label_key, binarydata_file)
-    network = Neural_Network(trainingdata_file=binarydata_file,layers=p.layers,activations=p.activations,
-                             num_outnodes=p.num_outnodes,loss_function=p.loss_function,opt_function=p.opt_function,
-                             measure=p.measure,batch_size=p.batch_size,num_epochs=p.num_epochs)
+    network = Neural_Network(model_path=model_path,trainingdata_file=binarydata_file,layers=p.layers,
+                             activations=p.activations,num_outnodes=p.num_outnodes,loss_function=p.loss_function,
+                             opt_function=p.opt_function,measure=p.measure,batch_size=p.batch_size,
+                             num_epochs=p.num_epochs)
     network.construct_model()
 
 
 def main():
-    coordinates,training_folder,label_key,binarydata_file,p = set_homemodelparameters()
-    build_neuralnetwork(coordinates, training_folder, label_key, binarydata_file,p)
+    model_path,coordinates,training_folder,label_key,binarydata_file,p = set_homemodelparameters()
+    build_neuralnetwork(model_path,coordinates, training_folder, label_key, binarydata_file,p)
 
 
 main()

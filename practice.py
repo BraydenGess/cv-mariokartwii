@@ -14,7 +14,7 @@ def main():
         count += 1
         print(count)
         time.sleep(0.1)
-        if count == 15:
+        if count == 5:
             exit()
 
 main()

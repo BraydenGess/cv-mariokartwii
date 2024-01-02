@@ -2,6 +2,7 @@ import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials,SpotifyOAuth
 from tools.utility import *
 from tools.deep_learning import predict
+import cv2 as cv
 
 
 def setup_spotifyobject(file):
@@ -17,13 +18,27 @@ def setup_spotifyobject(file):
                                     username=cred_dict['username']))
     return spotify
 
-def pause_toggle(sp,frame):
+def pause_toggle(sp,frame,root_model,coordinates):
+    index,confidence = predict(frame,coordinates.home_coordinates,root_model.homedetect_model,'imgtobinary')
+    if confidence >= 0.8:
+        if index == 0:
+            if sp.is_paused:
+                sp.resume()
+                sp.is_paused = False
+        elif index == 1:
+            if not sp.is_paused:
+                sp.pause()
+                sp.is_paused = True
     return None
 
 def get_course(frame,root_model,coordinates):
+    cap = cv.VideoCapture(0)
+    ret, next_frame = cap.read()
     index,confidence = predict(frame,coordinates.course_coordinates,root_model.coursedetect_model,'imgtobinary')
-    if confidence >= 0.95:
-        return index,confidence
+    index2,confidence2 = predict(next_frame,coordinates.course_coordinates,root_model.coursedetect_model,'imgtobinary')
+    if index == index2 != 33:
+        if ((confidence >= 0.95)and(confidence2>=0.95)):
+            return index,confidence
     return 33,0
 
 def course_tracker(sp,course_index):
@@ -37,12 +52,12 @@ def course_tracker(sp,course_index):
         sp.course_count = 0
 
 def play_music(sp,course_index):
-    if sp.course_count == 2:
+    if sp.course_count == 1:
         if sp.course != sp.course_queued:
             sp.queue_newsong(course_index)
 
 def run_audio(sp,frame,root_model,coordinates):
-    pause_toggle(sp,frame)
+    pause_toggle(sp,frame,root_model,coordinates)
     course_index,confidence = get_course(frame,root_model,coordinates)
     course_tracker(sp,course_index)
     play_music(sp,course_index)

@@ -8,6 +8,7 @@ def main():
     sp, coordinates = audio_setup(genre='rock', credentials_file='credentials.txt')
     root_model = initialize_rootmodel()
     coordinates = initialize_coordinates()
+    print('ready')
     cap = cv.VideoCapture(0)
     while cap.isOpened():
         ret,frame = cap.read()

@@ -3,10 +3,12 @@ from sklearn.model_selection import train_test_split
 from keras.layers import Dense
 from keras.models import Sequential
 import numpy as np
+import tensorflow as tf
 
 class Neural_Network():
-    def __init__(self,trainingdata_file=None,layers=None,activations=None,num_outnodes=None,loss_function=None,
+    def __init__(self,model_path=None,trainingdata_file=None,layers=None,activations=None,num_outnodes=None,loss_function=None,
                  opt_function=None,measure=None,batch_size=None,num_epochs=None):
+        self.model_path = model_path
         self.trainingdata_file = trainingdata_file
         self.layers = layers
         self.activations = activations
@@ -37,10 +39,13 @@ class Neural_Network():
         score = model.evaluate(X_test,Y_test,verbose=0)
         print('Test loss:',score[0])
         print('Test accuracy',score[1])
+    def save_model(self,model):
+        tf.keras.Model.save(model,self.model_path)
     def construct_model(self):
         X_train, X_test, Y_train, Y_test = self.load_data()
         model = self.train_model(X_train,Y_train)
         self.evaluate_model(model,X_test,Y_test)
+        self.save_model(model)
 
 
 
