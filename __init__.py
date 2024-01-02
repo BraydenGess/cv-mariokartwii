@@ -9,10 +9,8 @@ import pygame
 
 
 class SpotifyPlayer():
-    def __init__(self,spotify,course,course_count,course_queued,playlist,songkey_dict,song_queued,is_paused):
+    def __init__(self,spotify,course_queued,playlist,songkey_dict,song_queued,is_paused):
         self.spotify = spotify
-        self.course = course
-        self.course_count = course_count
         self.course_queued = course_queued
         self.song_queued = song_queued
         self.playlist = playlist
@@ -86,7 +84,7 @@ def audio_setup(genre,credentials_file):
     spotify = setup_spotifyobject(credentials_file)
     coordinates = initialize_coordinates()
     course_dict, songkey_dict = initialize_playlist(genre)
-    sp = SpotifyPlayer(spotify=spotify, course=33, course_count=0, course_queued=None,
+    sp = SpotifyPlayer(spotify=spotify, course_queued=None,
                        song_queued=None, playlist=course_dict, songkey_dict=songkey_dict,is_paused=False)
     return sp,coordinates
 

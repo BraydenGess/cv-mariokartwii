@@ -29,37 +29,27 @@ def pause_toggle(sp,frame,root_model,coordinates):
             if not sp.is_paused:
                 sp.pause()
                 sp.is_paused = True
+                print('yes')
     return None
 
 def get_course(frame,root_model,coordinates):
-    cap = cv.VideoCapture(0)
-    ret, next_frame = cap.read()
     index,confidence = predict(frame,coordinates.course_coordinates,root_model.coursedetect_model,'imgtobinary')
-    index2,confidence2 = predict(next_frame,coordinates.course_coordinates,root_model.coursedetect_model,'imgtobinary')
-    if index == index2 != 33:
-        if ((confidence >= 0.95)and(confidence2>=0.95)):
+    if (index!=33):
+        cap = cv.VideoCapture(0)
+        ret, next_frame = cap.read()
+        index2,confidence2 = predict(next_frame,coordinates.course_coordinates,root_model.coursedetect_model,'imgtobinary')
+        if index == index2:
             return index,confidence
     return 33,0
 
-def course_tracker(sp,course_index):
-    if course_index == 33:
-        sp.course = course_index
-        sp.course_count = 0
-    if course_index == sp.course:
-        sp.course_count += 1
-    else:
-        sp.course = course_index
-        sp.course_count = 0
-
 def play_music(sp,course_index):
-    if sp.course_count == 1:
-        if sp.course != sp.course_queued:
+    if course_index != 33:
+        if course_index != sp.course_queued:
             sp.queue_newsong(course_index)
 
 def run_audio(sp,frame,root_model,coordinates):
     pause_toggle(sp,frame,root_model,coordinates)
     course_index,confidence = get_course(frame,root_model,coordinates)
-    course_tracker(sp,course_index)
     play_music(sp,course_index)
     sp.auto_skip()
 

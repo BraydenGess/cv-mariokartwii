@@ -3,6 +3,7 @@
 import time
 import cv2 as cv
 from tools.imagemanipulation import imgtobinary
+import numpy as np
 
 def main():
     cap = cv.VideoCapture(0)
@@ -17,7 +18,15 @@ def main():
         if count == 5:
             exit()
 
-main()
+def main2():
+    array = np.array([1,2,3],dtype=int)
+    array2 = np.array([1, 2, 3], dtype=int)
+    confidence = np.argmax(array)
+    confidence2 = np.argmax(array2)
+    if confidence == confidence2 != 2:
+        print('True')
+
+main2()
 
 
 
