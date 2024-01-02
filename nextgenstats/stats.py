@@ -1,4 +1,5 @@
 from tools.utility import remove_newline
+import os
 class Course():
     def __init__(self,name=None,length=None,AP=None,d_races=None,r_races=None,CPI=None):
         self.name = name
@@ -20,9 +21,12 @@ def recalculate_coursestats():
         item_dict[data[0]] = i
     f.close()
     data_folder = 'nextgenstats/data/'
-    for datafile in data_folder:
-        f = open(datafile,'r')
-
+    for datafile in os.listdir(data_folder):
+        f = open(data_folder+datafile,'r')
+        race_data = f.readlines()
+        for i in range(len(race_data)):
+            race_dataline = race_data[i].split(',')
+            print(race_dataline)
     return 42
 
 recalculate_coursestats()

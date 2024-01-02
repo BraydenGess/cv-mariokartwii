@@ -37,7 +37,7 @@ def course_tracker(sp,course_index):
         sp.course_count = 0
 
 def play_music(sp,course_index):
-    if sp.course_count == 3:
+    if sp.course_count == 2:
         if sp.course != sp.course_queued:
             sp.queue_newsong(course_index)
 

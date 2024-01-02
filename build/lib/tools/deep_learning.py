@@ -47,15 +47,14 @@ class Neural_Network():
 
 def filter_frame(frame,coordinates,filter):
     [x0,x1,y0,y1] = coordinates
-    #new_frame = frame[y0:y1,x0:x1].copy()
-    new_frame = frame.copy()
+    new_frame = frame[y0:y1,x0:x1].copy()
     if filter == 'imgtobinary':
         new_frame = imgtobinary(new_frame)
     return new_frame
 
 def single_conversion(frame):
     array = np.ones(shape=(1, len(frame) * len(frame[0])))
-    frame = frame // 255
+    frame = frame//255
     count = 0
     for row in range(len(frame)):
         for col in range(len(frame[row])):
