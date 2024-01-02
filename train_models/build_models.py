@@ -19,9 +19,9 @@ def set_homemodelparameters():
     training_folder = 'train_models/training_images/home_trainingimages/'
     label_key = {'None':'0','Home':'1'}
     binarydata_file = 'train_models/binary_imagedata/homeimages.csv'
-    p = Parameters(layers=[16,8],activations=['sigmoid','sigmoid','softmax'],num_outnodes=len(label_key),
+    p = Parameters(layers=[8,4],activations=['sigmoid','sigmoid','softmax'],num_outnodes=len(label_key),
                    loss_function='sparse_categorical_crossentropy',
-                 opt_function='adam',measure=['accuracy'],batch_size=6,num_epochs=90)
+                 opt_function='adam',measure=['accuracy'],batch_size=20,num_epochs=90)
     return coordinates,training_folder,label_key,binarydata_file,p
 
 def write_imgtobinary(f,label,image):
