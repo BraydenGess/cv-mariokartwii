@@ -29,8 +29,6 @@ def pause_toggle(sp,frame,root_model,coordinates):
             if not sp.is_paused:
                 sp.pause()
                 sp.is_paused = True
-                print('yes')
-    return None
 
 def get_course(frame,root_model,coordinates):
     index,confidence = predict(frame,coordinates.course_coordinates,root_model.coursedetect_model,'imgtobinary')
