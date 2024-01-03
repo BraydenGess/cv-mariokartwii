@@ -4,29 +4,14 @@ import time
 import cv2 as cv
 from tools.imagemanipulation import imgtobinary
 import numpy as np
+import os
 
-def main():
-    cap = cv.VideoCapture(0)
-    count = 0
-    while cap.isOpened():
-        ret,frame = cap.read()
-        file_name = 'img' + str(count) + '.png'
-        cv.imwrite(file_name,imgtobinary(frame))
-        count += 1
-        print(count)
-        time.sleep(0.1)
-        if count == 5:
-            exit()
-
-def main2():
-    array = np.array([1,2,3],dtype=int)
-    array2 = np.array([1, 2, 3], dtype=int)
-    confidence = np.argmax(array)
-    confidence2 = np.argmax(array2)
-    if confidence == confidence2 != 2:
-        print('True')
-
-main2()
+path = '/Users/bradygess/PycharmProjects/mariokartwii/characterselection/characters/fourpcharacterimages/'
+for image in os.listdir(path):
+    image_path = path+image
+    frame = cv.imread(image_path)
+    new_path = 'train_models/training_images/character_trainingimages4/'+image
+    cv.imwrite(new_path,frame)
 
 
 
