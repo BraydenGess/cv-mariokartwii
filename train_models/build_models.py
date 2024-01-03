@@ -15,7 +15,7 @@ class Parameters():
         self.batch_size = batch_size
         self.num_epochs = num_epochs
 def set_homemodelparameters():
-    coordinates = [135,490,80,180]
+    coordinates = [[135,490,80,180]]
     training_folder = 'train_models/training_images/home_trainingimages/'
     label_key = {'None':'0','Home':'1'}
     binarydata_file = 'train_models/binary_imagedata/homeimages.csv'
@@ -24,6 +24,26 @@ def set_homemodelparameters():
                    loss_function='sparse_categorical_crossentropy',
                  opt_function='adam',measure=['accuracy'],batch_size=12,num_epochs=110)
     return model_path,coordinates,training_folder,label_key,binarydata_file,p
+
+def make_characterlabeldict(file):
+    f = open(file,'r')
+    label_dict = dict()
+    lines = f.readlines()
+    for i in range(1,len(lines)):
+        character_name = lines[i].split(',')[0]
+        label_dict[character_name] = i
+    return label_dict
+
+def set_4charactermodelparameters():
+    coordinates = [[155,445,452,480],[1455,1745,452,480],[155,445,834,862],[1455,1745,834,862]]
+    training_folder = 'train_models/training_images/character_trainingimages4/'
+    label_key = make_characterlabeldict(file='nextgenstats/information/characterstats.csv')
+    binarydata_file = 'train_models/binary_imagedata/character4images.csv'
+    model_path = 'models/characterdetectionmodel4'
+    p = Parameters(layers=[36, 18], activations=['relu', 'relu', 'softmax'], num_outnodes=len(label_key),
+                   loss_function='sparse_categorical_crossentropy',
+                   opt_function='adam', measure=['accuracy'], batch_size=12, num_epochs=150)
+    return model_path, coordinates, training_folder, label_key, binarydata_file, p
 
 def write_imgtobinary(f,label,image):
     f.write(label)
@@ -41,13 +61,14 @@ def write_imgtobinary(f,label,image):
 def prepare_data(coordinates,training_folder,label_key,binarydata_file):
     f = open(binarydata_file,'w')
     images = os.listdir(training_folder)
-    [x0,x1,y0,y1] = coordinates
     for image_name in images:
         image_path = training_folder + image_name
         image = cv.imread(image_path)
-        image = image[y0:y1,x0:x1]//255
-        label = label_key[image_name.split('#')[0]]
-        write_imgtobinary(f, label, image)
+        for i in range(len(coordinates)):
+            [x0,x1,y0,y1] = coordinates[i]
+            image = image[y0:y1,x0:x1]//255
+            label = label_key[image_name.split('#')[i]]
+            write_imgtobinary(f, label, image)
     f.close()
 
 def build_neuralnetwork(model_path,coordinates, training_folder, label_key, binarydata_file,p):
@@ -60,8 +81,17 @@ def build_neuralnetwork(model_path,coordinates, training_folder, label_key, bina
 
 
 def main():
-    model_path,coordinates,training_folder,label_key,binarydata_file,p = set_homemodelparameters()
-    build_neuralnetwork(model_path,coordinates, training_folder, label_key, binarydata_file,p)
+    command = sys.argv
+    if "home" in command:
+        model_path, coordinates, training_folder, label_key, binarydata_file, p = set_homemodelparameters()
+        if "prepare" in command:
+            prepare_data(coordinates, training_folder, label_key, binarydata_file)
+        build_neuralnetwork(model_path, coordinates, training_folder, label_key, binarydata_file, p)
+    if "4p" in command:
+        model_path, coordinates, training_folder, label_key, binarydata_file, p = set_4charactermodelparameters()
+        if "prepare" in command:
+            prepare_data(coordinates, training_folder, label_key, binarydata_file)
+        build_neuralnetwork(model_path, coordinates, training_folder, label_key, binarydata_file, p)
 
 
 main()
