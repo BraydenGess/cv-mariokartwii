@@ -26,7 +26,6 @@ for image in os.listdir(path):
         image_path = path+image
         frame = cv.imread(image_path)
         new_name = get_newimagename(image)
-        print(new_name)
         cv.imwrite(new_name,frame)
 
 
