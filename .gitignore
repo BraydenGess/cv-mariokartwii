@@ -1,4 +1,6 @@
 .cache-bradygess
 credentials.txt
 .DS_Store
-nextgenstats/data
+nextgenstats/data/GunGameF23.csv
+nextgenstats/information/GunGameF23.csv
+nextgenstats/stats.py
