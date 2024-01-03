@@ -27,7 +27,7 @@ def set_homemodelparameters():
 
 def make_characterlabeldict(file):
     f = open(file,'r')
-    label_dict = dict()
+    label_dict = {'None':'0'}
     lines = f.readlines()
     for i in range(1,len(lines)):
         character_name = lines[i].split(',')[0]
@@ -36,17 +36,17 @@ def make_characterlabeldict(file):
 
 def set_4charactermodelparameters():
     coordinates = [[155,445,452,480],[1455,1745,452,480],[155,445,834,862],[1455,1745,834,862]]
-    training_folder = 'train_models/training_images/character_trainingimages4/'
+    training_folder = 'train_models/training_images/char_trainingimages4/'
     label_key = make_characterlabeldict(file='nextgenstats/information/characterstats.csv')
-    binarydata_file = 'train_models/binary_imagedata/character4images.csv'
-    model_path = 'models/characterdetectionmodel4'
+    binarydata_file = 'train_models/binary_imagedata/char4images.csv'
+    model_path = 'models/chardetectionmodel4'
     p = Parameters(layers=[36, 18], activations=['relu', 'relu', 'softmax'], num_outnodes=len(label_key),
                    loss_function='sparse_categorical_crossentropy',
                    opt_function='adam', measure=['accuracy'], batch_size=12, num_epochs=150)
     return model_path, coordinates, training_folder, label_key, binarydata_file, p
 
 def write_imgtobinary(f,label,image):
-    f.write(label)
+    f.write(str(label))
     f.write(',')
     for row in range(len(image)):
         for col in range(len(image[row])):
@@ -66,9 +66,9 @@ def prepare_data(coordinates,training_folder,label_key,binarydata_file):
         image = cv.imread(image_path)
         for i in range(len(coordinates)):
             [x0,x1,y0,y1] = coordinates[i]
-            image = image[y0:y1,x0:x1]//255
+            new_image = image[y0:y1,x0:x1]//255
             label = label_key[image_name.split('#')[i]]
-            write_imgtobinary(f, label, image)
+            write_imgtobinary(f, label, new_image)
     f.close()
 
 def build_neuralnetwork(model_path,coordinates, training_folder, label_key, binarydata_file,p):
