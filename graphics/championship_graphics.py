@@ -9,12 +9,14 @@ def countdown(sp,display_surface,x,y,time):
     text1 = font1.render(str(int(time)), True, (200, 100, 50))
     textRect1 = text1.get_rect()
     textRect1.center = (x // 2, y * 2 // 5)
+    print(textRect1)
     display_surface.fill((255,255,255))
     display_surface.blit(text1, textRect1)
     pygame.display.update()
 
 def champ_graphics(sp,display_surface,x,y,time):
     countdown(sp,display_surface,x,y,time)
+
 
 
 

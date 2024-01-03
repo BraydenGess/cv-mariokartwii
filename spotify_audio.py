@@ -41,9 +41,8 @@ def get_course(frame,root_model,coordinates):
     return 33,0
 
 def play_music(sp,course_index):
-    if course_index != 33:
-        if course_index != sp.course_queued:
-            sp.queue_newsong(course_index)
+    if ((course_index != 33)and(course_index != sp.course_queued)):
+        sp.queue_newsong(course_index)
 
 def run_audio(sp,frame,root_model,coordinates):
     pause_toggle(sp,frame,root_model,coordinates)
