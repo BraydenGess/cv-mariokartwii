@@ -45,10 +45,7 @@ class Neural_Network():
         X_train, X_test, Y_train, Y_test = self.load_data()
         model = self.train_model(X_train,Y_train)
         self.evaluate_model(model,X_test,Y_test)
-        #self.save_model(model)
-
-
-
+        self.save_model(model)
 
 def filter_frame(frame,coordinates,filter):
     [x0,x1,y0,y1] = coordinates

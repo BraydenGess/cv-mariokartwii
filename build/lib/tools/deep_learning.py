@@ -47,9 +47,6 @@ class Neural_Network():
         self.evaluate_model(model,X_test,Y_test)
         self.save_model(model)
 
-
-
-
 def filter_frame(frame,coordinates,filter):
     [x0,x1,y0,y1] = coordinates
     new_frame = frame[y0:y1,x0:x1].copy()
