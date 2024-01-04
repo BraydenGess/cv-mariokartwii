@@ -22,8 +22,8 @@ class Neural_Network():
         array = np.loadtxt(self.trainingdata_file,delimiter=',',dtype=int)
         Y = np.array(array[:,0])
         X = np.array(array[:,1:])
-        #X_train,X_test,Y_train,Y_test = train_test_split(X,Y,test_size=0.2)
-        X_train,Y_train,X_test,Y_test = X,Y,X,Y
+        X_train,X_test,Y_train,Y_test = train_test_split(X,Y,test_size=0.2)
+        #X_train,Y_train,X_test,Y_test = X,Y,X,Y
         return X_train,X_test,Y_train,Y_test
     def train_model(self,X_train,Y_train):
         self.layers = [X_train.shape[1]]+self.layers
