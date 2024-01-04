@@ -20,7 +20,6 @@ def setup_spotifyobject(file):
 
 def pause_toggle(sp,frame,root_model,coordinates):
     index,confidence = predict(frame,coordinates.home_coordinates,root_model.homedetect_model,'imgtobinary')
-    print(index,confidence)
     if confidence >= 0.8:
         if index == 0:
             if sp.is_paused:

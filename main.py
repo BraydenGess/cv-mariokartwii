@@ -13,5 +13,5 @@ def main():
     while cap.isOpened():
         ret,frame = cap.read()
         run_audio(sp,frame,root_model,coordinates)
-        #character_select(frame,coordinates,root_model)
+        character_select(frame,coordinates,root_model)
 main()

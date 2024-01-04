@@ -54,6 +54,8 @@ def filter_frame(frame,coordinates,filter):
     new_frame = frame[y0:y1,x0:x1].copy()
     if filter == 'imgtobinary':
         new_frame = imgtobinary(new_frame)
+    if filter == 'sharpimgtobinary':
+        new_frame = sharpimgtobinary(new_frame)
     return new_frame
 
 def single_conversion(frame):
