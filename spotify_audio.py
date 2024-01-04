@@ -20,6 +20,7 @@ def setup_spotifyobject(file):
 
 def pause_toggle(sp,frame,root_model,coordinates):
     index,confidence = predict(frame,coordinates.home_coordinates,root_model.homedetect_model,'imgtobinary')
+    print(index,confidence)
     if confidence >= 0.8:
         if index == 0:
             if sp.is_paused:
@@ -30,13 +31,19 @@ def pause_toggle(sp,frame,root_model,coordinates):
                 sp.pause()
                 sp.is_paused = True
 
+def double_verifycourse(coordinates,root_model,index):
+    cap = cv.VideoCapture(0)
+    ret, next_frame = cap.read()
+    index2, confidence2 = predict(next_frame, coordinates.course_coordinates, root_model.coursedetect_model,
+                                  'imgtobinary')
+    if ((index2==index)and(confidence2>0.95)):
+        return True
+    return False
+
 def get_course(frame,root_model,coordinates):
     index,confidence = predict(frame,coordinates.course_coordinates,root_model.coursedetect_model,'imgtobinary')
-    if (index!=33):
-        cap = cv.VideoCapture(0)
-        ret, next_frame = cap.read()
-        index2,confidence2 = predict(next_frame,coordinates.course_coordinates,root_model.coursedetect_model,'imgtobinary')
-        if index == index2:
+    if ((index!=33)and(confidence>0.95)):
+        if double_verifycourse(coordinates,root_model,index):
             return index,confidence
     return 33,0
 

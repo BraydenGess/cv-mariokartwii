@@ -9,8 +9,9 @@ def main():
     sp, coordinates = audio_setup(genre='rock', credentials_file='credentials.txt')
     root_model = initialize_rootmodel()
     cap = cv.VideoCapture(0)
+    print('Ready')
     while cap.isOpened():
         ret,frame = cap.read()
         run_audio(sp,frame,root_model,coordinates)
-        character_select(root_model)
+        #character_select(frame,coordinates,root_model)
 main()
