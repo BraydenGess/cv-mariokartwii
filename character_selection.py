@@ -1,1 +1,2 @@
-def
+def cack():
+    return 42
