@@ -48,7 +48,7 @@ def set_4charactermodelparameters():
 def set_menumodelparameters():
     coordinates = [[120,675,80,140]]
     training_folder = 'train_models/training_images/menu_trainingimages/'
-    label_key = {'None':0,'Multiplayer':1,'Character':2,'Vehicle':3,'Drift':4,'Start':5}
+    label_key = {'None':0,'Singleplayer':1,'Multiplayer':2,'Character':3,'Vehicle':4,'Drift':5,'Start':6}
     binarydata_file = 'train_models/binary_imagedata/menuimages.csv'
     model_path = 'models/menudetectionmodel'
     p = Parameters(layers=[22,8], activations=['relu', 'relu', 'softmax'], num_outnodes=len(label_key),
