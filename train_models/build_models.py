@@ -48,12 +48,12 @@ def set_4charactermodelparameters():
 def set_menumodelparameters():
     coordinates = [[120,675,80,140]]
     training_folder = 'train_models/training_images/menu_trainingimages/'
-    label_key = {'None':0,'Count1':1,'Count2':2,'Count3':3,'Count4':4,'Character':5,'Vehicle':6,'Drift':7,'Start':8}
+    label_key = {'None':0,'Multiplayer':1,'Character':2,'Vehicle':3,'Drift':4,'Start':5}
     binarydata_file = 'train_models/binary_imagedata/menuimages.csv'
     model_path = 'models/menudetectionmodel'
-    p = Parameters(layers=[22,12], activations=['relu', 'relu', 'softmax'], num_outnodes=len(label_key),
+    p = Parameters(layers=[22,8], activations=['relu', 'relu', 'softmax'], num_outnodes=len(label_key),
                    loss_function='sparse_categorical_crossentropy',
-                   opt_function='adam', measure=['accuracy'], batch_size=4, num_epochs=120)
+                   opt_function='adam', measure=['accuracy'], batch_size=8, num_epochs=150)
     return model_path, coordinates, training_folder, label_key, binarydata_file, p
 
 def write_imgtobinary(f,label,image):
