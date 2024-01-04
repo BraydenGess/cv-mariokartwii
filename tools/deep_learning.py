@@ -41,6 +41,7 @@ class Neural_Network():
         print('Test accuracy',score[1])
     def save_model(self,model):
         tf.keras.Model.save(model,self.model_path)
+        print('Model Saved')
     def construct_model(self):
         X_train, X_test, Y_train, Y_test = self.load_data()
         model = self.train_model(X_train,Y_train)
