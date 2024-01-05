@@ -18,7 +18,7 @@ def spotify_safetycheck(sp):
     print('Ready')
 
 def main():
-    sp, coordinates = audio_setup(genre='rock', credentials_file='credentials.txt')
+    sp, coordinates = audio_setup(genre='Rock', credentials_file='credentials.txt')
     root_model = initialize_rootmodel()
     cap = cv.VideoCapture(0)
     spotify_safetycheck(sp)
