@@ -1,6 +1,8 @@
 from tools.deep_learning import predict
 
-
+class GP_Info():
+    def __init__(self,menu_screen=None):
+        self.menu_screen = menu_screen
 def player_count(frame,coordinates,root_model):
     return 42
 
