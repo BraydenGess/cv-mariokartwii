@@ -1,10 +1,14 @@
 from tools.deep_learning import predict
 
-def menu_control(frame,coordinates,root_model):
-    index,confidence = predict(frame,coordinates.menu_coordinates,root_model.menudetect_model,'sharpimgtobinary')
-    print(index,confidence)
+
+def player_count(frame,coordinates,root_model):
     return 42
 
+def menu_control(frame,coordinates,root_model):
+    index,confidence = predict(frame,coordinates.menu_coordinates,root_model.menudetect_model,'sharpimgtobinary')
+    if ((index==2)and(confidence>0.95)):
+        player_count(frame,coordinates,root_model)
+    return 42
 
 def character_select(frame,coordinates,root_model):
     menu_control(frame,coordinates,root_model)
