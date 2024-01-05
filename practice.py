@@ -2,7 +2,7 @@
 #from __init__ import *
 import time
 import cv2 as cv
-from tools.imagemanipulation import imgtobinary
+from tools.imagemanipulation import imgtobinary,sharpimgtobinary
 import numpy as np
 import os
 from spotify_audio import *
@@ -13,11 +13,16 @@ x = [120,675,80,140]
 #cv.imwrite('cack.png',img3)
 
 
-sp = setup_spotifyobject(file='credentials.txt')
-sp.repeat(state='off')
-x = len(sp.queue()['queue'])
+cap = cv.VideoCapture(0)
+count = 0
+while cap.isOpened():
+    ret,frame = cap.read()
+    file_name = 'cack' + str(count) + '.png'
+    count += 1
+    cv.imwrite(file_name,sharpimgtobinary(frame))
+    if count == 5:
+        break
 
-print(x)
 
 
 

@@ -92,6 +92,12 @@ class Course:
         self.course_name = course_name
         self.song_queue = song_queue
 
+class GP_Info():
+    def __init__(self,menu_screen=None,player_count=None):
+        self.menu_screen = menu_screen
+        self.player_count = player_count
+
+
 ### SET UP ###
 def audio_setup(genre,credentials_file):
     spotify = setup_spotifyobject(credentials_file)
@@ -152,6 +158,10 @@ def initialize_playlist(playlist_name):
     else:
         raise Exception("Not Valid Playlist")
     return course_dict,songkey_dict
+
+def initialize_gpinfo():
+    gp_info = GP_Info(menu_screen=0,player_count=0)
+    return gp_info
 
 def initialize_graphics():
     pygame.init()
