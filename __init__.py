@@ -192,12 +192,5 @@ def initialize_gpinfo():
     gp_info.players = player_dict
     return gp_info
 
-def initialize_graphics():
-    pygame.init()
-    screen = pygame.display.set_mode()
-    x,y = screen.get_size()
-    display_surface = pygame.display.set_mode((x, y))
-    pygame.display.set_caption("Beerio")
-    return display_surface,x,y
 
 
