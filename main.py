@@ -14,6 +14,7 @@ def safety_check(sp):
         elif not warning:
             print('Activate Device')
             warning = True
+    print(sp.spotify.current_playback()['item']['uri'])
     print('Ready')
 
 def main():
@@ -21,6 +22,7 @@ def main():
     root_model = initialize_rootmodel()
     cap = cv.VideoCapture(0)
     safety_check(sp)
+    return 42
     while cap.isOpened():
         ret,frame = cap.read()
         run_audio(sp,frame,root_model,coordinates)

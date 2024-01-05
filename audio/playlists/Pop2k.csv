@@ -1,5 +1,5 @@
 CourseName,Songs
-Opening,ShakeItOff,HallofFame,ShakeIt,WreckingBall,Replay,Firework
+Opening,ShakeItOff,HallofFame,ShakeIt,WreckingBall,Replay,Firework,BlurredLines
 LuigiCircuit,WideAwake,DeadAndGone
 MooMooMeadows,YouBelongWithMe,LoveSong
 MushroomGorge,GetLucky,CallMeMaybe
@@ -12,15 +12,15 @@ DaisyCircuit,Whistle,IWannaGo
 KoopaCape,Umbrella,RollingintheDeep
 MapleTreeway,Scream&Shout,TheNights
 GrumbleVolcano,Stay,Mirrors
-DryDryRuins,CaliforniaGurls,HeyBaby
-MoonviewHighway,GiveMeEverything,BlurredLines
+DryDryRuins,CaliforniaGurls,HeyBaby,GiveMeEverything
+MoonviewHighway,CrackABottle,ShutUpAndDrive
 BowsersCastle,FeelThisMoment,SetFiretotheRain
 RainbowRoad,Starships,SuperBass
 PeachBeach,Shower,StillIntoYou
 YoshiFalls,PartyInTheUSA,Classic
 GhostValley,LockedOutofHeaven,TheEdgeOfGlory
 MarioRaceway,StolenDance,SummertimeSadness
-#SherbertLand,YouMakeMeFeel,YouMakeMeFeel
+SherbertLand,YouMakeMeFeel,YouMakeMeFeel
 ShyGuyBeach,SoGood,Headband
 DelfinoSquare,Kids,SafeandSound
 WaluigiStadium,Titanium,HipsDontLie
