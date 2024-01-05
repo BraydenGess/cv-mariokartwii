@@ -17,7 +17,7 @@ def get_objects(frame,coordinates2,coordinates4,model2,model4,gp_info,alpha,filt
     if gp_info.player_count >= 3:
         for i in range(gp_info.player_count):
             index,conf = predict(frame,coordinates4[i],model4,filter)
-            if conf > 0.9:
+            if conf > alpha:
                 objects.append(index)
     if len(objects) == gp_info.player_count:
         return True,objects
