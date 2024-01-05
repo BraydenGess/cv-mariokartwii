@@ -60,7 +60,7 @@ class Graphics():
         texts = []
         for i in range(gp_info.player_count):
             p = gp_info.players[gp_info.colors[i]]
-            char = p.character
+            char = gp_info.character_stats[p.character].name
             vehicle = p.vehicle
             player = p.name
             rgb = gp_info.rgb_colors[i]
