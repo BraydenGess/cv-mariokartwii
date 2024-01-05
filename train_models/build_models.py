@@ -62,7 +62,7 @@ def set_playercountmodelparameters():
     label_key = {'None':0,'players2':1,'players3':2,'players4':3}
     binarydata_file = 'train_models/binary_imagedata/playercountimages.csv'
     model_path = 'models/playercountdetectionmodel'
-    p = Parameters(layers=[12,4], activations=['relu', 'relu', 'softmax'], num_outnodes=len(label_key),
+    p = Parameters(layers=[18,8], activations=['relu', 'relu', 'softmax'], num_outnodes=len(label_key),
                    loss_function='sparse_categorical_crossentropy',
                    opt_function='adam', measure=['accuracy'], batch_size=4, num_epochs=150)
     return model_path, coordinates, training_folder, label_key, binarydata_file, p

@@ -85,7 +85,7 @@ class Coordinates:
         self.course_coordinates = [1020,1770,894,978]
         self.home_coordinates = [135,490,80,180]
         self.menu_coordinates = [120,675,80,140]
-        self.playercount_coordinates = [120,675,80,140]
+        self.playercount_coordinates = [555, 640, 80, 140]
 
 class Course:
     def __init__(self,course_name=None,song_queue=None):
