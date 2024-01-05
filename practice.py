@@ -26,9 +26,10 @@ def main():
     graphics = initialize_graphics()
     gp_info = initialize_gpinfo()
     gp_info.menu_screen = 3
+    gp_info.player_count = 4
     colors = ["Orange","Blue","Red","Green"]
-    characters = ["Peach","TransRob","FunkyKong","KoopaTroop"]
-    vehicles = ['Mach Bike','Flame Runner','Spear','Bullet']
+    characters = ["Peach","TransRob","FunkyKong","KoopaTroopa"]
+    vehicles = ['Mach Bike','Flame Runner','Spear',"Bullet"]
     names = ["Max","Brady","Jack","George"]
     for i in range(len(colors)):
         gp_info.players[colors[i]].character = characters[i]

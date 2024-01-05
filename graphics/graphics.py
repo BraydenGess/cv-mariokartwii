@@ -58,7 +58,7 @@ class Graphics():
         x_buffer = self.X//32
         y_buffer = self.Y//8
         texts = []
-        for i in range(len(gp_info.colors)):
+        for i in range(gp_info.player_count):
             p = gp_info.players[gp_info.colors[i]]
             char = p.character
             vehicle = p.vehicle
