@@ -7,43 +7,38 @@ def get_playercount(frame,coordinates,root_model,gp_info):
         gp_info.player_count = index+1
     return gp_info
 
-def get_characters(frame,coordinates,root_model,gp_info):
-    characters = []
+def get_objects(frame,coordinates2,coordinates4,model2,model4,gp_info,alpha,filter):
+    objects = []
     if gp_info.player_count == 2:
         for i in range(2):
-            index,conf = predict(frame,coordinates.char2_coordinates[i],root_model.char2detect_model,'lightimgtobinary')
-            if conf > 0.9:
-                characters.append(index)
+            index,conf = predict(frame,coordinates2[i],model2,filter)
+            if conf > alpha:
+                objects.append(index)
     if gp_info.player_count >= 3:
         for i in range(gp_info.player_count):
-            index,conf = predict(frame,coordinates.char4_coordinates[i],root_model.char4detect_model,'lightimgtobinary')
+            index,conf = predict(frame,coordinates4[i],model4,filter)
             if conf > 0.9:
-                characters.append(index)
-    ### Set Characters ###
-    if len(characters) == gp_info.player_count:
+                objects.append(index)
+    if len(objects) == gp_info.player_count:
+        return True,objects
+    return False,None
+
+def get_characters(frame,coordinates,root_model,gp_info):
+    valid,characters = get_objects(frame,coordinates.char2_coordinates,coordinates.char4_coordinates,
+                                   root_model.char2detect_model,root_model.char4detect_model,0.9,'lightimgtobinary')
+    if valid:
         for i in range(len(characters)):
             gp_info.players[gp_info.colors[i]].character = characters[i]
-    return 42
+    return gp_info
 
 def get_vehicles(frame,coordinates,root_model,gp_info):
-    vehicles = []
-    if gp_info.player_count == 2:
-        for i in range(2):
-            index, conf = predict(frame, coordinates.vehicle2_coordinates[i], root_model.vehicle2detect_model,
+    valid, vehicles = get_objects(frame, coordinates.vehicle2_coordinates, coordinates.vehicle4_coordinates,
+                                    root_model.vehicle2detect_model, root_model.vehicle4detect_model, 0.9,
                                   'sharpimgtobinary')
-            if conf > 0.9:
-                vehicles.append(index)
-    if gp_info.player_count >= 3:
-        for i in range(gp_info.player_count):
-            index, conf = predict(frame, coordinates.vehicle4_coordinates[i], root_model.vehicle4detect_model,
-                                  'sharpimgtobinary')
-            if conf > 0.9:
-                vehicles.append(index)
-    ### Set Characters ###
-    if len(vehicles) == gp_info.player_count:
+    if valid:
         for i in range(len(vehicles)):
             gp_info.players[gp_info.colors[i]].vehicle = vehicles[i]
-    return 42
+    return gp_info
 
 def menu_control(frame,coordinates,root_model,gp_info):
     index,confidence = predict(frame,coordinates.menu_coordinates,root_model.menudetect_model,'sharpimgtobinary')
