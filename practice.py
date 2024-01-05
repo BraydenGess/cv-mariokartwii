@@ -25,6 +25,16 @@ def graphics_quit():
 def main():
     graphics = initialize_graphics()
     gp_info = initialize_gpinfo()
+    gp_info.menu_screen = 3
+    colors = ["Orange","Blue","Red","Green"]
+    characters = ["Peach","TransRob","FunkyKong","KoopaTroop"]
+    vehicles = ['Mach Bike','Flame Runner','Spear','Bullet']
+    names = ["Max","Brady","Jack","George"]
+    for i in range(len(colors)):
+        gp_info.players[colors[i]].character = characters[i]
+        gp_info.players[colors[i]].vehicle = vehicles[i]
+        gp_info.players[colors[i]].name = names[i]
+    gp_info.rgb_colors = [(255,165,0),(0,128,255),(255,100,50),(50,255,50)]
     while True:
         graphics.run_graphics(gp_info)
 

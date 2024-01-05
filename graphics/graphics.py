@@ -42,6 +42,10 @@ class Graphics():
         elif anchor == 'right':
             txtRect.right = (coordinates[0])
         return txt,txtRect
+    def write_text(self,texts):
+        for element in texts:
+            [txt,txtRect] = element
+            self.display_surface.blit(txt, txtRect)
     def draw_titlescreen(self):
         color = self.special_effect['TitleScreen']
         txt,txtRect = self.create_text('chalkduster',192,'BeerioKart',(int(color.red),int(color.green),int(color.blue)),
@@ -50,9 +54,44 @@ class Graphics():
         self.display_surface.fill((0,0,0))
         self.display_surface.blit(txt,txtRect)
         pygame.display.update()
+    def draw_playerselectionscreen(self,gp_info):
+        x_buffer = self.X//32
+        y_buffer = self.Y//8
+        texts = []
+        for i in range(len(gp_info.colors)):
+            p = gp_info.players[gp_info.colors[i]]
+            char = p.character
+            vehicle = p.vehicle
+            player = p.name
+            rgb = gp_info.rgb_colors[i]
+            if i <= 1:
+                y = y_buffer
+            elif i >= 2:
+                y = (2.5*y_buffer)
+            if i%2 == 0:
+                x = x_buffer
+                anchor = 'left'
+            elif i%2 != 0:
+                x = self.X - x_buffer
+                anchor = 'right'
+            txt,txtRect = self.create_text('Arial',72,char,rgb,[x,y],anchor)
+            texts.append([txt,txtRect])
+            if vehicle != None:
+                yv = y+(y_buffer//2)
+                if player == None:
+                    player = 'NA'
+                new_text = player + ' | ' + vehicle
+                txt, txtRect = self.create_text('Arial',24,new_text, rgb, [x, yv], anchor)
+                texts.append([txt, txtRect])
+        self.display_surface.fill((0, 0, 0))
+        self.write_text(texts)
+        pygame.display.update()
+
     def run_graphics(self,gp_info):
         if (gp_info.menu_screen <= 2):
             self.draw_titlescreen()
+        if (gp_info.menu_screen >= 3):
+            self.draw_playerselectionscreen(gp_info)
         self.exit()
     def exit(self):
         for event in pygame.event.get():

@@ -103,12 +103,13 @@ class Course:
         self.song_queue = song_queue
 
 class GP_Info():
-    def __init__(self,menu_screen=None,player_count=None,players=None,colors=None,read_menu=None):
+    def __init__(self,menu_screen=None,player_count=None,players=None,colors=None,read_menu=None,rgb_colors=None):
         self.menu_screen = menu_screen
         self.player_count = player_count
         self.players = players
         self.colors = colors
         self.read_menu = read_menu
+        self.rgb_colors = rgb_colors
 
 class Player():
     def __init__(self,name=None,color=None,character=None,vehicle=None,score=None,place=None):
@@ -185,7 +186,8 @@ def initialize_playlist(playlist_name):
     return course_dict,songkey_dict
 
 def initialize_gpinfo():
-    gp_info = GP_Info(menu_screen=0,player_count=0,colors=["Orange","Blue","Red","Green"],read_menu=False)
+    gp_info = GP_Info(menu_screen=0,player_count=0,colors=["Orange","Blue","Red","Green"],read_menu=False,
+                      rgb_colors=[(255,165,0),(0,128,255),(255,100,50),(50,255,50)])
     player_dict = dict()
     for i in range(len(gp_info.colors)):
         player_dict[gp_info.colors[i]] = Player(color=gp_info.colors[i])
