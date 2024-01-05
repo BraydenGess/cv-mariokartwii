@@ -17,7 +17,6 @@ def get_characters(frame,coordinates,root_model,gp_info):
     if gp_info.player_count >= 3:
         for i in range(gp_info.player_count):
             index,conf = predict(frame,coordinates.char4_coordinates[i],root_model.char4detect_model,'lightimgtobinary')
-            print(index,conf)
             if conf > 0.9:
                 characters.append(index)
     ### Set Characters ###
