@@ -9,19 +9,26 @@ import pygame
 
 
 class SpotifyPlayer():
-    def __init__(self,spotify,course_queued,playlist,songkey_dict,song_queued,is_paused):
+    def __init__(self,spotify,course_queued,playlist,songkey_dict,song_queued,is_paused,support_volume):
         self.spotify = spotify
         self.course_queued = course_queued
         self.song_queued = song_queued
         self.playlist = playlist
         self.songkey_dict = songkey_dict
         self.is_paused = is_paused
+        self.support_volume = support_volume
     def pause(self):
         if self.spotify.current_playback()['is_playing']:
             self.spotify.pause_playback(device_id=None)
     def resume(self):
         if not self.spotify.current_playback()['is_playing']:
             self.spotify.start_playback(device_id=None)
+    def min_volume(self):
+        if self.support_volume:
+            self.spotify.volume(volume_percent=0,device_id=None)
+    def max_volume(self):
+        if self.support_volume:
+            self.spotify.volume(volume_percent=100,device_id=None)
     def search(self,searchQuery):
         searchResults = self.spotify.search(searchQuery, 1, 0, "track")
         tracks_items = searchResults['tracks']['items']
@@ -36,9 +43,11 @@ class SpotifyPlayer():
     def queue_song(self,songs):
         for song in songs:
             self.spotify.add_to_queue(uri=song, device_id=None)
+        self.min_volume()
         for element in self.spotify.queue()['queue']:
             self.spotify.next_track()
             if songs[0] == element['uri']:
+                self.max_volume()
                 break
     def queue_newsong(self,course_index):
         song = self.playlist[course_index].song_queue.popleft()
@@ -86,8 +95,8 @@ def audio_setup(genre,credentials_file):
     spotify = setup_spotifyobject(credentials_file)
     coordinates = initialize_coordinates()
     course_dict, songkey_dict = initialize_playlist(genre)
-    sp = SpotifyPlayer(spotify=spotify, course_queued=None,
-                       song_queued=None, playlist=course_dict, songkey_dict=songkey_dict,is_paused=False)
+    sp = SpotifyPlayer(spotify=spotify, course_queued=None,song_queued=None, playlist=course_dict,
+                       songkey_dict=songkey_dict,is_paused=False,support_volume=False)
     return sp,coordinates
 
 def initialize_rootmodel():

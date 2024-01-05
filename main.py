@@ -5,24 +5,23 @@ import cv2 as cv
 import time
 from character_selection import character_select
 
-def safety_check(sp):
+def spotify_safetycheck(sp):
     warning = False
     safe = False
     while not safe:
         if sp.spotify.current_playback() != None:
             safe = True
+            sp.support_volume = sp.spotify.current_playback()['device']['supports_volume']
         elif not warning:
             print('Activate Device')
             warning = True
-    print(sp.spotify.current_playback()['item']['uri'])
     print('Ready')
 
 def main():
     sp, coordinates = audio_setup(genre='rock', credentials_file='credentials.txt')
     root_model = initialize_rootmodel()
     cap = cv.VideoCapture(0)
-    safety_check(sp)
-    return 42
+    spotify_safetycheck(sp)
     while cap.isOpened():
         ret,frame = cap.read()
         run_audio(sp,frame,root_model,coordinates)
