@@ -74,16 +74,18 @@ class SpotifyPlayer():
             self.queue_skip()
 
 class RootModel:
-    def __init__(self,coursedetect_model=None,homedetect_model=None,menudetect_model=None):
+    def __init__(self,coursedetect_model=None,homedetect_model=None,menudetect_model=None,playercountdetect_model=None):
         self.coursedetect_model = coursedetect_model
         self.homedetect_model = homedetect_model
         self.menudetect_model = menudetect_model
+        self.playercountdetect_model = playercountdetect_model
 
 class Coordinates:
     def __init__(self):
         self.course_coordinates = [1020,1770,894,978]
         self.home_coordinates = [135,490,80,180]
         self.menu_coordinates = [120,675,80,140]
+        self.playercount_coordinates = [120,675,80,140]
 
 class Course:
     def __init__(self,course_name=None,song_queue=None):
@@ -104,6 +106,7 @@ def initialize_rootmodel():
     root_model.coursedetect_model = load_model('models/coursedetectionmodel')
     root_model.homedetect_model = load_model('models/homedetectionmodel')
     root_model.menudetect_model = load_model('models/menudetectionmodel')
+    root_model.playercountdetect_model = load_model('models/playercountdetectionmodel')
     return root_model
 
 def initialize_coordinates():

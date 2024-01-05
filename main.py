@@ -20,10 +20,11 @@ def spotify_safetycheck(sp):
 def main():
     sp, coordinates = audio_setup(genre='Rock', credentials_file='credentials.txt')
     root_model = initialize_rootmodel()
+    gp_info = None
     spotify_safetycheck(sp)
     cap = cv.VideoCapture(0)
     while cap.isOpened():
         ret,frame = cap.read()
         run_audio(sp,frame,root_model,coordinates)
-        character_select(frame,coordinates,root_model)
+        character_select(frame,coordinates,root_model,gp_info)
 main()
