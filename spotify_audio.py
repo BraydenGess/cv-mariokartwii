@@ -46,14 +46,19 @@ def get_course(frame,root_model,coordinates):
             return index,confidence
     return 33,0
 
-def play_music(sp,course_index):
+def control_models(course_index,gp_info):
+    if course_index == 0:
+        gp_info.read_menu = True
+
+def play_music(sp,course_index,gp_info):
     if ((course_index != 33)and(course_index != sp.course_queued)):
+        control_models(course_index,gp_info)
         sp.queue_newsong(course_index)
 
-def run_audio(sp,frame,root_model,coordinates):
+def run_audio(sp,frame,root_model,coordinates,gp_info):
     pause_toggle(sp,frame,root_model,coordinates)
     course_index,confidence = get_course(frame,root_model,coordinates)
-    play_music(sp,course_index)
+    play_music(sp,course_index,gp_info)
     sp.auto_skip()
 
 

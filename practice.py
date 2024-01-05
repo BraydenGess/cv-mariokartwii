@@ -7,8 +7,8 @@ import tensorflow as tf
 from keras.models import load_model
 
 
-model_path = '/Users/bradygess/PycharmProjects/mariokartwii/characterselection/characters/textdetection4.h5'
+model_path = '/Users/bradygess/PycharmProjects/mariokartwii/characterselection/vehicles/vehicledetection2.h5'
 model = load_model(model_path)
-new_path = 'models/char4detectionmodel'
+new_path = 'models/vehicle2detectionmodel'
 tf.keras.Model.save(model,new_path)
 

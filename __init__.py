@@ -75,13 +75,16 @@ class SpotifyPlayer():
 
 class RootModel:
     def __init__(self,coursedetect_model=None,homedetect_model=None,menudetect_model=None,playercountdetect_model=None,
-                 char2detect_model=None,char4detect_model=None):
+                 char2detect_model=None,char4detect_model=None,vehicle2detect_model=None,vehicle4detect_model=None):
         self.coursedetect_model = coursedetect_model
         self.homedetect_model = homedetect_model
         self.menudetect_model = menudetect_model
         self.playercountdetect_model = playercountdetect_model
         self.char2detect_model = char2detect_model
         self.char4detect_model = char4detect_model
+        self.vehicle2detect_model = vehicle2detect_model
+        self.vehicle4detect_model = vehicle4detect_model
+
 
 class Coordinates:
     def __init__(self):
@@ -91,6 +94,8 @@ class Coordinates:
         self.playercount_coordinates = [555, 640, 80, 140]
         self.char2_coordinates = [[150,580,435,480],[150,580,781,826]]
         self.char4_coordinates = [[155,445,452,480],[1455,1745,452,480],[155,445,834,862],[1455,1745,834,862]]
+        self.vehicle2_coordinates = [[450, 925, 420, 500],[450, 925, 790, 870]]
+        self.vehicle4_coordinates = [[350,855,450,500],[1053,1558,450,500],[350,855,798,848],[1053,1558,798,848]]
 
 class Course:
     def __init__(self,course_name=None,song_queue=None):
@@ -98,10 +103,21 @@ class Course:
         self.song_queue = song_queue
 
 class GP_Info():
-    def __init__(self,menu_screen=None,player_count=None):
+    def __init__(self,menu_screen=None,player_count=None,players=None,colors=None,read_menu=None):
         self.menu_screen = menu_screen
         self.player_count = player_count
+        self.players = players
+        self.colors = colors
+        self.read_menu = read_menu
 
+class Player():
+    def __init__(self,name=None,color=None,character=None,vehicle=None,score=None,place=None):
+        self.name = name
+        self.color = color
+        self.character = character
+        self.vehicle = vehicle
+        self.score = score
+        self.place = place
 
 ### SET UP ###
 def audio_setup(genre,credentials_file):
@@ -120,6 +136,8 @@ def initialize_rootmodel():
     root_model.playercountdetect_model = load_model('models/playercountdetectionmodel')
     root_model.char2detect_model = load_model('models/char2detectionmodel')
     root_model.char4detect_model = load_model('models/char4detectionmodel')
+    root_model.vehicle2detect_model = load_model('models/vehicle2detectionmodel')
+    root_model.vehicle4detect_model = load_model('models/vehicle4detectionmodel')
     return root_model
 
 def initialize_coordinates():
@@ -167,7 +185,11 @@ def initialize_playlist(playlist_name):
     return course_dict,songkey_dict
 
 def initialize_gpinfo():
-    gp_info = GP_Info(menu_screen=0,player_count=0)
+    gp_info = GP_Info(menu_screen=0,player_count=0,colors=["Orange","Blue","Red","Green"],read_menu=False)
+    player_dict = dict()
+    for i in range(len(gp_info.colors)):
+        player_dict[gp_info.colors[i]] = Player(color=gp_info.colors[i])
+    gp_info.players = player_dict
     return gp_info
 
 def initialize_graphics():
