@@ -10,7 +10,7 @@ def get_playercount(frame,coordinates,root_model,gp_info):
 def get_objects(frame,coordinates2,coordinates4,model2,model4,gp_info,alpha,filter):
     objects = []
     if gp_info.player_count == 2:
-        for i in range(2):
+        for i in range(gp_info.player_count):
             index,conf = predict(frame,coordinates2[i],model2,filter)
             if conf > alpha:
                 objects.append(index)
