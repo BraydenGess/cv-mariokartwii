@@ -1,28 +1,14 @@
-#from spotify_audio import *
-#from __init__ import *
-import time
-import cv2 as cv
-from tools.imagemanipulation import imgtobinary,sharpimgtobinary
+from tools.imagemanipulation import *
+from sklearn.model_selection import train_test_split
+from keras.layers import Dense
+from keras.models import Sequential
 import numpy as np
-import os
-from spotify_audio import *
-x = [120,675,80,140]
-#img = cv.imread('train_models/training_images/playercount_trainingimages/players2#A.png')
-#img2 = cv.imread('train_models/training_images/playercount_trainingimages/players2#B.png')
-#img3 = cv.subtract(img2,img)
-#cv.imwrite('cack.png',img3)
+import tensorflow as tf
+from keras.models import load_model
 
 
-cap = cv.VideoCapture(0)
-count = 0
-while cap.isOpened():
-    ret,frame = cap.read()
-    file_name = 'cack' + str(count) + '.png'
-    count += 1
-    cv.imwrite(file_name,sharpimgtobinary(frame))
-    if count == 5:
-        break
-
-
-
+model_path = '/Users/bradygess/PycharmProjects/mariokartwii/characterselection/characters/textdetection4.h5'
+model = load_model(model_path)
+new_path = 'models/char4detectionmodel'
+tf.keras.Model.save(model,new_path)
 

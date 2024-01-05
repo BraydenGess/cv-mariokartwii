@@ -74,11 +74,14 @@ class SpotifyPlayer():
             self.queue_skip()
 
 class RootModel:
-    def __init__(self,coursedetect_model=None,homedetect_model=None,menudetect_model=None,playercountdetect_model=None):
+    def __init__(self,coursedetect_model=None,homedetect_model=None,menudetect_model=None,playercountdetect_model=None,
+                 char2detect_model=None,char4detect_model=None):
         self.coursedetect_model = coursedetect_model
         self.homedetect_model = homedetect_model
         self.menudetect_model = menudetect_model
         self.playercountdetect_model = playercountdetect_model
+        self.char2detect_model = char2detect_model
+        self.char4detect_model = char4detect_model
 
 class Coordinates:
     def __init__(self):
@@ -86,6 +89,8 @@ class Coordinates:
         self.home_coordinates = [135,490,80,180]
         self.menu_coordinates = [120,675,80,140]
         self.playercount_coordinates = [555, 640, 80, 140]
+        self.char2_coordinates = [[150,580,435,480],[150,580,781,826]]
+        self.char4_coordinates = [[155,445,452,480],[1455,1745,452,480],[155,445,834,862],[1455,1745,834,862]]
 
 class Course:
     def __init__(self,course_name=None,song_queue=None):
@@ -113,6 +118,8 @@ def initialize_rootmodel():
     root_model.homedetect_model = load_model('models/homedetectionmodel')
     root_model.menudetect_model = load_model('models/menudetectionmodel')
     root_model.playercountdetect_model = load_model('models/playercountdetectionmodel')
+    root_model.char2detect_model = load_model('models/char2detectionmodel')
+    root_model.char4detect_model = load_model('models/char4detectionmodel')
     return root_model
 
 def initialize_coordinates():
