@@ -56,6 +56,17 @@ def set_menumodelparameters():
                    opt_function='adam', measure=['accuracy'], batch_size=8, num_epochs=150)
     return model_path, coordinates, training_folder, label_key, binarydata_file, p
 
+def set_playercountmodelparameters():
+    coordinates = [[555,640,80,140]]
+    training_folder = 'train_models/training_images/playercount_trainingimages/'
+    label_key = {'None':0,'players2':1,'players3':2,'players4':3}
+    binarydata_file = 'train_models/binary_imagedata/playercountimages.csv'
+    model_path = 'models/playercountdetectionmodel'
+    p = Parameters(layers=[8,2], activations=['relu', 'relu', 'softmax'], num_outnodes=len(label_key),
+                   loss_function='sparse_categorical_crossentropy',
+                   opt_function='adam', measure=['accuracy'], batch_size=4, num_epochs=150)
+    return model_path, coordinates, training_folder, label_key, binarydata_file, p
+
 def write_imgtobinary(f,label,image):
     f.write(str(label))
     f.write(',')
@@ -105,6 +116,11 @@ def main():
         build_neuralnetwork(model_path, coordinates, training_folder, label_key, binarydata_file, p)
     if 'menu' in command:
         model_path, coordinates, training_folder, label_key, binarydata_file, p = set_menumodelparameters()
+        if "prepare" in command:
+            prepare_data(coordinates, training_folder, label_key, binarydata_file)
+        build_neuralnetwork(model_path, coordinates, training_folder, label_key, binarydata_file, p)
+    if 'playercount' in command:
+        model_path, coordinates, training_folder, label_key, binarydata_file, p = set_playercountmodelparameters()
         if "prepare" in command:
             prepare_data(coordinates, training_folder, label_key, binarydata_file)
         build_neuralnetwork(model_path, coordinates, training_folder, label_key, binarydata_file, p)
