@@ -19,7 +19,9 @@ def spotify_safetycheck(sp):
 
 def main():
     sp, coordinates = audio_setup(genre='Rock', credentials_file='credentials.txt')
-    root_model = initialize_rootmodel()
+    #root_model = initialize_rootmodel()
+    print(sp.spotify.current_playback()['item']['uri'])
+    exit()
     cap = cv.VideoCapture(0)
     spotify_safetycheck(sp)
     while cap.isOpened():

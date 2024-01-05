@@ -5,8 +5,8 @@ import cv2 as cv
 from tools.imagemanipulation import imgtobinary
 import numpy as np
 import os
-path = 'train_models/training_images/menu_trainingimages/Start#B.png'
-new_path = 'train_models/training_images/playercount_trainingimages/None#F.png'
-cv.imwrite(new_path,cv.imread(path))
+from spotify_audio import *
 
 
+sp = setup_spotifyobject(file='credentials.txt')
+print(sp.current_playback()['item']['uri'])
