@@ -27,4 +27,5 @@ def main():
         ret,frame = cap.read()
         run_audio(sp,frame,root_model,coordinates)
         character_select(frame,coordinates,root_model,gp_info)
+
 main()

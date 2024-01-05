@@ -6,7 +6,7 @@ from collections import deque
 import time
 from spotify_audio import setup_spotifyobject
 import pygame
-
+import os
 
 class SpotifyPlayer():
     def __init__(self,spotify,course_queued,playlist,songkey_dict,song_queued,is_paused,support_volume):
@@ -97,8 +97,8 @@ def audio_setup(genre,credentials_file):
     spotify = setup_spotifyobject(credentials_file)
     coordinates = initialize_coordinates()
     course_dict, songkey_dict = initialize_playlist(genre)
-    sp = SpotifyPlayer(spotify=spotify, course_queued=None,song_queued=None, playlist=course_dict,
-                       songkey_dict=songkey_dict,is_paused=False,support_volume=False)
+    sp = SpotifyPlayer(spotify=spotify, course_queued=None, song_queued=None, playlist=course_dict,
+                       songkey_dict=songkey_dict, is_paused=False, support_volume=False)
     return sp,coordinates
 
 def initialize_rootmodel():
@@ -113,12 +113,12 @@ def initialize_coordinates():
     coordinates = Coordinates()
     return coordinates
 
-def initialize_playlist(playlist_name):
+def make_coursedict(file_name):
     course_dict = dict()
-    file = 'audio/playlists/'+playlist_name+'.csv'
-    f = open(file,'r')
+    file = 'audio/playlists/' + file_name
+    f = open(file, 'r')
     datalines = f.readlines()
-    for i in range(1,len(datalines)):
+    for i in range(1, len(datalines)):
         data = datalines[i].split(',')
         course_name = data[0]
         data[-1] = remove_newline(data[-1])
@@ -127,16 +127,30 @@ def initialize_playlist(playlist_name):
         q = deque()
         for j in range(len(course_songs)):
             q.append(course_songs[j])
-        course_dict[i-1] = Course(course_name=course_name,song_queue=q)
+        course_dict[i - 1] = Course(course_name=course_name, song_queue=q)
     f.close()
+    return course_dict
+
+def make_songkeydict(file):
     songkey_dict = dict()
-    f = open('audio/song_uri.csv','r')
+    f = open(file, 'r')
     datalines = f.readlines()
     for i in range(1, len(datalines)):
         data = datalines[i].split(',')
         song_name = data[0]
         song_uri = remove_newline(data[1])
         songkey_dict[song_name] = song_uri
+    f.close()
+    return songkey_dict
+
+def initialize_playlist(playlist_name):
+    songkey_dict = make_songkeydict(file = 'audio/song_uri.csv')
+    course_playlists = os.listdir('audio/playlists/')
+    file_name = playlist_name+'.csv'
+    if file_name in course_playlists:
+        course_dict = make_coursedict(file_name)
+    else:
+        raise Exception("Not Valid Playlist")
     return course_dict,songkey_dict
 
 def initialize_graphics():
