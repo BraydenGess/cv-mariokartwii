@@ -4,6 +4,17 @@ from tools.utility import *
 from tools.deep_learning import predict
 import cv2 as cv
 
+def spotify_safetycheck(sp):
+    warning = False
+    safe = False
+    while not safe:
+        if sp.spotify.current_playback() != None:
+            safe = True
+            sp.support_volume = sp.spotify.current_playback()['device']['supports_volume']
+        elif not warning:
+            print('Activate Device')
+            warning = True
+    print('Ready')
 
 def setup_spotifyobject(file):
     f = open(file,'r')
@@ -46,15 +57,15 @@ def model_switching(course_index,gp_info):
     if course_index == 0:
         gp_info.read_menu = True
 
-def play_music(sp,course_index,gp_info):
+def play_music(frame,root_model,coordinates,sp,gp_info):
+    course_index,confidence = get_course(frame,root_model,coordinates)
     if ((course_index != 33)and(course_index != sp.course_queued)):
         model_switching(course_index,gp_info)
         sp.queue_newsong(course_index)
 
 def run_audio(sp,frame,root_model,coordinates,gp_info):
     pause_toggle(sp,frame,root_model,coordinates)
-    course_index,confidence = get_course(frame,root_model,coordinates)
-    play_music(sp,course_index,gp_info)
+    play_music(frame,root_model,coordinates,sp,gp_info)
     sp.auto_skip()
 
 
