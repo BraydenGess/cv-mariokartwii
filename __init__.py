@@ -20,9 +20,11 @@ class SpotifyPlayer():
     def pause(self):
         if self.spotify.current_playback()['is_playing']:
             self.spotify.pause_playback(device_id=None)
+            self.is_pause = True
     def resume(self):
         if not self.spotify.current_playback()['is_playing']:
             self.spotify.start_playback(device_id=None)
+            self.is_paused = False
     def min_volume(self):
         if self.support_volume:
             self.spotify.volume(volume_percent=0,device_id=None)

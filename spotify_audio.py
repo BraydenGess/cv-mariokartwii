@@ -22,13 +22,9 @@ def pause_toggle(sp,frame,root_model,coordinates):
     index,confidence = predict(frame,coordinates.home_coordinates,root_model.homedetect_model,'imgtobinary')
     if confidence >= 0.8:
         if index == 0:
-            if sp.is_paused:
-                sp.resume()
-                sp.is_paused = False
-        elif index == 1:
-            if not sp.is_paused:
-                sp.pause()
-                sp.is_paused = True
+            sp.resume()
+        else:
+            sp.pause()
 
 def double_verifycourse(coordinates,root_model,index):
     cap = cv.VideoCapture(0)
