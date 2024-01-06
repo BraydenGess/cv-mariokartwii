@@ -46,6 +46,11 @@ class Graphics():
         for element in texts:
             [txt,txtRect] = element
             self.display_surface.blit(txt, txtRect)
+    def write_rectangles(self,rectangles):
+        for element in rectangles:
+            [rect, rgb] = element
+            pygame.draw.rect(self.display_surface,rgb,rect)
+
     def draw_titlescreen(self):
         color = self.special_effect['TitleScreen']
         txt,txtRect = self.create_text('chalkduster',192,'BeerioKart',(int(color.red),int(color.green),int(color.blue)),
@@ -54,36 +59,81 @@ class Graphics():
         self.display_surface.fill((0,0,0))
         self.display_surface.blit(txt,txtRect)
         pygame.display.update()
+    def selectionscreen_coordinates(self,i,x_buffer,y_buffer):
+        if i <= 1:
+            y = y_buffer
+        elif i >= 2:
+            y = (2.5 * y_buffer)
+        if i % 2 == 0:
+            x = x_buffer
+            anchor = 'left'
+        elif i % 2 != 0:
+            x = self.X - x_buffer
+            anchor = 'right'
+        return x,y,anchor
+    def selectionscreen_subset(self,vehicle,player,anchor,y_buffer,y,gp_info):
+        if vehicle != None:
+            vehicle_name = gp_info.vehicle_stats[vehicle].name
+            yv = y + (y_buffer // 2)
+            if player == None:
+                player = 'NA'
+            if anchor == 'left':
+                new_text = player + ' | ' + str(vehicle_name)
+            else:
+                new_text = str(vehicle_name) + ' | ' + player
+        return yv,new_text
+    def draw_selectionscreengraph(self,gp_info,y_buffer,x_buffer,texts):
+        max_value = 8
+        stats = [[],[],[],[],[],[],[]]
+        bottom = self.Y-(y_buffer//2)
+        left = x_buffer
+        graph_width = self.X//8
+        graph_margin = (self.X - ((graph_width*7)+(2*x_buffer)))//7
+        rect_width = graph_width//gp_info.player_count
+        rectangles = []
+        for i in range(gp_info.player_count):
+            p = gp_info.players[gp_info.colors[i]]
+            if p.character != None:
+                c = gp_info.character_stats[p.character]
+                stats[0].append(int(c.sp))
+                stats[1].append(int(c.wt))
+                stats[2].append(int(c.ac))
+                stats[3].append(int(c.hn))
+                stats[4].append(int(c.dr))
+                stats[5].append(int(c.off))
+                stats[6].append(int(c.mt))
+        labels = ['Speed','Weight','Acceleration','Handle','Drift','Off-Road','Mini-Turbo']
+        for i in range(len(stats)):
+            xc = left + (2*rect_width) + (graph_margin*i) + (graph_width*i)
+            txt,txtRect = self.create_text('Arial',32,labels[i],(255,255,255),(xc,self.Y-y_buffer//4),'center')
+            texts.append([txt,txtRect])
+            for j in range(len(stats[i])):
+                rgb = gp_info.rgb_colors[j]
+                x0 = left + (j*rect_width) + (graph_margin*i) + (graph_width*i)
+                y0 = bottom
+                rect_height = max(int((stats[i][j]/max_value)*(self.Y//2-(y_buffer//2))),1)
+                rect = pygame.Rect(x0,y0-rect_height,rect_width,rect_height)
+                rectangles.append([rect,rgb])
+        return texts,rectangles
     def draw_playerselectionscreen(self,gp_info):
-        x_buffer = self.X//32
-        y_buffer = self.Y//8
+        x_buffer = self.X // 32
+        y_buffer = self.Y // 8
         texts = []
         for i in range(gp_info.player_count):
             p = gp_info.players[gp_info.colors[i]]
-            char = gp_info.character_stats[p.character].name
-            vehicle = p.vehicle
-            player = p.name
-            rgb = gp_info.rgb_colors[i]
-            if i <= 1:
-                y = y_buffer
-            elif i >= 2:
-                y = (2.5*y_buffer)
-            if i%2 == 0:
-                x = x_buffer
-                anchor = 'left'
-            elif i%2 != 0:
-                x = self.X - x_buffer
-                anchor = 'right'
-            txt,txtRect = self.create_text('Arial',72,char,rgb,[x,y],anchor)
-            texts.append([txt,txtRect])
-            if vehicle != None:
-                yv = y+(y_buffer//2)
-                if player == None:
-                    player = 'NA'
-                new_text = player + ' | ' + vehicle
-                txt, txtRect = self.create_text('Arial',24,new_text, rgb, [x, yv], anchor)
-                texts.append([txt, txtRect])
+            if p.character != None:
+                char,vehicle,player = gp_info.character_stats[p.character].name,p.vehicle,p.name
+                rgb = gp_info.rgb_colors[i]
+                x,y,anchor = self.selectionscreen_coordinates(i,x_buffer,y_buffer)
+                txt,txtRect  = self.create_text('Arial',72,char,rgb,[x,y],anchor)
+                texts.append([txt,txtRect])
+                if vehicle != None:
+                    yv,new_text = self.selectionscreen_subset(vehicle,player,anchor,y_buffer,y,gp_info)
+                    txt, txtRect = self.create_text('Arial',24,new_text, rgb, [x, yv], anchor)
+                    texts.append([txt, txtRect])
         self.display_surface.fill((0, 0, 0))
+        texts,rectangles = self.draw_selectionscreengraph(gp_info, y_buffer,x_buffer,texts)
+        self.write_rectangles(rectangles)
         self.write_text(texts)
         pygame.display.update()
 

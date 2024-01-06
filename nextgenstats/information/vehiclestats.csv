@@ -1,0 +1,37 @@
+vehiclename,sp,wt,ac,hn,dr,off,mt,sigma,size
+Standard Kart S,41,29,48,48,51,40,45,302,Light
+Standard Kart M,46,45,40,43,45,35,40,294,Medium
+Standard Kart L,48,59,37,40,40,35,35,294,Large
+Standard Bike S,39,21,51,51,54,43,48,307,Light
+Standard Bike M,43,37,43,45,48,37,43,296,Medium
+Standard Bike L,46,54,40,43,43,37,37,300,Large
+Blue Falcon,60,29,35,29,43,24,29,249,Light
+Booster Seat,27,27,56,64,37,54,59,324,Light
+Cheep Charger,34,24,64,56,59,45,54,336,Light
+Mini Beast,55,32,29,32,64,27,64,303,Light
+Tiny Titan,46,35,43,43,29,64,40,300,Light
+Bit Bike,25,18,59,67,40,56,62,327,Light
+Bullet Bike,53,24,32,35,67,29,67,307,Light
+Jet Bubble,48,27,40,40,45,35,37,272,Light
+Magikruiser,43,24,45,45,32,67,43,299,Light
+Quacker,32,17,67,60,62,48,57,343,Light
+Classic Dragster,37,43,59,54,54,40,51,338,Medium
+Daytripper,34,45,51,59,32,48,54,323,Medium
+Sprinter,64,48,27,24,37,21,24,245,Medium
+Super Blooper,50,40,35,37,21,54,35,272,Medium
+Wild Wing,57,51,21,29,59,24,59,300,Medium
+Dolphin Dasher,48,43,37,40,24,56,37,285,Medium
+Mach Bike,55,37,24,32,62,27,62,299,Medium
+Sneakster,62,40,29,27,40,24,27,249,Medium
+Sugarscoot,32,32,54,62,35,51,56,322,Medium
+Zip Zip,41,35,45,51,29,62,45,308,Medium
+Flame Flyer,62,59,16,21,48,18,48,272,Large
+Honeycoupe,53,62,27,29,56,24,56,307,Large
+Jetsetter,69,56,21,17,27,16,16,222,Large
+Offroader,39,64,48,54,18,43,45,311,Large
+Piranha Prowler,55,67,29,35,35,29,27,277,Large
+Flame Runner,60,54,18,24,51,21,51,279,Large
+Phantom,43,51,43,48,17,56,40,298,Large
+Shooting Star,50,48,29,32,59,27,59,304,Large
+Spear,67,56,24,18,29,18,18,230,Large
+Wario Bike,37,59,51,56,21,45,48,317,Large

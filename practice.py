@@ -29,8 +29,8 @@ def main():
     gp_info.player_count = 4
     colors = ["Orange","Blue","Red","Green"]
     characters = [1,2,3,4]
-    vehicles = ['Mach Bike','Flame Runner','Spear',"Bullet"]
-    names = ["Max","Brady","Jack","George"]
+    vehicles = [7,1,8,9]
+    names = [None,None,None,None]
     for i in range(len(colors)):
         gp_info.players[colors[i]].character = characters[i]
         gp_info.players[colors[i]].vehicle = vehicles[i]

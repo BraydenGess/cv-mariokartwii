@@ -104,7 +104,7 @@ class Course:
 
 class GP_Info():
     def __init__(self,menu_screen=None,player_count=None,players=None,colors=None,read_menu=None,rgb_colors=None,
-                 character_stats=None):
+                 character_stats=None,vehicle_stats=None):
         self.menu_screen = menu_screen
         self.player_count = player_count
         self.players = players
@@ -112,6 +112,7 @@ class GP_Info():
         self.read_menu = read_menu
         self.rgb_colors = rgb_colors
         self.character_stats = character_stats
+        self.vehicle_stats = vehicle_stats
 
 class Player():
     def __init__(self,name=None,color=None,character=None,vehicle=None,score=None,place=None):
@@ -122,7 +123,7 @@ class Player():
         self.score = score
         self.place = place
 
-class Character():
+class Stat_Asset():
     def __init__(self,name=None,sp=None,wt=None,ac=None,hn=None,dr=None,off=None,mt=None,sigma=None,size=None):
         self.name = name
         self.sp = sp
@@ -200,22 +201,24 @@ def initialize_playlist(playlist_name):
         raise Exception("Not Valid Playlist")
     return course_dict,songkey_dict
 
-def get_characterstats(file):
+def get_attributes(file):
     f = open(file,'r')
     datalines = f.readlines()
-    character_stats = dict()
+    asset_stats = dict()
     for i in range(1,len(datalines)):
         data = datalines[i].split(',')
-        c = Character(name=data[0],sp=data[1],wt=data[2],ac=data[3],hn=data[4],dr=data[5],off=data[6],mt=data[7],
+        c = Stat_Asset(name=data[0],sp=data[1],wt=data[2],ac=data[3],hn=data[4],dr=data[5],off=data[6],mt=data[7],
                       sigma=data[8],size=remove_newline(data[9]))
-        character_stats[i] = c
-    return character_stats
+        asset_stats[i] = c
+    return asset_stats
+
 
 
 def initialize_gpinfo():
     gp_info = GP_Info(menu_screen=0,player_count=0,colors=["Orange","Blue","Red","Green"],read_menu=False,
                       rgb_colors=[(255,165,0),(0,128,255),(255,100,50),(50,255,50)])
-    gp_info.character_stats = get_characterstats('nextgenstats/information/characterstats.csv')
+    gp_info.character_stats = get_attributes(file='nextgenstats/information/characterstats.csv')
+    gp_info.vehicle_stats = get_attributes(file='nextgenstats/information/vehiclestats.csv')
     player_dict = dict()
     for i in range(len(gp_info.colors)):
         player_dict[gp_info.colors[i]] = Player(color=gp_info.colors[i])
