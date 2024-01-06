@@ -8,10 +8,16 @@ def check_playlistexists(playlists,target_playlist):
     print('Playlist Not Found')
     print("Hint: Make sure playlist is public and added to username's profile")
     sys.exit()
-    return False,None
+
+def check_length(playlist):
+    playlist_length = playlist['tracks']['total']
+    if playlist_length < 66:
+        print('Playlist too short. Number of tracks must exceed 66')
+        sys.exit()
 def make_newplaylist(sp,username,target_playlist):
     playlists = sp.user_playlists(username)
     found,playlist = check_playlistexists(playlists,target_playlist)
+    check_length(playlist)
     if found:
         tracks = sp.playlist_tracks(playlist_id=playlist['uri'])
         for track in tracks['items']:
@@ -30,7 +36,6 @@ def get_arguements(argv,sp):
 def main():
     sp = setup_spotifyobject(file='credentials.txt')
     command,username,target_playlist = get_arguements(sys.argv,sp)
-    print(command,username,target_playlist)
     if command == 'newplaylist':
         make_newplaylist(sp,username,target_playlist)
 
