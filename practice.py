@@ -23,6 +23,7 @@ def graphics_quit():
                 quit()
 
 def main():
+    print('pushing')
     graphics = initialize_graphics()
     gp_info = initialize_gpinfo()
     gp_info.menu_screen = 3
@@ -38,5 +39,6 @@ def main():
     gp_info.rgb_colors = [(255,165,0),(0,128,255),(255,100,50),(50,255,50)]
     while True:
         graphics.run_graphics(gp_info)
+
 
 main()
