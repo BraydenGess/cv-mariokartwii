@@ -7,18 +7,21 @@ def get_playercount(frame,coordinates,root_model,gp_info):
         gp_info.player_count = index+1
     return gp_info
 
+def add_objectolist(objects,gp_info,frame,coordinates,model,filter,alpha):
+    for i in range(gp_info.player_count):
+        index, conf = predict(frame, coordinates[i], model, filter)
+        if conf > alpha:
+            objects.append(index)
+    return objects
 def get_objects(frame,coordinates2,coordinates4,model2,model4,gp_info,alpha,filter):
     objects = []
     if gp_info.player_count == 2:
-        for i in range(gp_info.player_count):
-            index,conf = predict(frame,coordinates2[i],model2,filter)
-            if conf > alpha:
-                objects.append(index)
+        coordinates = coordinates2
+        model = model2
     if gp_info.player_count >= 3:
-        for i in range(gp_info.player_count):
-            index,conf = predict(frame,coordinates4[i],model4,filter)
-            if conf > alpha:
-                objects.append(index)
+        coordinates = coordinates4
+        model = model4
+    objects = add_objectolist(objects, gp_info, frame, coordinates, model, filter, alpha)
     if len(objects) == gp_info.player_count:
         return True,objects
     return False,None

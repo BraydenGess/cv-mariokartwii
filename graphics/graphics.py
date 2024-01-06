@@ -49,7 +49,7 @@ class Graphics():
     def write_rectangles(self,rectangles):
         for element in rectangles:
             [rect, rgb] = element
-            pygame.draw.rect(self.display_surface,rgb,rect)
+            pygame.draw.rect(self.display_surface,rgb,rect,10)
 
     def draw_titlescreen(self):
         color = self.special_effect['TitleScreen']
@@ -83,7 +83,7 @@ class Graphics():
                 new_text = str(vehicle_name) + ' | ' + player
         return yv,new_text
     def draw_selectionscreengraph(self,gp_info,y_buffer,x_buffer,texts):
-        max_value = 8
+        max_value = 70
         stats = [[],[],[],[],[],[],[]]
         bottom = self.Y-(y_buffer//2)
         left = x_buffer
@@ -102,6 +102,15 @@ class Graphics():
                 stats[4].append(int(c.dr))
                 stats[5].append(int(c.off))
                 stats[6].append(int(c.mt))
+            if p.vehicle != None:
+                v = gp_info.vehicle_stats[p.vehicle]
+                stats[0][i] += int(v.sp)
+                stats[1][i] += int(v.wt)
+                stats[2][i] += int(v.ac)
+                stats[3][i] += int(v.hn)
+                stats[4][i] += int(v.dr)
+                stats[5][i] += int(v.off)
+                stats[6][i] += int(v.mt)
         labels = ['Speed','Weight','Acceleration','Handle','Drift','Off-Road','Mini-Turbo']
         for i in range(len(stats)):
             xc = left + (2*rect_width) + (graph_margin*i) + (graph_width*i)
