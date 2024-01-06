@@ -23,7 +23,6 @@ def graphics_quit():
                 quit()
 
 def main():
-    print('pushing')
     graphics = initialize_graphics()
     gp_info = initialize_gpinfo()
     gp_info.menu_screen = 3
