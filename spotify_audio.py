@@ -42,13 +42,13 @@ def get_course(frame,root_model,coordinates):
             return index,confidence
     return 33,0
 
-def control_models(course_index,gp_info):
+def model_switching(course_index,gp_info):
     if course_index == 0:
         gp_info.read_menu = True
 
 def play_music(sp,course_index,gp_info):
     if ((course_index != 33)and(course_index != sp.course_queued)):
-        control_models(course_index,gp_info)
+        model_switching(course_index,gp_info)
         sp.queue_newsong(course_index)
 
 def run_audio(sp,frame,root_model,coordinates,gp_info):
