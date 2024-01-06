@@ -32,8 +32,8 @@ class SpotifyPlayer():
         if self.support_volume:
             self.spotify.volume(volume_percent=100,device_id=None)
     def search(self,searchQuery):
-        searchResults = self.spotify.search(searchQuery, 1, 0, "track")
-        tracks_items = searchResults['tracks']['items']
+        search_results = self.spotify.search(searchQuery, 1, 0, "track")
+        tracks_items = search_results['tracks']['items']
         song_uri = tracks_items[0]['external_urls']['spotify']
         return song_uri
     def get_uri(self,song):

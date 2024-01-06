@@ -83,7 +83,10 @@ class Graphics():
                 new_text = str(vehicle_name) + ' | ' + player
         return yv,new_text
     def draw_selectionscreengraph(self,gp_info,y_buffer,x_buffer,texts):
-        max_value = 70
+        if gp_info.menu_screen <= 2:
+            max_value = 8
+        else:
+            max_value = 73
         stats = [[],[],[],[],[],[],[]]
         bottom = self.Y-(y_buffer//2)
         left = x_buffer
