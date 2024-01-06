@@ -1,3 +1,4 @@
+spotify_audio
 tools/deep_learning
 tools/imagemanipulation
 tools/utility

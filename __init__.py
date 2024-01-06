@@ -214,8 +214,6 @@ def get_attributes(file):
         asset_stats[i] = c
     return asset_stats
 
-
-
 def initialize_gpinfo():
     gp_info = GP_Info(menu_screen=0,player_count=0,colors=["Orange","Blue","Red","Green"],read_menu=False,
                       rgb_colors=[(255,165,0),(0,128,255),(255,100,50),(50,255,50)])

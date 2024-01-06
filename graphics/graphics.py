@@ -148,7 +148,6 @@ class Graphics():
         self.write_rectangles(rectangles)
         self.write_text(texts)
         pygame.display.update()
-
     def run_graphics(self,gp_info):
         if (gp_info.menu_screen <= 2):
             self.draw_titlescreen()
