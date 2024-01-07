@@ -181,14 +181,22 @@ def make_coursedict(file_name):
     f.close()
     return course_dict
 
+def comma_innamecase(data):
+    song_name = ''
+    for i in range(len(data)):
+        song_name += data[i]
+        if i != len(data) - 1:
+            song_name += ','
+    return song_name
+
 def make_songkeydict(file):
     songkey_dict = dict()
     f = open(file, 'r')
     datalines = f.readlines()
     for i in range(1, len(datalines)):
         data = datalines[i].split(',')
-        song_name = data[0]
-        song_uri = remove_newline(data[1])
+        song_name = comma_innamecase(data)
+        song_uri = remove_newline(data[-1])
         songkey_dict[song_name] = song_uri
     f.close()
     return songkey_dict
