@@ -10,20 +10,29 @@ def check_playlistexists(playlists,target_playlist):
     sys.exit()
 
 def check_length(playlist):
+    min_length = 66
     playlist_length = playlist['tracks']['total']
-    if playlist_length < 66:
-        print('Playlist too short. Number of tracks must exceed 66')
-        sys.exit()
+    if playlist_length < min_length:
+        print(f'WARNING -- Playlist too short')
+        print(f'Number of tracks must exceed {min_length} to avoid duplicates')
+
+def get_tracksfromplaylist(sp,playlist):
+    tracks = []
+    raw_tracks = sp.playlist_tracks(playlist_id=playlist['uri'])
+    for track in raw_tracks['items']:
+        name = track['track']['name']
+        uri = track['track']['uri']
+        duration = track['track']['duration_ms']
+        tracks.append([name,uri,duration])
+    return tracks
+
 def make_newplaylist(sp,username,target_playlist):
     playlists = sp.user_playlists(username)
     found,playlist = check_playlistexists(playlists,target_playlist)
     check_length(playlist)
     if found:
-        tracks = sp.playlist_tracks(playlist_id=playlist['uri'])
-        for track in tracks['items']:
-            name = track['track']['name']
-            uri = track['track']['uri']
-            print(name,uri)
+        tracks = get_tracksfromplaylist(sp,playlist)
+        print(tracks)
 def get_arguements(argv,sp):
     command = argv[1]
     if command == 'newplaylist':
@@ -38,10 +47,5 @@ def main():
     command,username,target_playlist = get_arguements(sys.argv,sp)
     if command == 'newplaylist':
         make_newplaylist(sp,username,target_playlist)
-
-
-
-
-
 
 main()
