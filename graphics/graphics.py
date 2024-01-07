@@ -55,7 +55,7 @@ class Graphics():
         color = self.special_effect['TitleScreen']
         txt,txtRect = self.create_text('chalkduster',192,'BeerioKart',(int(color.red),int(color.green),int(color.blue)),
                                          [self.X//2,self.Y*2//5],'center')
-        color.FadeIn(strength=[0,0.2,0.4],max_value=200)
+        color.FadeIn(strength=[0,2,4],max_value=200)
         self.display_surface.fill((0,0,0))
         self.display_surface.blit(txt,txtRect)
         pygame.display.update()
@@ -83,12 +83,12 @@ class Graphics():
                 new_text = str(vehicle_name) + ' | ' + player
         return yv,new_text
     def draw_selectionscreengraph(self,gp_info,y_buffer,x_buffer,texts):
-        if gp_info.menu_screen <= 2:
+        if gp_info.menu_screen <= 3:
             max_value = 8
         else:
             max_value = 73
         stats = [[],[],[],[],[],[],[]]
-        bottom = self.Y-(y_buffer//2)
+        bottom = self.Y-(y_buffer//2)qq
         left = x_buffer
         graph_width = self.X//8
         graph_margin = (self.X - ((graph_width*7)+(2*x_buffer)))//7
@@ -116,7 +116,7 @@ class Graphics():
                 stats[6][i] += int(v.mt)
         labels = ['Speed','Weight','Acceleration','Handle','Drift','Off-Road','Mini-Turbo']
         for i in range(len(stats)):
-            xc = left + (2*rect_width) + (graph_margin*i) + (graph_width*i)
+            xc = left + (graph_width//2) + (graph_margin*i) + (graph_width*i)
             txt,txtRect = self.create_text('Arial',32,labels[i],(255,255,255),(xc,self.Y-y_buffer//4),'center')
             texts.append([txt,txtRect])
             for j in range(len(stats[i])):

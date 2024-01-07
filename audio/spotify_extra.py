@@ -79,6 +79,7 @@ def write_newplaylist(courses,target_playlist):
     uris = []
     f = open(file_path,'w')
     courses.sort(key=lambda x:x[2])
+    f.write('CourseNames,Songs\n')
     for course in courses:
         course_name = course[0]
         f.write(course_name)
@@ -94,8 +95,6 @@ def write_newplaylist(courses,target_playlist):
     f.close()
     uri_path = 'audio/song_uri.csv'
     songkey_dict = make_songkeydict(uri_path)
-    print(songkey_dict)
-    exit()
     f = open(uri_path,'a')
     for element in uris:
         song_name = element[0]
@@ -113,7 +112,7 @@ def make_newplaylist(sp,username,target_playlist):
     if found:
         tracks = get_tracksfromplaylist(sp,playlist)
         courses = get_courses(file='nextgenstats/information/coursedata.csv')
-        make_playlist(tracks, courses,playlist_length)
+        courses,tracks = make_playlist(tracks, courses,playlist_length)
         write_newplaylist(courses,target_playlist)
 
 def get_arguements(argv,sp):

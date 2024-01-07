@@ -10,7 +10,7 @@ def get_playercount(frame,coordinates,root_model,gp_info):
 def add_objectolist(objects,gp_info,frame,coordinates,model,filter,alpha):
     for i in range(gp_info.player_count):
         index, conf = predict(frame, coordinates[i], model, filter)
-        if conf > alpha:
+        if ((conf > alpha) and (index!=0)):
             objects.append(index)
     return objects
 def get_objects(frame,coordinates2,coordinates4,model2,model4,gp_info,alpha,filter):
@@ -28,7 +28,8 @@ def get_objects(frame,coordinates2,coordinates4,model2,model4,gp_info,alpha,filt
 
 def get_characters(frame,coordinates,root_model,gp_info):
     valid,characters = get_objects(frame,coordinates.char2_coordinates,coordinates.char4_coordinates,
-                                   root_model.char2detect_model,root_model.char4detect_model,0.9,'lightimgtobinary')
+                                   root_model.char2detect_model,root_model.char4detect_model,gp_info,alpha=0.7,
+                                   filter='lightimgtobinary')
     if valid:
         for i in range(len(characters)):
             gp_info.players[gp_info.colors[i]].character = characters[i]
@@ -36,8 +37,8 @@ def get_characters(frame,coordinates,root_model,gp_info):
 
 def get_vehicles(frame,coordinates,root_model,gp_info):
     valid, vehicles = get_objects(frame, coordinates.vehicle2_coordinates, coordinates.vehicle4_coordinates,
-                                    root_model.vehicle2detect_model, root_model.vehicle4detect_model, 0.9,
-                                  'sharpimgtobinary')
+                                    root_model.vehicle2detect_model, root_model.vehicle4detect_model,gp_info,alpha= 0.7,
+                                  filter='sharpimgtobinary')
     if valid:
         for i in range(len(vehicles)):
             gp_info.players[gp_info.colors[i]].vehicle = vehicles[i]

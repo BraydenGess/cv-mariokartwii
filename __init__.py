@@ -183,9 +183,9 @@ def make_coursedict(file_name):
 
 def comma_innamecase(data):
     song_name = ''
-    for i in range(len(data)):
+    for i in range(len(data)-1):
         song_name += data[i]
-        if i != len(data) - 1:
+        if i != len(data) - 2:
             song_name += ','
     return song_name
 
