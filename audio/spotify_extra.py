@@ -1,5 +1,6 @@
 from spotify_audio import setup_spotifyobject
 from __init__ import make_songkeydict
+from tools.utility import remove_comma
 import sys
 import random
 import os
@@ -25,6 +26,8 @@ def get_tracksfromplaylist(sp,playlist):
     raw_tracks = sp.playlist_tracks(playlist_id=playlist['uri'])
     for track in raw_tracks['items']:
         name = track['track']['name']
+        if ',' in name:
+            name = remove_comma(track['track']['name'])
         uri = track['track']['uri']
         duration = track['track']['duration_ms']
         tracks.append([name,uri,duration])
