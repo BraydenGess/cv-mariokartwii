@@ -41,7 +41,6 @@ class SpotifyPlayer():
             song_uri = self.search(song)
         return song_uri
     def queue_song(self,songs):
-        print(self.support_volume)
         for song in songs:
             self.spotify.add_to_queue(uri=song, device_id=None)
         self.min_volume()
@@ -119,10 +118,11 @@ class GP_Info():
         self.rgb_colors = rgb_colors
         self.character_stats = character_stats
         self.vehicle_stats = vehicle_stats
-    def model_switching(self,course_index):
+    def model_switching(self,course_index,gp_info):
         if course_index == 0:
             self.read_menu = True
             self.racing = False
+            gp_info.menu_screen = 0
         else:
             self.read_menu = False
             self.racing = True

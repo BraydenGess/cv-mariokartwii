@@ -56,7 +56,6 @@ def menu_control(frame,coordinates,root_model,gp_info):
         if gp_info.menu_screen == 4:
             get_vehicles(frame,coordinates,root_model,gp_info)
         if gp_info.menu_screen == 6:
-            gp_info.menu_screen = 0
             gp_info.read_menu = False
 
 def character_select(frame,coordinates,root_model,gp_info):

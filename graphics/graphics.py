@@ -3,8 +3,8 @@ def initialize_graphics():
     pygame.init()
     screen = pygame.display.set_mode()
     x,y = screen.get_size()
-    display_surface = pygame.display.set_mode((x, y))
-    #display_surface = pygame.display.set_mode((x, y),pygame.FULLSCREEN)
+    #display_surface = pygame.display.set_mode((x, y))
+    display_surface = pygame.display.set_mode((x, y),pygame.FULLSCREEN)
     caption = "Beerio"
     pygame.display.set_caption(caption)
     specialeffects_dict= {'TitleScreen':Special_Effects(blue=0,green=0,red=0)}
@@ -88,7 +88,7 @@ class Graphics():
         else:
             max_value = 73
         stats = [[],[],[],[],[],[],[]]
-        bottom = self.Y-(y_buffer//2)
+        bottom = self.Y-(y_buffer)
         left = x_buffer
         graph_width = self.X//8
         graph_margin = (self.X - ((graph_width*7)+(2*x_buffer)))//7
@@ -117,7 +117,7 @@ class Graphics():
         labels = ['Speed','Weight','Acceleration','Handle','Drift','Off-Road','Mini-Turbo']
         for i in range(len(stats)):
             xc = left + (graph_width//2) + (graph_margin*i) + (graph_width*i)
-            txt,txtRect = self.create_text('Arial',32,labels[i],(255,255,255),(xc,self.Y-y_buffer//4),'center')
+            txt,txtRect = self.create_text('Arial',32,labels[i],(255,255,255),(xc,bottom + ((self.Y-bottom)//4)),'center')
             texts.append([txt,txtRect])
             for j in range(len(stats[i])):
                 rgb = gp_info.rgb_colors[j]
@@ -157,11 +157,10 @@ class Graphics():
             self.display_surface.blit(pic,(0, 0))
             pygame.display.update()
     def run_graphics(self,gp_info,sp):
-        if (not gp_info.racing):
-            if (gp_info.menu_screen <= 2):
-                self.draw_titlescreen()
-            if (gp_info.menu_screen >= 3):
-                self.draw_playerselectionscreen(gp_info)
+        if (gp_info.menu_screen <= 2):
+            self.draw_titlescreen()
+        if (gp_info.menu_screen >= 3):
+            self.draw_playerselectionscreen(gp_info)
         elif (gp_info.racing and not gp_info.read_menu):
             self.course_intro(sp)
         self.exit()

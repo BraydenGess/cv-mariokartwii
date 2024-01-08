@@ -57,14 +57,14 @@ def get_course(frame,root_model,coordinates):
 def play_music(frame,root_model,coordinates,sp,gp_info):
     course_index,confidence = get_course(frame,root_model,coordinates)
     if ((course_index != 33)and(course_index != sp.course_queued)):
-        gp_info.model_switching(course_index)
         sp.queue_newsong(course_index)
+        gp_info.model_switching(course_index,gp_info)
 
 def run_audio(sp,frame,root_model,coordinates,gp_info):
     pause_toggle(sp,frame,root_model,coordinates)
     if not gp_info.read_menu:
         play_music(frame,root_model,coordinates,sp,gp_info)
-    if not (3 <= gp_info.menu_screen<= 4):
+    if not (3 <= gp_info.menu_screen <= 4):
         sp.auto_skip()
 
 
