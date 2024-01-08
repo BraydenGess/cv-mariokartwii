@@ -64,8 +64,5 @@ def run_audio(sp,frame,root_model,coordinates,gp_info):
     pause_toggle(sp,frame,root_model,coordinates)
     if not gp_info.read_menu:
         play_music(frame,root_model,coordinates,sp,gp_info)
-    if not (3 <= gp_info.menu_screen <= 4):
+    if sp.is_paused:
         sp.auto_skip()
-
-
-

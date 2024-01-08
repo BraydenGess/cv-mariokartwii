@@ -3,8 +3,8 @@ def initialize_graphics():
     pygame.init()
     screen = pygame.display.set_mode()
     x,y = screen.get_size()
-    #display_surface = pygame.display.set_mode((x, y))
-    display_surface = pygame.display.set_mode((x, y),pygame.FULLSCREEN)
+    display_surface = pygame.display.set_mode((x, y))
+    #display_surface = pygame.display.set_mode((x, y),pygame.FULLSCREEN)
     caption = "Beerio"
     pygame.display.set_caption(caption)
     specialeffects_dict= {'TitleScreen':Special_Effects(blue=0,green=0,red=0)}
@@ -159,7 +159,7 @@ class Graphics():
     def run_graphics(self,gp_info,sp):
         if (gp_info.menu_screen <= 2):
             self.draw_titlescreen()
-        if (gp_info.menu_screen >= 3):
+        elif ((gp_info.menu_screen >= 3)and(sp.course_queued==0)):
             self.draw_playerselectionscreen(gp_info)
         elif (gp_info.racing and not gp_info.read_menu):
             self.course_intro(sp)

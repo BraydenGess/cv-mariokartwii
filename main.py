@@ -7,10 +7,8 @@ from graphics.graphics import initialize_graphics
 from inputs import user_input
 
 def main():
-    sp, coordinates = audio_setup(genre='Beatles', credentials_file='credentials.txt')
-    root_model = initialize_rootmodel()
-    gp_info = initialize_gpinfo()
-    graphics = initialize_graphics()
+    sp, coordinates = audio_setup(genre='Pop2k', credentials_file='credentials.txt')
+    root_model,gp_info,graphics = initialize_rootmodel(),initialize_gpinfo(),initialize_graphics()
     spotify_safetycheck(sp)
     cap = cv.VideoCapture(0)
     while cap.isOpened():
