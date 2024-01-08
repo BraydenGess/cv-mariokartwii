@@ -1,5 +1,4 @@
 import pygame
-
 def initialize_graphics():
     pygame.init()
     screen = pygame.display.set_mode()
@@ -149,17 +148,22 @@ class Graphics():
         self.write_rectangles(rectangles)
         self.write_text(texts)
         pygame.display.update()
-    def course_intro(self):
+    def course_intro(self,sp):
         self.display_surface.fill((0, 0, 0))
-        pygame.display.update()
-    def run_graphics(self,gp_info):
-        if not gp_info.racing:
+        img = sp.playlist[sp.course_queued].img
+        if img != None:
+            pic = pygame.image.load(img)
+            pic = pygame.transform.scale(pic, (self.X, self.Y))
+            self.display_surface.blit(pic,(0, 0))
+            pygame.display.update()
+    def run_graphics(self,gp_info,sp):
+        if (not gp_info.racing):
             if (gp_info.menu_screen <= 2):
                 self.draw_titlescreen()
             if (gp_info.menu_screen >= 3):
                 self.draw_playerselectionscreen(gp_info)
-        else:
-            self.course_intro()
+        elif (gp_info.racing and not gp_info.read_menu):
+            self.course_intro(sp)
         self.exit()
     def exit(self):
         for event in pygame.event.get():

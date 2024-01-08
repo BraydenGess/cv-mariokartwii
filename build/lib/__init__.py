@@ -97,13 +97,14 @@ class Coordinates:
         self.vehicle4_coordinates = [[350,855,450,500],[1053,1558,450,500],[350,855,798,848],[1053,1558,798,848]]
 
 class Course:
-    def __init__(self,course_name=None,song_queue=None,fast_staff=None,length_rank=None,AP=None,img=None):
+    def __init__(self,course_name=None,song_queue=None,fast_staff=None,length_rank=None,AP=None,img=None,txtColor=None):
         self.course_name = course_name
         self.song_queue = song_queue
         self.fast_staff = fast_staff
         self.length_rank = length_rank
         self.AP = AP
         self.img = img
+        self.txtColor = txtColor
 
 class GP_Info():
     def __init__(self,menu_screen=None,player_count=None,players=None,colors=None,read_menu=None,racing=None,
@@ -191,7 +192,8 @@ def add_coursedata(course_dict,file_name):
             course_dict[i].fast_staff = data[1]
             course_dict[i].length_rank = data[2]
             course_dict[i].AP = data[3]
-            course_dict[i].img = check_imageexists(courseimage_directory,remove_newline(data[4]))
+            course_dict[i].img = check_imageexists(courseimage_directory,data[4])
+            course_dict[i].txtcolor = remove_newline(data[5])
         else:
             print(f"Races out of order or misspelled in {file_name} or {course_infofile}")
             sys.exit()
@@ -269,7 +271,7 @@ def initialize_gpinfo():
                       rgb_colors=[(255,165,0),(0,128,255),(255,100,50),(50,255,50)],racing=False)
     gp_info.character_stats = get_attributes(file='nextgenstats/information/characterstats.csv')
     gp_info.vehicle_stats = get_attributes(file='nextgenstats/information/vehiclestats.csv')
-    gp_info.player_dict = create_playerdict(gp_info)
+    gp_info.players = create_playerdict(gp_info)
     return gp_info
 
 

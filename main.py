@@ -7,18 +7,17 @@ from graphics.graphics import initialize_graphics
 from inputs import user_input
 
 def main():
-    sp, coordinates = audio_setup(genre='ChillRap', credentials_file='credentials.txt')
+    sp, coordinates = audio_setup(genre='Beatles', credentials_file='credentials.txt')
     root_model = initialize_rootmodel()
     gp_info = initialize_gpinfo()
-    spotify_safetycheck(sp)
     graphics = initialize_graphics()
+    spotify_safetycheck(sp)
     cap = cv.VideoCapture(0)
     while cap.isOpened():
         ret,frame = cap.read()
         run_audio(sp,frame,root_model,coordinates,gp_info)
         if gp_info.read_menu:
             character_select(frame,coordinates,root_model,gp_info)
-        graphics.run_graphics(gp_info)
-        user_input()
+        graphics.run_graphics(gp_info, sp)
 
 main()
