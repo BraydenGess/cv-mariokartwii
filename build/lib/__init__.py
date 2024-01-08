@@ -1,11 +1,8 @@
-import queue
 import random
 from keras.models import load_model
 from tools.utility import remove_newline
 from collections import deque
-import time
 from spotify_audio import setup_spotifyobject
-import pygame
 import os
 import sys
 
@@ -120,6 +117,13 @@ class GP_Info():
         self.rgb_colors = rgb_colors
         self.character_stats = character_stats
         self.vehicle_stats = vehicle_stats
+    def model_switching(self,course_index):
+        if course_index == 0:
+            self.read_menu = True
+            self.racing = False
+        else:
+            self.read_menu = False
+            self.racing = True
 
 class Player():
     def __init__(self,name=None,color=None,character=None,vehicle=None,score=None,place=None):
@@ -172,6 +176,7 @@ def check_imageexists(courseimage_directory,image_path):
     img_path = courseimage_directory + image_path
     if not os.path.isfile(img_path):
         print(f'Image {img_path} does not exit')
+        sys.exit()
     return img_path
 
 def add_coursedata(course_dict,file_name):
@@ -188,7 +193,7 @@ def add_coursedata(course_dict,file_name):
             course_dict[i].AP = data[3]
             course_dict[i].img = check_imageexists(courseimage_directory,remove_newline(data[4]))
         else:
-            print(f"Races out of order in {file_name} or {course_infofile}")
+            print(f"Races out of order or misspelled in {file_name} or {course_infofile}")
             sys.exit()
     f.close()
     return course_dict
@@ -253,15 +258,18 @@ def get_attributes(file):
         asset_stats[i] = c
     return asset_stats
 
+def create_playerdict(gp_info):
+    player_dict = dict()
+    for i in range(len(gp_info.colors)):
+        player_dict[gp_info.colors[i]] = Player(color=gp_info.colors[i])
+    return player_dict
+
 def initialize_gpinfo():
     gp_info = GP_Info(menu_screen=0,player_count=0,colors=["Orange","Blue","Red","Green"],read_menu=False,
                       rgb_colors=[(255,165,0),(0,128,255),(255,100,50),(50,255,50)],racing=False)
     gp_info.character_stats = get_attributes(file='nextgenstats/information/characterstats.csv')
     gp_info.vehicle_stats = get_attributes(file='nextgenstats/information/vehiclestats.csv')
-    player_dict = dict()
-    for i in range(len(gp_info.colors)):
-        player_dict[gp_info.colors[i]] = Player(color=gp_info.colors[i])
-    gp_info.players = player_dict
+    gp_info.player_dict = create_playerdict(gp_info)
     return gp_info
 
 

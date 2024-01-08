@@ -54,18 +54,10 @@ def get_course(frame,root_model,coordinates):
             return index,confidence
     return 33,0
 
-def model_switching(course_index,gp_info):
-    if course_index == 0:
-        gp_info.read_menu = True
-        gp_info.racing = False
-    else:
-        gp_info.read_menu = False
-        gp_info.racing = True
-
 def play_music(frame,root_model,coordinates,sp,gp_info):
     course_index,confidence = get_course(frame,root_model,coordinates)
     if ((course_index != 33)and(course_index != sp.course_queued)):
-        model_switching(course_index,gp_info)
+        gp_info.model_switching(gp_info)
         sp.queue_newsong(course_index)
 
 def run_audio(sp,frame,root_model,coordinates,gp_info):
