@@ -200,8 +200,8 @@
 50F,1,1,4,D,PeachBeachMaple TreewayYoshi Falls,150,Agg,Hard,3,Y,1*,Mach,Luigi,A,4*,Mach,Mario,M,2*,Bullet,Toad,M,3*,Flame,Rosalina,A
 51,N,0,5,D,JungleParkway,150,Agg,Hard,3,Y,3,Mach,Birdo,A,1,Mach,Mario,M,1,Bullet,Toad,M,5,Flame,Rosalina,A
 51,Y,1,5,D,DKMountain,150,Agg,Hard,3,Y,1,Mach,Birdo,A,6,Mach,Mario,M,6,Bullet,Toad,M,7,Flame,Rosalina,A
-51,N,0,5,D,ShebetLand,150,Agg,Hard,3,Y,2,Mach,Birdo,A,5,Mach,Mario,M,5,Bullet,Toad,M,3,Flame,Rosalina,A
-51F,1,1,5,D,JungleParkwayDK MountainShebet Land,150,Agg,Hard,3,Y,1*,Mach,Birdo,A,3*,Mach,Mario,M,3*,Bullet,Toad,M,5*,Flame,Rosalina,A
+51,N,0,5,D,SherbetLand,150,Agg,Hard,3,Y,2,Mach,Birdo,A,5,Mach,Mario,M,5,Bullet,Toad,M,3,Flame,Rosalina,A
+51F,1,1,5,D,JungleParkwayDK MountainSherbet Land,150,Agg,Hard,3,Y,1*,Mach,Birdo,A,3*,Mach,Mario,M,3*,Bullet,Toad,M,5*,Flame,Rosalina,A
 52,N,0,1,D,ShyGuyBeach,150,Agg,Hard,3,Y,5,Flame,Waluigi,A,2,Mach,Yoshi,M,4,Bullet,Toad,M,1,Flame,Rosalina,A
 52,Y,1,1,D,RainbowRoad,150,Agg,Hard,3,Y,3,Flame,Waluigi,A,2,Mach,Yoshi,M,9,Bullet,Toad,M,4,Flame,Rosalina,A
 52,Y,1,1,D,MoonviewHighway,150,Agg,Hard,3,Y,2,Flame,Waluigi,A,3,Mach,Yoshi,M,4,Bullet,Toad,M,1,Flame,Rosalina,A
