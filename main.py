@@ -21,4 +21,10 @@ def main():
         graphics.run_graphics(gp_info)
         user_input()
 
+course_dict = make_coursedict(file_name='Rock.csv')
+for element in course_dict:
+    print(course_dict[element].img)
+exit()
+
+
 main()
