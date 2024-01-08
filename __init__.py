@@ -189,7 +189,7 @@ def add_coursedata(course_dict,file_name):
             course_dict[i].AP = data[3]
             course_dict[i].img = check_imageexists(courseimage_directory,remove_newline(data[4]))
         else:
-            print(f"Races out of order in {file_name} or {course_infofile}")
+            print(f"Races out of order or misspelled in {file_name} or {course_infofile}")
             sys.exit()
     f.close()
     return course_dict
