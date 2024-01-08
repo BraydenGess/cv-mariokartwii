@@ -7,6 +7,7 @@ import time
 from spotify_audio import setup_spotifyobject
 import pygame
 import os
+import sys
 
 class SpotifyPlayer():
     def __init__(self,spotify,course_queued,playlist,songkey_dict,song_queued,is_paused,support_volume):
@@ -100,18 +101,22 @@ class Coordinates:
         self.vehicle4_coordinates = [[350,855,450,500],[1053,1558,450,500],[350,855,798,848],[1053,1558,798,848]]
 
 class Course:
-    def __init__(self,course_name=None,song_queue=None):
+    def __init__(self,course_name=None,song_queue=None,fast_staff=None,length_rank=None,AP=None):
         self.course_name = course_name
         self.song_queue = song_queue
+        self.fast_staff = fast_staff
+        self.length_rank = length_rank
+        self.AP = AP
 
 class GP_Info():
-    def __init__(self,menu_screen=None,player_count=None,players=None,colors=None,read_menu=None,rgb_colors=None,
-                 character_stats=None,vehicle_stats=None):
+    def __init__(self,menu_screen=None,player_count=None,players=None,colors=None,read_menu=None,racing=None,
+                 rgb_colors=None,character_stats=None,vehicle_stats=None):
         self.menu_screen = menu_screen
         self.player_count = player_count
         self.players = players
         self.colors = colors
         self.read_menu = read_menu
+        self.racing = racing
         self.rgb_colors = rgb_colors
         self.character_stats = character_stats
         self.vehicle_stats = vehicle_stats
@@ -179,6 +184,21 @@ def make_coursedict(file_name):
             q.append(course_songs[j])
         course_dict[i - 1] = Course(course_name=course_name, song_queue=q)
     f.close()
+    course_infofile = 'nextgenstats/information/coursedata.csv'
+    f = open(course_infofile, 'r')
+    datalines = f.readlines()
+    for i in range(1, len(datalines)):
+        data = datalines[i].split(',')
+        course_name = data[0]
+        print(course_name,course_dict[i].course_name)
+        if course_name == course_dict[i].course_name:
+            course_dict[i].fast_staff = data[1]
+            course_dict[i].length_rank = data[2]
+            course_dict[i].AP = remove_newline(data[3])
+        else:
+            print("Races out of order in playlist or coursedata")
+            sys.exit()
+    f.close()
     return course_dict
 
 def comma_innamecase(data):
@@ -224,7 +244,7 @@ def get_attributes(file):
 
 def initialize_gpinfo():
     gp_info = GP_Info(menu_screen=0,player_count=0,colors=["Orange","Blue","Red","Green"],read_menu=False,
-                      rgb_colors=[(255,165,0),(0,128,255),(255,100,50),(50,255,50)])
+                      rgb_colors=[(255,165,0),(0,128,255),(255,100,50),(50,255,50)],racing=False)
     gp_info.character_stats = get_attributes(file='nextgenstats/information/characterstats.csv')
     gp_info.vehicle_stats = get_attributes(file='nextgenstats/information/vehiclestats.csv')
     player_dict = dict()

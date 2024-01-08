@@ -4,6 +4,7 @@ import cv2 as cv
 import time
 from character_selection import character_select
 from graphics.graphics import initialize_graphics
+from inputs import user_input
 
 def main():
     sp, coordinates = audio_setup(genre='ChillRap', credentials_file='credentials.txt')
@@ -18,5 +19,6 @@ def main():
         if gp_info.read_menu:
             character_select(frame,coordinates,root_model,gp_info)
         graphics.run_graphics(gp_info)
+        user_input()
 
 main()

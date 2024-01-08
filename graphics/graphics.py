@@ -4,7 +4,8 @@ def initialize_graphics():
     pygame.init()
     screen = pygame.display.set_mode()
     x,y = screen.get_size()
-    display_surface = pygame.display.set_mode((x, y),pygame.FULLSCREEN)
+    display_surface = pygame.display.set_mode((x, y))
+    #display_surface = pygame.display.set_mode((x, y),pygame.FULLSCREEN)
     caption = "Beerio"
     pygame.display.set_caption(caption)
     specialeffects_dict= {'TitleScreen':Special_Effects(blue=0,green=0,red=0)}
@@ -88,7 +89,7 @@ class Graphics():
         else:
             max_value = 73
         stats = [[],[],[],[],[],[],[]]
-        bottom = self.Y-(y_buffer//2)qq
+        bottom = self.Y-(y_buffer//2)
         left = x_buffer
         graph_width = self.X//8
         graph_margin = (self.X - ((graph_width*7)+(2*x_buffer)))//7
@@ -148,11 +149,17 @@ class Graphics():
         self.write_rectangles(rectangles)
         self.write_text(texts)
         pygame.display.update()
+    def course_intro(self):
+        self.display_surface.fill((0, 0, 0))
+        pygame.display.update()
     def run_graphics(self,gp_info):
-        if (gp_info.menu_screen <= 2):
-            self.draw_titlescreen()
-        if (gp_info.menu_screen >= 3):
-            self.draw_playerselectionscreen(gp_info)
+        if not gp_info.racing:
+            if (gp_info.menu_screen <= 2):
+                self.draw_titlescreen()
+            if (gp_info.menu_screen >= 3):
+                self.draw_playerselectionscreen(gp_info)
+        else:
+            self.course_intro()
         self.exit()
     def exit(self):
         for event in pygame.event.get():

@@ -11,6 +11,7 @@ def spotify_safetycheck(sp):
         if sp.spotify.current_playback() != None:
             safe = True
             sp.support_volume = sp.spotify.current_playback()['device']['supports_volume']
+            print('Supports Volume')
         elif not warning:
             print('Activate Device')
             warning = True
@@ -56,6 +57,10 @@ def get_course(frame,root_model,coordinates):
 def model_switching(course_index,gp_info):
     if course_index == 0:
         gp_info.read_menu = True
+        gp_info.racing = False
+    else:
+        gp_info.read_menu = False
+        gp_info.racing = True
 
 def play_music(frame,root_model,coordinates,sp,gp_info):
     course_index,confidence = get_course(frame,root_model,coordinates)
