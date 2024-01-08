@@ -88,7 +88,6 @@ class RootModel:
         self.vehicle2detect_model = vehicle2detect_model
         self.vehicle4detect_model = vehicle4detect_model
 
-
 class Coordinates:
     def __init__(self):
         self.course_coordinates = [1020,1770,894,978]
@@ -101,12 +100,13 @@ class Coordinates:
         self.vehicle4_coordinates = [[350,855,450,500],[1053,1558,450,500],[350,855,798,848],[1053,1558,798,848]]
 
 class Course:
-    def __init__(self,course_name=None,song_queue=None,fast_staff=None,length_rank=None,AP=None):
+    def __init__(self,course_name=None,song_queue=None,fast_staff=None,length_rank=None,AP=None,img=None):
         self.course_name = course_name
         self.song_queue = song_queue
         self.fast_staff = fast_staff
         self.length_rank = length_rank
         self.AP = AP
+        self.img = img
 
 class GP_Info():
     def __init__(self,menu_screen=None,player_count=None,players=None,colors=None,read_menu=None,racing=None,
@@ -168,6 +168,31 @@ def initialize_coordinates():
     coordinates = Coordinates()
     return coordinates
 
+def check_imageexists(courseimage_directory,image_path):
+    img_path = courseimage_directory + image_path
+    if not os.path.isfile(img_path):
+        print(f'Image {img_path} does not exit')
+    return img_path
+
+def add_coursedata(course_dict,file_name):
+    course_infofile = 'nextgenstats/information/coursedata.csv'
+    courseimage_directory = 'graphics/coursepictures/'
+    f = open(course_infofile, 'r')
+    datalines = f.readlines()
+    for i in range(1, len(datalines)):
+        data = datalines[i].split(',')
+        course_name = data[0]
+        if course_name == course_dict[i].course_name:
+            course_dict[i].fast_staff = data[1]
+            course_dict[i].length_rank = data[2]
+            course_dict[i].AP = data[3]
+            course_dict[i].img = check_imageexists(courseimage_directory,remove_newline(data[4]))
+        else:
+            print(f"Races out of order in {file_name} or {course_infofile}")
+            sys.exit()
+    f.close()
+    return course_dict
+
 def make_coursedict(file_name):
     course_dict = dict()
     file = 'audio/playlists/' + file_name
@@ -184,21 +209,7 @@ def make_coursedict(file_name):
             q.append(course_songs[j])
         course_dict[i - 1] = Course(course_name=course_name, song_queue=q)
     f.close()
-    course_infofile = 'nextgenstats/information/coursedata.csv'
-    f = open(course_infofile, 'r')
-    datalines = f.readlines()
-    for i in range(1, len(datalines)):
-        data = datalines[i].split(',')
-        course_name = data[0]
-        print(course_name,course_dict[i].course_name)
-        if course_name == course_dict[i].course_name:
-            course_dict[i].fast_staff = data[1]
-            course_dict[i].length_rank = data[2]
-            course_dict[i].AP = remove_newline(data[3])
-        else:
-            print("Races out of order in playlist or coursedata")
-            sys.exit()
-    f.close()
+    course_dict = add_coursedata(course_dict,file_name)
     return course_dict
 
 def comma_innamecase(data):

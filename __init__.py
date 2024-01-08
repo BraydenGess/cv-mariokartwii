@@ -172,6 +172,7 @@ def check_imageexists(courseimage_directory,image_path):
     img_path = courseimage_directory + image_path
     if not os.path.isfile(img_path):
         print(f'Image {img_path} does not exit')
+        sys.exit()
     return img_path
 
 def add_coursedata(course_dict,file_name):
@@ -182,7 +183,6 @@ def add_coursedata(course_dict,file_name):
     for i in range(1, len(datalines)):
         data = datalines[i].split(',')
         course_name = data[0]
-        print(course_name,course_dict[i].course_name)
         if course_name == course_dict[i].course_name:
             course_dict[i].fast_staff = data[1]
             course_dict[i].length_rank = data[2]
