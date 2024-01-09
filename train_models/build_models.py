@@ -67,6 +67,30 @@ def set_playercountmodelparameters():
                    opt_function='adam', measure=['accuracy'], batch_size=4, num_epochs=150)
     return model_path, coordinates, training_folder, label_key, binarydata_file, p
 
+def set_gomodel2parameters():
+    coordinates = [[740,1140,200,360]]
+    training_folder = 'train_models/training_images/go_trainingimages2/'
+    label_key = {'GO':0,'1':1,'2':2,'3':3,'ANone':4}
+    binarydata_file = 'train_models/binary_imagedata/go2images.csv'
+    model_path = 'models/go2detectionmodel'
+    p = Parameters(layers=[18,8], activations=['relu', 'relu', 'softmax'], num_outnodes=len(label_key),
+                   loss_function='sparse_categorical_crossentropy',
+                   opt_function='adam', measure=['accuracy'], batch_size=16, num_epochs=150)
+    return model_path, coordinates, training_folder, label_key, binarydata_file, p
+
+def set_gomodel4parameters():
+    coordinates = [[740,1140,200,360]]
+    exit()
+    training_folder = 'train_models/training_images/playercount_trainingimages/'
+    label_key = {'None':0,'players2':1,'players3':2,'players4':3}
+    binarydata_file = 'train_models/binary_imagedata/playercountimages.csv'
+    model_path = 'models/playercountdetectionmodel'
+    p = Parameters(layers=[18,8], activations=['relu', 'relu', 'softmax'], num_outnodes=len(label_key),
+                   loss_function='sparse_categorical_crossentropy',
+                   opt_function='adam', measure=['accuracy'], batch_size=4, num_epochs=150)
+    return model_path, coordinates, training_folder, label_key, binarydata_file, p
+
+
 def write_imgtobinary(f,label,image):
     f.write(str(label))
     f.write(',')
@@ -124,6 +148,12 @@ def main():
         if "prepare" in command:
             prepare_data(coordinates, training_folder, label_key, binarydata_file)
         build_neuralnetwork(model_path, coordinates, training_folder, label_key, binarydata_file, p)
+    if 'go2' in command:
+        model_path, coordinates, training_folder, label_key, binarydata_file, p = set_gomodel2parameters()
+        if "prepare" in command:
+            prepare_data(coordinates, training_folder, label_key, binarydata_file)
+        build_neuralnetwork(model_path, coordinates, training_folder, label_key, binarydata_file, p)
+
 
 
 main()

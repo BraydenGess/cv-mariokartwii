@@ -17,3 +17,8 @@ def lightimgtobinary(image):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     out_binary = cv2.threshold(image,140,255,cv2.THRESH_BINARY)[1]
     return out_binary
+
+def superlightimgtobinary(image):
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    out_binary = cv2.threshold(image, 80, 255, cv2.THRESH_BINARY)[1]
+    return out_binary
