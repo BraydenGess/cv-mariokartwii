@@ -1,10 +1,8 @@
-from __init__ import *
-from spotify_audio import spotify_safetycheck,setup_spotifyobject,run_audio
 import cv2 as cv
-import time
+from __init__ import *
+from spotify_audio import spotify_safetycheck,run_audio
 from character_selection import character_select
 from graphics.graphics import initialize_graphics
-from inputs import user_input
 
 def main():
     sp, coordinates = audio_setup(genre='Rock', credentials_file='credentials.txt')
