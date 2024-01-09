@@ -26,6 +26,7 @@ def write_tofile(information_file,course_dict):
             f.write(',')
             f.write(course.txtcolor)
             f.write('\n')
+
 def calculate_CPI():
     course_dict,course_indexlookup = make_coursedict(file_name='Rock.csv')
     scoring_dict = get_scoringdict()

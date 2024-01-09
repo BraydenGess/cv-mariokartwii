@@ -118,6 +118,26 @@ def make_newplaylist(sp,username,target_playlist):
         courses,tracks = make_playlist(tracks, courses,playlist_length)
         write_newplaylist(courses,target_playlist)
 
+
+def check_duplicates():
+    duplicates = []
+    song_dict = dict()
+    uri_file = 'audio/song_uri.csv'
+    f = open(uri_file,'r')
+    datalines = f.readlines()
+    for dataline in datalines:
+        song_name = dataline.split(',')[0]
+        if song_name in song_dict:
+            duplicates.append(song_name)
+        song_dict[song_name] = 0
+    if len(duplicates) > 0:
+        print('Duplicates Exists',duplicates)
+    else:
+        print('No Duplicates Detected')
+
+def check_integrity():
+    check_duplicates()
+
 def get_arguements(argv,sp):
     command = argv[1]
     if command == 'newplaylist':
@@ -125,6 +145,8 @@ def get_arguements(argv,sp):
         username = sp.current_user()['id']
         if len(command) >= 4:
             username = argv[3]
+    if command == 'integrity':
+        return command,None,None
     return command,username,target_playlist
 
 def main():
@@ -132,5 +154,7 @@ def main():
     command,username,target_playlist = get_arguements(sys.argv,sp)
     if command == 'newplaylist':
         make_newplaylist(sp,username,target_playlist)
+    if command == 'integrity':
+        check_integrity()
 
 main()
