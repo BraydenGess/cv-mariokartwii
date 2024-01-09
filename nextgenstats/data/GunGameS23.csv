@@ -1,0 +1,116 @@
+1,N,0,1,H,DKMountain,100,Agg,Hard,3,Y,1,Daisy,Mach,A,3,Yoshi,Sneakster ,A,2,Toad,Bullet,M,4,Toadette,Bullet,A
+1,Y,1,1,H,JungleParkway,100,Agg,Hard,3,Y,2,Daisy,Mach,A,1,Yoshi,Sneakster,A,3,Toad,Bullet,M,4,Toadette,Bullet,A
+1,N,0,1,H,RainbowRoad,100,Agg,Hard,3,Y,1,Daisy,Mach,A,2,Yoshi,Sneakster,A,5,Toad,Bullet,M,3,Toadette,Bullet,A
+1F,1,1,1,H,DK MountainJungle ParkwayRainbow Road,100,Agg,Hard,3,Y,1*,Daisy,Mach,A,2*,Yoshi,Sneakster,A,4*,Toad,Bullet,M,3*,Toadette,Bullet,A
+2,N,0,1,H,MushroomGorge,100,Agg,Hard,3,Y,1,Yoshi,Mach,A,2,Yoshi,Sneakster,A,8,Toad,Bullet,M,3,Toadette,Bullet,A
+2,N,1,1,H,ShyGuyBeach,100,Agg,Hard,3,Y,1,Yoshi,Mach,A,3,Yoshi,Sneakster,A,5,Toad,Bullet,M,2,Toadette,Bullet,A
+2,Y,0,1,H,MarioCircuit,100,Agg,Hard,3,Y,6,Yoshi,Mach,A,2,Yoshi,Sneakster,A,3,Toad,Bullet,M,1,Toadette,Bullet,A
+2F,1,1,1,H,Mushroom GorgeShy Guy BeachMario Circuit,100,Agg,Hard,3,Y,2*,Yoshi,Mach,A,3*,Yoshi,Sneaskter,A,5*,Toad,Bullet,M,1*,Toadette,Bullet,A
+3,N,0,2,H,CoconutMall,100,Agg,Hard,3,Y,5,Yoshi,Mach,A,2,Yoshi,Sneakster,A,1,Toad,Bullet,M,4,Koopa,Bullet,A
+3,Y,1,2,H,DesertHills,100,Agg,Hard,3,Y,3,Yoshi,Mach,A,2,Yoshi,Sneakster,A,4,Toad,Bullet,M,1,Koopa,Bullet,A
+3,N,0,2,H,MarioCircuit3,100,Agg,Hard,3,Y,5,Yoshi,Mach,A,3,Yoshi,Sneakster,A,1,Toad,Bullet,M,4,Koopa,Bullet,A
+3F,1,1,2,H,Coconut MallDesert HillsMario Circuit 3,100,Agg,Hard,3,Y,5*,Yoshi,Mach,A,2*,Yoshi,Sneakster,A,1*,Toad,Bullet,M,3*,Koopa,Bullet,A
+4,N,0,3,H,SherbetLand,100,Agg,Hard,3,Y,3,Yoshi,Mach,A,1,Yoshi,Sneakster,A,2,Toadette,Bullet,M,5,Koopa,Bullet,A
+4,N,0,3,H,DKSummit,100,Agg,Hard,3,Y,1,Yoshi,Mach,A,2,Yoshi,Sneakster,A,3,Toadette,Bullet,M,4,Koopa,Bullet,A
+4,Y,1,3,H,YoshiFalls,100,Agg,Hard,3,Y,1,Yoshi,Mach,A,2,Yoshi,Sneakster,A,5,Toadette,Bullet,M,4,Koopa,Bullet,A
+4F,1,1,3,H,Sherbet LandDK SummitYoshi Falls,100,Agg,Hard,3,Y,1*,Yoshi,Mach,A,2*,Yoshi,Sneakster,A,3*,Toadette,Bullet,M,4*,Koopa,Bullet,A
+5,N,0,4,H,ToadsFactory,100,Agg,Hard,3,Y,3,Birdo,Mach,A,11,Yoshi,Sneakster,A,2,Toadette,Bullet,M,1,Koopa,Bullet,A
+5,Y,1,4,H,MarioRaceway,100,Agg,Hard,3,Y,5,Birdo,Mach,A,1,Yoshi,Sneakster,A,2,Toadette,Bullet,M,3,Koopa,Bullet,A
+5,N,0,4,H,WaluigiStadium,100,Agg,Hard,3,Y,2,Birdo,Mach,A,1,Yoshi,Sneakster,A,3,Toadette,Bullet,M,4,Koopa,Bullet,A
+5F,1,1,4,H,Toad's FactoryMario RacewayWaluigi Stadium,100,Agg,Hard,3,Y,4*,Birdo,Mach,A,3*,Yoshi,Sneakster,A,1*,Toadette,Bullet,M,2*,Koopa,Bullet,A
+6,N,0,5,H,SherbetLand,100,Agg,Hard,3,Y,2,Birdo,Mach,A,3,Yoshi,Sneakster,A,5,Koopa,Bullet,M,1,Koopa,Bullet,A
+6,Y,1,5,H,DelfinoSquare,100,Agg,Hard,3,Y,2,Birdo,Mach,A,3,Yoshi,Sneakster,A,4,Koopa,Bullet,M,1,Koopa,Bullet,A
+6,N,0,5,H,JungleParkway,100,Agg,Hard,3,Y,1,Birdo,Mach,A,4,Yoshi,Sneakster,A,3,Koopa,Bullet,M,3,Koopa,Bullet,A
+6F,1,1,5,H,Sherbet LandDelfino SquareJungle Parkway,100,Agg,Hard,3,Y,2*,Birdo,Mach,A,3*,Yoshi,Sneakster,A,4*,Koopa,Bullet,M,1*,Koopa ,Bullet,A
+7,N,0,1,H,DryDryRuins,100,Agg,Hard,3,Y,4,Birdo,Mach,A,2,Yoshi,Mach,A,3,Koopa,Bullet,M,1,Mario,Mach,A
+7,Y,1,1,H,BowserCastle3,100,Agg,Hard,3,Y,4,Birdo,Mach,A,2,Yoshi,Mach,A,3,Koopa,Bullet,M,1,Mario,Mach,A
+7,N,0,1,H,DKSummit,100,Agg,Hard,3,Y,3,Birdo,Mach,A,4,Yoshi,Mach,A,9,Koopa,Bullet,M,1,Mario,Mach,A
+7F,1,1,1,H,Dry Dry RuinsBowser Castle 3DK Summit,100,Agg,Hard,3,Y,3*,Birdo,Mach,A,2*,Yoshi,Mach,A,4*,Koopa,Bullet,M,1*,Mario,Mach,A
+8,N,0,2,H,WaluigiStadium,100,Agg,Hard,3,Y,3,Birdo,Mach,A,2,Yoshi,Mach ,A,12,Koopa,Bullet,M,1,Luigi,Mach,A
+8,N,0,2,H,GrumbleVolcano,100,Agg,Hard,3,Y,6,Birdo,Mach,A,1,Yoshi,Mach,A,5,Koopa,Bullet,M,2,Luigi,Mach,A
+8,Y,1,2,H,MoonviewHighway,100,Agg,Hard,3,Y,2,Birdo,Mach,A,1,Yoshi,Mach,A,4,Koopa,Bullet,M,3,Luigi,Mach,A
+8F,1,1,2,H,Waluigi StadiumGrumble VolcanoMoonview Highway,100,Agg,Hard,3,Y,3*,Birdo,Mach,A,1*,Yoshi,Mach,A,7*,Koopa,Bullet,M,2*,Luigi,Mach,A
+9,Y,1,3,H,MoonviewHighway,100,Agg,Hard,3,Y,4,Birdo,Mach,A,3,Birdo,Mach,A,2,Toadette,Bullet,M,1,Luigi,Mach,A
+9,N,0,3,H,DryDryRuins,100,Agg,Hard,3,Y,1,Birdo,Mach,A,3,Birdo,Mach,A,4,Toadette,Bullet,M,2,Luigi,Mach,A
+9,N,0,3,H,RainbowRoad,100,Agg,Hard,3,Y,1,Birdo,Mach,A,3,Birdo,Mach,A,9,Toadette,Bullet,M,2,Luigi,Mach,A
+9F,1,1,3,H,Moonview HighwayDry Dry RuinsRainbow Road,100,Agg,Hard,3,Y,2*,Birdo,Mach,A,3*,Birdo,Mach,A,4*,Toadette,Bullet,M,1*,Luigi,Mach,A
+10,N,0,4,H,KoopaCape,100,Agg,Hard,3,Y,1,Birdo,Mach,A,2,Birdo,Sneakster,A,5,Toadette,Bullet,M,3,Peach,Mach,A
+10,Y,1,4,H,BowserCastle3,100,Agg,Hard,3,Y,4,Birdo,Mach,A,3,Birdo,Sneakster,A,2,Toadette,Bullet,M,1,Peach,Mach,A
+10,N,0,4,H,MarioRaceway,100,Agg,Hard,3,Y,2,Birdo,Mach,A,1,Birdo,Sneakster,A,3,Toadette,Bullet,M,5,Peach,Mach,A
+10F,1,1,4,H,Koopa CapeBowser Castle 3Mario Raceway,100,Agg,Hard,3,Y,2*,Birdo,Mach,A,1*,Birdo,Sneakster,A,4*,Toadette,Bullet,M,3*,Peach,Mach,A
+11,N,0,5,H,MarioCircuit3,100,Agg,Hard,3,Y,1,Birdo,Mach,A,5,Diddy Kong,Sneakster,A,7,Toadette,Bullet,M,2,Peach,Mach,A
+11,Y,1,5,H,BowsersCastle,100,Agg,Hard,3,Y,2,Birdo,Mach,A,1,Diddy Kong,Sneakster,A,10,Toadette,Bullet,M,3,Peach,Mach,A
+11,N,0,5,H,MushroomGorge,100,Agg,Hard,3,Y,2,Birdo,Mach,A,1,Diddy Kong,Sneakster,A,8,Toadette,Bullet,M,3,Peach,Mach,A
+11F,1,1,5,H,MarioCircuit3Bowser's CastleMushroom Gorge,100,Agg,Hard,3,Y,1*,Birdo,Mach,A,2*,Diddy Kong,Sneakster,A,9*,Toadette,Bullet,M,3*,Peach,Mach,A
+12,N,0,1,H,WariosGoldMine,100,Agg,Hard,3,Y,6,Diddy Kong,Mach,A,1,Diddy Kong,Mach,A,11,Toad,Bullet,M,2,Peach,Mach,A
+12,Y,1,1,H,PeachGardens,100,Agg,Hard,3,Y,3,Diddy Kong,Mach,A,2,Diddy Kong,Mach,A,4,Toad,Bullet,M,1,Peach,Mach,A
+12,N,0,1,H,BowserCastle3,100,Agg,Hard,3,Y,3,Diddy Kong,Mach,A,1,Diddy Kong,Mach,A,5,Toad,Bullet,M,2,Peach,Mach,A
+12F,1,1,1,H,WariosGoldMinePeach GardensBowser Castle 3,100,Agg,Hard,3,Y,3*,Diddy Kong,Mach,A,1*,Diddy Kong,Mach,A,2*,Toad,Bullet,M,5*,Peach,Mach,A
+13,N,0,2,H,KoopaCape,100,Agg,Hard,3,Y,3,Diddy Kong,Mach,A,1,Bowser Jr,Mach,A,4,Toad,Bullet,M,2,Peach,Mach,A
+13,Y,1,2,H,GhostValley,100,Agg,Hard,3,Y,1,Diddy Kong,Mach,A,4,Bowser Jr,Mach,A,3,Toad,Bullet,M,12,Peach,Mach,A
+13,Y,1,2,H,MoonviewHighway,100,Agg,Hard,3,Y,4,Diddy Kong,Mach,A,2,Bowser Jr,Mach,A,1,Toad,Bullet,M,3,Peach,Mach,A
+13F,2,1,2,H,Koopa CapeSNES Ghost Valley 2Moonview Highway,100,Agg,Hard,3,Y,3*,Diddy Kong,Mach,A,1*,Bowser Jr,Mach,A,2*,Toad,Bullet,M,4*,Peach,Mach,A
+14,N,0,3,H,SherbetLand,150,Agg,Hard,3,Y,3,Diddy Kong,Mach,A,8,Wario,Flame Runner,A,1,Toad,Bullet,M,6,Peach,Mach,A
+14,N,0,3,H,MarioCircuit3,150,Agg,Hard,3,Y,4,Diddy Kong,Mach,A,2,Wario,Flame Runner,A,3,Toad,Bullet,M,1,Peach,Mach,A
+14,Y,1,3,H,GCNMarioCircuit,150,Agg,Hard,3,Y,2,Diddy Kong,Mach,A,8,Wario,Flame Runner,A,5,Toad,Bullet,M,10,Peach,Mach,A
+14F,1,1,3,H,Sherbet LandMario Circuit 3GCN Mario Circuit,150,Agg,Hard,3,Y,2*,Diddy Kong,Mach,A,4*,Wario,Flame Runner,A,1*,Toad,Bullet,M,5*,Peach,Mach,A
+15,N,0,4,H,BowsersCastle,150,Agg,Hard,3,Y,2,Diddy Kong,Mach,A,3,Wario,Flame Runner,M,7,Toadette,Bullet,M,4,Peach,Mach,A
+15,N,0,4,H,GCNMarioCircuit,150,Agg,Hard,3,Y,2,Diddy Kong,Mach,A,1,Wario,Flame Runner,M,3,Toadette,Bullet,M,8,Peach,Mach,A
+15,Y,1,4,H,MarioCircuit3,150,Agg,Hard,3,Y,6,Diddy Kong,Mach,A,3,Wario,Flame Runner,M,2,Toadette,Bullet,M,1,Peach,Mach,A
+15F,1,1,4,H,Bowser'sCastleGCN Mario CircuitMario Circuit 3,150,Agg,Hard,3,Y,2*,Diddy Kong,Mach,A,1*,Wario,Flame Runner,M,4*,Toadette,Bullet,M,3*,Peach,Mach,A
+16,N,0,1,H,DKMountain,150,Agg,Hard,3,Y,1,Diddy Kong,Mach,A,4,Waluigi,Flame Runner,M,2,Toadette,Bullet,M,3,Peach,Mach,A
+16,Y,1,1,H,KoopaCape,150,Agg,Hard,3,Y,1,Diddy Kong,Mach,A,3,Waluigi,Flame Runner,M,5,Toadette,Bullet,M,3,Peach,Mach,A
+16,N,0,1,H,MapleTreeway,150,Agg,Hard,3,Y,2,Diddy Kong,Mach,A,5,Waluigi,Flame Runner,M,9,Toadette,Bullet,M,1,Peach,Mach,A
+16F,1,1,1,H,DK MountainKoopa CapeMaple Treeway,150,Agg,Hard,3,Y,1*,Diddy Kong,Mach,A,3*,Waluigi,Flame Runner,M,5*,Toadette,Bullet,M,2*,Peach,Mach,A
+17,Y,1,2,H,RainbowRoad,150,Agg,Hard,3,Y,2,Bowser Jr,Mach,A,10,Waluigi,Flame Runner,M,1,Toadette,Bullet,M,5,Peach,Mach,A
+17,N,0,2,H,DryDryRuins,150,Agg,Hard,3,Y,1,Bowser Jr,Mach,A,4,Waluigi,Flame Runner,M,2,Toadette,Bullet,M,3,Peach,Mach,A
+17,N,0,2,H,MushroomGorge,150,Agg,Hard,3,Y,11,Bowser Jr,Mach,A,2,Waluigi,Flame Runner,M,3,Toadette,Bullet,M,1,Peach,Mach,A
+17F,1,1,2,H,Rainbow RoadDry Dry RuinsMushroom Gorge,150,Agg,Hard,3,Y,3*,Bowser Jr,Mach,A,4*,Waluigi,Flame Runner,M,1*,Toadette,Bullet,M,2*,Peach,Mach,A
+18,N,0,3,H,WaluigiStadium,150,Agg,Hard,3,Y,3,Bowser Jr,Mach,A,1,Waluigi,Flame Runner,M,4,Toadette,Bullet,M,2,Peach,Mach,A
+18,Y,1,3,H,GrumbleVolcano,150,Agg,Hard,3,Y,2,Bowser Jr,Mach,A,1,Waluigi,Flame Runner,M,4,Toadette,Bullet,M,10,Peach,Mach,A
+18,N,0,3,H,MapleTreeway,150,Agg,Hard,3,Y,1,Bowser Jr,Mach,A,5,Waluigi,Flame Runner,M,2,Toadette,Bullet,M,3,Peach,Mach,A
+18F,1,1,3,H,Waluigi StadiumGrumble VolcanoMaple Treeway,150,Agg,Hard,3,Y,1*,Bowser Jr,Mach,A,2*,Waluigi,Flame Runner,M,3*,Toadette,Bullet,M,5*,Peach,Mach,A
+19,N,0,1,H,SherbetLand,150,Agg,Hard,3,Y,2,Wario,Mach,A,1,Waluigi,Flame Runner,M,4,Koopa,Bullet,M,3,Peach,Mach,A
+19,Y,2,1,H,JungleParkway,150,Agg,Hard,3,Y,11,Wario,Mach,A,1,Waluigi,Flame Runner,M,8,Koopa,Bullet,M,10,Peach,Mach,A
+19,N,0,1,H,DelfinoSquare,150,Agg,Hard,3,Y,1,Wario,Mach,A,4,Waluigi,Flame Runner,M,2,Koopa,Bullet,M,3,Peach,Mach,A
+19F,1,2,1,H,Sherbet LandJungle ParkwayDelfino Square,150,Agg,Hard,3,Y,2*,Wario,Mach,A,1*,Waluigi,Flame Runner,M,3*,Koopa,Bullet,M,5*,Peach,Mach,A
+20,Y,1,2,H,N64BowsersCastle,150,Agg,Hard,3,Y,1,Wario,Mach,A,3,Donkey Kong,Flame Runner,M,4,Koopa,Bullet,M,7,Peach,Mach,A
+20,N,0,2,H,WaluigiStadium,150,Agg,Hard,3,Y,2,Wario,Mach,A,5,Donkey Kong,Flame Runner,M,3,Koopa,Bullet,M,1,Peach,Mach,A
+20,N,0,2,H,MarioCircuit3,150,Agg,Hard,3,Y,1,Wario,Mach,A,5,Donkey Kong,Flame Runner,M,6,Koopa,Bullet,M,3,Peach,Mach,A
+20F,1,1,2,H,N64BowsersCastleWaluigi StadiumMario Circuit 3,150,Agg,Hard,3,Y,1*,Wario,Mach,A,4*,Donkey Kong,Flame Runner,M,6*,Koopa,Bullet,M,3*,Peach,Mach,A
+21,Y,1,3,H,DKMountain,150,Agg,Hard,3,Y,3,Waluigi,Flame Runner,A,1,Donkey Kong,Flame Runner,M,4,Koopa,Bullet,M,2,Peach,Mach,A
+21,N,0,3,H,LuigiCircuit,150,Agg,Hard,3,Y,1,Waluigi,Flame Runner,A,9,Donkey Kong,Flame Runner,M,4,Koopa,Bullet,M,5,Peach,Mach,A
+21,N,0,3,H,GhostValley,150,Agg,Hard,3,Y,1,Waluigi,Flame Runner,A,3,Donkey Kong,Flame Runner,M,6,Koopa,Bullet,M,5,Peach,Mach,A
+21F,1,1,3,H,DK MountainLuigi CircuitSNES Ghost Valley 2,150,Agg,Hard,3,Y,1*,Waluigi,Flame Runner,A,3*,Donkey Kong,Flame Runner,M,5*,Koopa,Bullet,M,4*,Peach,Mach,A
+22,N,0,1,H,ShyGuyBeach,150,Agg,Hard,3,Y,1,Donkey Kong,Flame Runner,A,6,Donkey Kong,Flame Runner,M,2,Koopa,Bullet,M,10,Peach,Mach,A
+22,Y,1,1,H,MarioRaceway,150,Agg,Hard,3,Y,8,Donkey Kong,Flame Runner,A,3,Donkey Kong,Flame Runner,M,4,Koopa,Bullet,M,6,Peach,Mach,A
+22,N,0,1,H,BowsersCastle,150,Agg,Hard,3,Y,6,Donkey Kong,Flame Runner,A,4,Donkey Kong,Flame Runner,M,3,Koopa,Bullet,M,2,Peach,Mach,A
+22F,1,1,1,H,ShyGuyBeachMario RacewayBowser's Castle,150,Agg,Hard,3,Y,2*,Donkey Kong,Flame Runner,A,4*,Donkey Kong,Flame Runner,M,3*,Koopa,Bullet,M,5*,Peach,Mach,A
+23,Y,1,2,H,KoopaCape,150,Agg,Hard,3,Y,1,Waluigi,Flame Runner,A,10,Waluigi,Flame Runner,M,2,Toadette,Bullet,M,4,Luigi,Mach,A
+23,Y,1,2,H,MoonviewHighway,150,Agg,Hard,3,Y,1,Waluigi,Flame Runner,A,2,Waluigi,Flame Runner,M,12,Toadette,Bullet,M,4,Luigi,Mach,A
+23,N,0,2,H,WaluigiStadium,150,Agg,Hard,3,Y,9,Waluigi,Flame Runner,A,1,Waluigi,Flame Runner,M,3,Toadette,Bullet,M,4,Luigi,Mach,A
+23F,2,1,2,H,Koopa CapeMoonview HighwayWaluigi Stadium,150,Agg,Hard,3,Y,1*,Waluigi,Flame Runner,A,2*,Waluigi,Flame Runner,M,5*,Toadette,Bullet,M,3*,Luigi,Mach,A
+24,N,0,3,H,DelfinoSquare,150,Agg,Hard,3,Y,3,Donkey Kong,Flame Runner,A,1,Waluigi,Flame Runner,M,2,Toadette,Bullet,M,4,Luigi,Mach,A
+24,N,0,3,H,ShyGuyBeach,150,Agg,Hard,3,Y,1,Donkey Kong,Flame Runner,A,3,Waluigi,Flame Runner,M,4,Toadette,Bullet,M,2,Luigi,Mach,A
+24,Y,1,3,H,GrumbleVolcano,150,Agg,Hard,3,Y,2,Donkey Kong,Flame Runner,A,1,Waluigi,Flame Runner,M,4,Toadette,Bullet,M,3,Luigi,Mach,A
+24F,1,1,3,H,Delfino SquareShy Guy BeachGrumble Volcano,150,Agg,Hard,3,Y,2*,Donkey Kong,Flame Runner,A,1*,Waluigi,Flame Runner,M,4*,Toadette,Bullet,M,3*,Luigi,Mach,A
+25,N,0,4,H,LuigiCircuit,150,Agg,Hard,3,Y,1,Donkey Kong,Flame Runner,A,11,Donkey Kong,Flame Runner,M,4,Toadette,Bullet,M,10,Luigi,Mach,A
+25,Y,1,4,H,MoonviewHighway,150,Agg,Hard,3,Y,1,Donkey Kong,Flame Runner,A,3,Donkey Kong,Flame Runner,M,2,Toadette,Bullet,M,11,Luigi,Mach,A
+25,N,0,4,H,DelfinoSquare,150,Agg,Hard,3,Y,4,Donkey Kong,Flame Runner,A,3,Donkey Kong,Flame Runner,M,2,Toadette,Bullet,M,1,Luigi,Mach,A
+25F,1,1,4,H,Luigi CircuitMoonview HighwayDelfino Square,150,Agg,Hard,3,Y,1*,Donkey Kong,Flame Runner,A,4*,Donkey Kong,Flame Runner,M,2*,Toadette,Bullet,M,7*,Luigi,Mach,A
+26,N,0,1,H,ShyGuyBeach,150,Agg,Hard,3,Y,6,Bowser,Flame Runner,A,1,Donkey Kong,Flame Runner,M,4,Toadette,Bullet,M,3,Luigi,Mach,A
+26,Y,1,1,H,MarioRaceway,150,Agg,Hard,3,Y,4,Bowser,Flame Runner,A,7,Donkey Kong,Flame Runner,M,12,Toadette,Bullet,M,8,Luigi,Mach,A
+26,N,0,1,H,SherbetLand,150,Agg,Hard,3,Y,2,Bowser,Flame Runner,A,3,Donkey Kong,Flame Runner,M,5,Toadette,Bullet,M,1,Luigi,Mach,A
+26F,1,1,1,H,Shy Guy BeachMario RacewaySherbet Land,150,Agg,Hard,3,Y,4*,Bowser,Flame Runner,A,3*,Donkey Kong,Flame Runner,M,6*,Toadette,Bullet,M,1*,Luigi,Mach,A
+27,N,0,2,H,DryDryRuins,150,Agg,Hard,3,Y,4,Bowser,Flame Runner,A,3,Donkey Kong,Flame Runner,M,2,Toadette,Bullet,M,1,Peach,Mach,A
+27,Y,1,2,H,BowserCastle3,150,Agg,Hard,3,Y,1,Bowser,Flame Runner,A,12,Donkey Kong,Flame Runner,M,6,Toadette,Bullet,M,2,Peach,Mach,A
+27,N,0,2,H,BowsersCastle,150,Agg,Hard,3,Y,2,Bowser,Flame Runner,A,1,Donkey Kong,Flame Runner,M,7,Toadette,Bullet,M,4,Peach,Mach,A
+27F,1,1,2,H,Dry Dry RuinsBowser Castle 3Bowser's Castle,150,Agg,Hard,3,Y,1*,Bowser,Flame Runner,A,3*,Donkey Kong,Flame Runner,M,4*,Toadette,Bullet,M,2*,Peach,Mach,A
+28,N,0,3,H,CoconutMall,150,Agg,Hard,3,Y,5,King Boo,Flame Runner,A,7,Donkey Kong,Flame Runner,M,8,Toadette,Bullet,M,4,Peach,Mach,A
+28,Y,1,3,H,DryDryRuins,150,Agg,Hard,3,Y,3,King Boo,Flame Runner,A,4,Donkey Kong,Flame Runner,M,1,Toadette,Bullet,M,2,Peach,Mach,A
+28,N,0,3,H,BowsersCastle,150,Agg,Hard,3,Y,4,King Boo,Flame Runner,A,7,Donkey Kong,Flame Runner,M,1,Toadette,Bullet,M,6,Peach,Mach,A
+28F,1,1,3,H,Coconut MallDry Dry RuinsBowser's Castle,150,Agg,Hard,3,Y,4*,King Boo,Flame Runner,A,7*,Donkey Kong,Flame Runner,M,1*,Toadette,Bullet,M,6*,Peach,Mach,A
+29,N,0,4,H,MooMooMeadows,150,Agg,Hard,3,Y,2,King Boo,Flame Runner,A,4,Waluigi,Flame Runner,M,1,Koopa,Bullet,M,3,Peach,Mach,A
+29,Y,1,4,H,WaluigiStadium,150,Agg,Hard,3,Y,2,King Boo,Flame Runner,A,3,Waluigi,Flame Runner,M,5,Koopa,Bullet,M,1,Peach,Mach,A
+29,N,0,4,H,KoopaCape,150,Agg,Hard,3,Y,1,King Boo,Flame Runner,A,3,Waluigi,Flame Runner,M,2,Koopa,Bullet,M,4,Peach,Mach,A
+29F,1,1,4,H,Moo Moo MeadowsWaluigi StadiumKoopa Cape,150,Agg,Hard,3,Y,1*,King Boo,Flame Runner,A,4*,Wal,Flame Runner,M,2*,Koopa,Bullet,M,3*,Peach,Mach,A
