@@ -137,6 +137,8 @@ class GP_Info():
             self.racing = False
             gp_info.menu_screen = 0
             self.started = False
+            for color in gp_info.colors:
+                gp_info.players[color].vehicle = None
         else:
             self.read_menu = False
             self.racing = True

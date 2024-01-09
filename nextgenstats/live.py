@@ -12,7 +12,6 @@ def countdown(frame,root_model,coordinates,gp_info,sp):
     else:
         coordinates = coordinates.go4_coordinates
     index,confidence = predict(frame,coordinates,root_model.godetect_model,'superlightimgtobinary')
-    print(index,confidence,gp_info.started)
     if (confidence>0.99):
         if index == 0:
             gp_info.started = True

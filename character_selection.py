@@ -12,6 +12,7 @@ def add_objectolist(gp_info,frame,coordinates,model,filter,alpha):
     objects = []
     for i in range(gp_info.player_count):
         index, conf = predict(frame, coordinates[i], model, filter)
+        print(index,conf)
         if ((conf > alpha) and (index!=0)):
             objects.append(index)
     return objects
@@ -31,7 +32,7 @@ def get_objects(frame,coordinates2,coordinates4,model2,model4,gp_info,alpha,filt
 
 def get_characters(frame,coordinates,root_model,gp_info):
     valid,characters = get_objects(frame,coordinates.char2_coordinates,coordinates.char4_coordinates,
-                                   root_model.char2detect_model,root_model.char4detect_model,gp_info,alpha=0.7,
+                                   root_model.char2detect_model,root_model.char4detect_model,gp_info,alpha=0.9,
                                    filter='lightimgtobinary')
     if valid:
         for i in range(len(characters)):
