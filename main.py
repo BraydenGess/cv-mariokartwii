@@ -17,5 +17,5 @@ def main():
         character_select(frame,coordinates,root_model,gp_info)
         nextgenstats(frame, root_model, coordinates, gp_info,sp)
         graphics.run_graphics(gp_info, sp)
-        cv.imwrite('cack.png',frame)
+
 main()

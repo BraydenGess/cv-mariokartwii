@@ -159,7 +159,6 @@ class Graphics():
             pic = pygame.image.load(img)
             pic = pygame.transform.scale(pic, (self.X, self.Y))
             self.display_surface.blit(pic,(0, 0))
-            pygame.display.update()
         course = sp.playlist[sp.course_queued]
         course_name = course.course_name
         color = course.txtcolor
@@ -182,7 +181,7 @@ class Graphics():
         if time_diff%10 <= 5:
             self.display_surface.fill((0, 0, 0))
         else:
-            self.display_surface.fill((255,255,255))
+            self.display_surface.fill((0,255,0))
         pygame.display.update()
     def racing_graphics(self,gp_info,sp):
         if not gp_info.started:

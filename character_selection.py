@@ -12,7 +12,6 @@ def add_objectolist(gp_info,frame,coordinates,model,filter,alpha):
     objects = []
     for i in range(gp_info.player_count):
         index, conf = predict(frame, coordinates[i], model, filter)
-        print(index,conf)
         if ((conf > alpha) and (index!=0)):
             objects.append(index)
     return objects

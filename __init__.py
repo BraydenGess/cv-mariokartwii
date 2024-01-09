@@ -166,6 +166,12 @@ class Stat_Asset():
         self.sigma = sigma
         self.size = size
 
+class Song():
+    def __init__(self,song_name=None,uri=None,img=None):
+        self.song_name = song_name
+        self.uri = uri
+        self.img = img
+
 ### SET UP ###
 def audio_setup(genre,credentials_file):
     spotify = setup_spotifyobject(credentials_file)
