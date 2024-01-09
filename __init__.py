@@ -75,7 +75,8 @@ class SpotifyPlayer():
 
 class RootModel:
     def __init__(self,coursedetect_model=None,homedetect_model=None,menudetect_model=None,playercountdetect_model=None,
-                 char2detect_model=None,char4detect_model=None,vehicle2detect_model=None,vehicle4detect_model=None):
+                 char2detect_model=None,char4detect_model=None,vehicle2detect_model=None,vehicle4detect_model=None,
+                 go2detect_model):
         self.coursedetect_model = coursedetect_model
         self.homedetect_model = homedetect_model
         self.menudetect_model = menudetect_model
@@ -84,6 +85,7 @@ class RootModel:
         self.char4detect_model = char4detect_model
         self.vehicle2detect_model = vehicle2detect_model
         self.vehicle4detect_model = vehicle4detect_model
+        self.go2detect_model = go2detect_model
 
 class Coordinates:
     def __init__(self):
@@ -168,6 +170,7 @@ def initialize_rootmodel():
     root_model.char4detect_model = load_model('models/char4detectionmodel')
     root_model.vehicle2detect_model = load_model('models/vehicle2detectionmodel')
     root_model.vehicle4detect_model = load_model('models/vehicle4detectionmodel')
+    root_model.go2detect_model = load_model('models/go2detectionmodel')
     return root_model
 
 def initialize_coordinates():
