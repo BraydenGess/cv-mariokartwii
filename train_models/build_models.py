@@ -51,7 +51,7 @@ def set_menumodelparameters():
     label_key = {'None':0,'Singleplayer':1,'Multiplayer':2,'Character':3,'Vehicle':4,'Drift':5,'Start':6}
     binarydata_file = 'train_models/binary_imagedata/menuimages.csv'
     model_path = 'models/menudetectionmodel'
-    p = Parameters(layers=[28,12], activations=['relu', 'relu', 'softmax'], num_outnodes=len(label_key),
+    p = Parameters(layers=[30,18], activations=['relu', 'relu', 'softmax'], num_outnodes=len(label_key),
                    loss_function='sparse_categorical_crossentropy',
                    opt_function='adam', measure=['accuracy'], batch_size=8, num_epochs=150)
     return model_path, coordinates, training_folder, label_key, binarydata_file, p
