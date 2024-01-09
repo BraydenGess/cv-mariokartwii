@@ -79,7 +79,7 @@ def set_gomodel2parameters():
     return model_path, coordinates, training_folder, label_key, binarydata_file, p
 
 def set_gomodel4parameters():
-    coordinates = [[740,1140,200,360]]
+    coordinates = [[294, 694, 200, 360]]
     exit()
     training_folder = 'train_models/training_images/playercount_trainingimages/'
     label_key = {'None':0,'players2':1,'players3':2,'players4':3}

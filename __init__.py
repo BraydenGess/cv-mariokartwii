@@ -98,6 +98,7 @@ class Coordinates:
         self.vehicle2_coordinates = [[450, 925, 420, 500],[450, 925, 790, 870]]
         self.vehicle4_coordinates = [[350,855,450,500],[1053,1558,450,500],[350,855,798,848],[1053,1558,798,848]]
         self.go2_coordinates = [740,1140,200,360]
+        self.go4_coordinates = [294, 694, 200, 360]
 
 class Course:
     def __init__(self,course_name=None,song_queue=None,fast_staff=None,length_rank=None,AP=None,img=None,txtColor=None):
