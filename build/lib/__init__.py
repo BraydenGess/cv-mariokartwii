@@ -130,6 +130,7 @@ class GP_Info():
         else:
             self.read_menu = False
             self.racing = True
+            self.started = False
 
 class Player():
     def __init__(self,name=None,color=None,character=None,vehicle=None,score=None,place=None):

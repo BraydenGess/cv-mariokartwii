@@ -83,10 +83,7 @@ class Graphics():
                 new_text = str(vehicle_name) + ' | ' + player
         return yv,new_text
     def draw_selectionscreengraph(self,gp_info,y_buffer,x_buffer,texts):
-        if gp_info.menu_screen <= 3:
-            max_value = 8
-        else:
-            max_value = 73
+        max_value = 73
         stats = [[],[],[],[],[],[],[]]
         bottom = self.Y-(y_buffer)
         left = x_buffer
@@ -156,13 +153,22 @@ class Graphics():
             pic = pygame.transform.scale(pic, (self.X, self.Y))
             self.display_surface.blit(pic,(0, 0))
             pygame.display.update()
+    def race(self):
+        self.display_surface.fill((0, 0, 0))
+        pygame.display.update()
+    def racing_graphics(self,gp_info,sp):
+        print(gp_info.started)
+        if not gp_info.started:
+            self.course_intro(sp)
+        if gp_info.started:
+            self.race()
     def run_graphics(self,gp_info,sp):
         if (gp_info.menu_screen <= 2):
             self.draw_titlescreen()
         elif ((gp_info.menu_screen >= 3)and(sp.course_queued==0)):
             self.draw_playerselectionscreen(gp_info)
         elif (gp_info.racing and not gp_info.read_menu):
-            self.course_intro(sp)
+            self.racing_graphics(gp_info,sp)
         self.exit()
     def exit(self):
         for event in pygame.event.get():

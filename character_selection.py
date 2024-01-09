@@ -37,7 +37,7 @@ def get_characters(frame,coordinates,root_model,gp_info):
 
 def get_vehicles(frame,coordinates,root_model,gp_info):
     valid, vehicles = get_objects(frame, coordinates.vehicle2_coordinates, coordinates.vehicle4_coordinates,
-                                    root_model.vehicle2detect_model, root_model.vehicle4detect_model,gp_info,alpha= 0.7,
+                                    root_model.vehicle2detect_model, root_model.vehicle4detect_model,gp_info,alpha= 0.8,
                                   filter='sharpimgtobinary')
     if valid:
         for i in range(len(vehicles)):
@@ -46,7 +46,6 @@ def get_vehicles(frame,coordinates,root_model,gp_info):
 
 def menu_control(frame,coordinates,root_model,gp_info):
     index,confidence = predict(frame,coordinates.menu_coordinates,root_model.menudetect_model,'sharpimgtobinary')
-    print(index,confidence)
     if confidence>0.95:
         if index != 0:
             gp_info.menu_screen = index

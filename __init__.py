@@ -127,9 +127,11 @@ class GP_Info():
             self.read_menu = True
             self.racing = False
             gp_info.menu_screen = 0
+            self.started = False
         else:
             self.read_menu = False
             self.racing = True
+            self.started = False
 
 class Player():
     def __init__(self,name=None,color=None,character=None,vehicle=None,score=None,place=None):
