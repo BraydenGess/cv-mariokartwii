@@ -157,7 +157,6 @@ class Graphics():
         self.display_surface.fill((0, 0, 0))
         pygame.display.update()
     def racing_graphics(self,gp_info,sp):
-        print(gp_info.started)
         if not gp_info.started:
             self.course_intro(sp)
         if gp_info.started:
