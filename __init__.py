@@ -76,7 +76,7 @@ class SpotifyPlayer():
 class RootModel:
     def __init__(self,coursedetect_model=None,homedetect_model=None,menudetect_model=None,playercountdetect_model=None,
                  char2detect_model=None,char4detect_model=None,vehicle2detect_model=None,vehicle4detect_model=None,
-                 go2detect_model):
+                 godetect_model=None):
         self.coursedetect_model = coursedetect_model
         self.homedetect_model = homedetect_model
         self.menudetect_model = menudetect_model
@@ -85,7 +85,7 @@ class RootModel:
         self.char4detect_model = char4detect_model
         self.vehicle2detect_model = vehicle2detect_model
         self.vehicle4detect_model = vehicle4detect_model
-        self.go2detect_model = go2detect_model
+        self.godetect_model = godetect_model
 
 class Coordinates:
     def __init__(self):
@@ -97,6 +97,7 @@ class Coordinates:
         self.char4_coordinates = [[155,445,452,480],[1455,1745,452,480],[155,445,834,862],[1455,1745,834,862]]
         self.vehicle2_coordinates = [[450, 925, 420, 500],[450, 925, 790, 870]]
         self.vehicle4_coordinates = [[350,855,450,500],[1053,1558,450,500],[350,855,798,848],[1053,1558,798,848]]
+        self.go2_coordinates = [740,1140,200,360]
 
 class Course:
     def __init__(self,course_name=None,song_queue=None,fast_staff=None,length_rank=None,AP=None,img=None,txtColor=None):
@@ -110,13 +111,14 @@ class Course:
 
 class GP_Info():
     def __init__(self,menu_screen=None,player_count=None,players=None,colors=None,read_menu=None,racing=None,
-                 rgb_colors=None,character_stats=None,vehicle_stats=None):
+                 rgb_colors=None,character_stats=None,vehicle_stats=None,started=None):
         self.menu_screen = menu_screen
         self.player_count = player_count
         self.players = players
         self.colors = colors
         self.read_menu = read_menu
         self.racing = racing
+        self.started = started
         self.rgb_colors = rgb_colors
         self.character_stats = character_stats
         self.vehicle_stats = vehicle_stats
@@ -170,7 +172,7 @@ def initialize_rootmodel():
     root_model.char4detect_model = load_model('models/char4detectionmodel')
     root_model.vehicle2detect_model = load_model('models/vehicle2detectionmodel')
     root_model.vehicle4detect_model = load_model('models/vehicle4detectionmodel')
-    root_model.go2detect_model = load_model('models/go2detectionmodel')
+    root_model.godetect_model = load_model('models/go2detectionmodel')
     return root_model
 
 def initialize_coordinates():
@@ -272,7 +274,7 @@ def create_playerdict(gp_info):
 
 def initialize_gpinfo():
     gp_info = GP_Info(menu_screen=0,player_count=0,colors=["Orange","Blue","Red","Green"],read_menu=False,
-                      rgb_colors=[(255,165,0),(0,128,255),(255,100,50),(50,255,50)],racing=False)
+                      rgb_colors=[(255,165,0),(0,128,255),(255,100,50),(50,255,50)],racing=False,started=False)
     gp_info.character_stats = get_attributes(file='nextgenstats/information/characterstats.csv')
     gp_info.vehicle_stats = get_attributes(file='nextgenstats/information/vehiclestats.csv')
     gp_info.players = create_playerdict(gp_info)
