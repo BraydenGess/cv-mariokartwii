@@ -1,6 +1,6 @@
 from spotify_audio import setup_spotifyobject
 from __init__ import make_songkeydict
-from tools.utility import remove_comma
+from tools.utility import remove_comma,remove_newline
 import sys
 import random
 import os
@@ -119,7 +119,7 @@ def make_newplaylist(sp,username,target_playlist):
         write_newplaylist(courses,target_playlist)
 
 
-def check_duplicates():
+def check_duplicates(uri_file):
     duplicates = []
     song_dict = dict()
     uri_file = 'audio/song_uri.csv'
@@ -135,8 +135,36 @@ def check_duplicates():
     else:
         print('No Duplicates Detected')
 
-def check_integrity():
-    check_duplicates()
+def make_images(sp,uri_file):
+    songs = []
+    f = open(uri_file, 'r')
+    datalines = f.readlines()
+    count = 0
+    for i in range(1,len(datalines)):
+        dataline = datalines[i]
+        print(len(datalines)-count)
+        song_name = dataline.split(',')[0]
+        uri = remove_newline(dataline.split(',')[1])
+        t = sp.track(uri)
+        images = t['album']['images']
+        if len(images) != 0:
+            img_url = images[0]['url']
+        else:
+            img_url = 'None'
+        songs.append([song_name,uri,img_url])
+        count += 1
+    songs.sort(key=lambda x:x[0])
+    f.close()
+    f = open(uri_file,'w')
+    f.write('song,spotify uri_code,img')
+    for element in songs:
+        f.write(f'\n{element[0]},{element[1]},{element[2]}')
+    f.close()
+
+def check_integrity(sp):
+    uri_file = 'audio/song_uri.csv'
+    check_duplicates(uri_file)
+    make_images(sp,uri_file)
 
 def get_arguements(argv,sp):
     command = argv[1]
@@ -155,6 +183,7 @@ def main():
     if command == 'newplaylist':
         make_newplaylist(sp,username,target_playlist)
     if command == 'integrity':
-        check_integrity()
+        check_integrity(sp)
+
 
 main()
