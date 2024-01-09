@@ -101,14 +101,14 @@ class Coordinates:
         self.go4_coordinates = [294, 694, 200, 360]
 
 class Course:
-    def __init__(self,course_name=None,song_queue=None,fast_staff=None,length_rank=None,AP=None,img=None,txtColor=None):
+    def __init__(self,course_name=None,song_queue=None,fast_staff=None,length_rank=None,AP=None,img=None,txtcolor=None):
         self.course_name = course_name
         self.song_queue = song_queue
         self.fast_staff = fast_staff
         self.length_rank = length_rank
         self.AP = AP
         self.img = img
-        self.txtColor = txtColor
+        self.txtcolor = txtcolor
 
 class GP_Info():
     def __init__(self,menu_screen=None,player_count=None,players=None,colors=None,read_menu=None,racing=None,
