@@ -6,9 +6,7 @@ def remove_newline(string):
 def remove_comma(string):
     new_string = ''
     for element in string:
-        if element == ',':
-            new_string += ' '
-        else:
+        if element != ',':
             new_string += element
     return new_string
 
