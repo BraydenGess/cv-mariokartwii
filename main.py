@@ -14,8 +14,7 @@ def main():
     while cap.isOpened():
         ret,frame = cap.read()
         run_audio(sp,frame,root_model,coordinates,gp_info)
-        if gp_info.read_menu:
-            character_select(frame,coordinates,root_model,gp_info)
+        character_select(frame,coordinates,root_model,gp_info)
         nextgenstats(frame, root_model, coordinates, gp_info)
         graphics.run_graphics(gp_info, sp)
 main()

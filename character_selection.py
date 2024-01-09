@@ -1,9 +1,10 @@
 from tools.deep_learning import predict
 
 def get_playercount(frame,coordinates,root_model,gp_info):
+    null_index,alpha = 0,0.99
     index,confidence = predict(frame,coordinates.playercount_coordinates,
                                root_model.playercountdetect_model,'sharpimgtobinary')
-    if ((index)>=1 and (confidence>0.99)):
+    if ((index != null_index) and (confidence>alpha)):
         gp_info.player_count = index+1
     return gp_info
 
@@ -44,9 +45,9 @@ def get_vehicles(frame,coordinates,root_model,gp_info):
             gp_info.players[gp_info.colors[i]].vehicle = vehicles[i]
     return gp_info
 
-def menu_control(frame,coordinates,root_model,gp_info):
+def menu_control(frame,coordinates,root_model,gp_info,alpha):
     index,confidence = predict(frame,coordinates.menu_coordinates,root_model.menudetect_model,'sharpimgtobinary')
-    if confidence>0.95:
+    if confidence>alpha:
         if index != 0:
             gp_info.menu_screen = index
         if gp_info.menu_screen == 2:
@@ -59,5 +60,5 @@ def menu_control(frame,coordinates,root_model,gp_info):
             gp_info.read_menu = False
 
 def character_select(frame,coordinates,root_model,gp_info):
-    menu_control(frame,coordinates,root_model,gp_info)
-    return 42
+    if gp_info.read_menu:
+        menu_control(frame,coordinates,root_model,gp_info,alpha=0.95)
