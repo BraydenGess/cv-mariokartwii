@@ -1,7 +1,7 @@
 from tools.deep_learning import predict
 
 def get_playercount(frame,coordinates,root_model,gp_info):
-    null_index,alpha = 0,0.99
+    null_index,alpha = 0,0.95
     index,confidence = predict(frame,coordinates.playercount_coordinates,
                                root_model.playercountdetect_model,'sharpimgtobinary')
     if ((index != null_index) and (confidence>alpha)):
@@ -40,7 +40,7 @@ def get_characters(frame,coordinates,root_model,gp_info):
 
 def get_vehicles(frame,coordinates,root_model,gp_info):
     valid, vehicles = get_objects(frame, coordinates.vehicle2_coordinates, coordinates.vehicle4_coordinates,
-                                    root_model.vehicle2detect_model, root_model.vehicle4detect_model,gp_info,alpha= 0.8,
+                                    root_model.vehicle2detect_model, root_model.vehicle4detect_model,gp_info,alpha= 0.85,
                                   filter='sharpimgtobinary')
     if valid:
         for i in range(len(vehicles)):
@@ -49,19 +49,18 @@ def get_vehicles(frame,coordinates,root_model,gp_info):
 
 def menu_control(frame,coordinates,root_model,gp_info,alpha):
     index,confidence = predict(frame,coordinates.menu_coordinates,root_model.menudetect_model,'sharpimgtobinary')
-    print(index,confidence)
     if confidence>alpha:
         if index != 0:
             gp_info.menu_screen = index
-        if gp_info.menu_screen == 2:
+        if index == 2:
             gp_info = get_playercount(frame,coordinates,root_model,gp_info)
-        if gp_info.menu_screen == 3:
+        if index == 3:
             get_characters(frame, coordinates, root_model, gp_info)
-        if gp_info.menu_screen == 4:
+        if index == 4:
             get_vehicles(frame,coordinates,root_model,gp_info)
-        if gp_info.menu_screen == 6:
+        if index == 6:
             gp_info.read_menu = False
 
 def character_select(frame,coordinates,root_model,gp_info):
     if gp_info.read_menu:
-        menu_control(frame,coordinates,root_model,gp_info,alpha=0.95)
+        menu_control(frame,coordinates,root_model,gp_info,alpha=0.7)
