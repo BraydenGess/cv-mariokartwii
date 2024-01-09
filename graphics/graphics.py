@@ -1,4 +1,7 @@
 import pygame
+from tools.utility import string_tocolor,text_spaces
+import time
+
 def initialize_graphics(screen_setting):
     pygame.init()
     screen = pygame.display.set_mode()
@@ -123,7 +126,8 @@ class Graphics():
                 rgb = gp_info.rgb_colors[j]
                 x0 = left + (j*rect_width) + (graph_margin*i) + (graph_width*i)
                 y0 = bottom
-                rect_height = max(int((stats[i][j]/max_value)*(self.Y//2-(y_buffer//2))),1)
+                stats_value = max(1,int(stats[i][j]))
+                rect_height = max(int((stats_value/max_value)*(self.Y//2-(y_buffer//2))),1)
                 rect = pygame.Rect(x0,y0-rect_height,rect_width,rect_height)
                 rectangles.append([rect,rgb])
         return texts,rectangles
@@ -156,14 +160,35 @@ class Graphics():
             pic = pygame.transform.scale(pic, (self.X, self.Y))
             self.display_surface.blit(pic,(0, 0))
             pygame.display.update()
-    def race(self):
-        self.display_surface.fill((0, 0, 0))
+        course = sp.playlist[sp.course_queued]
+        course_name = course.course_name
+        color = course.txtcolor
+        texts = []
+        txt, txtRect = self.create_text('impact', 74, text_spaces(course_name), string_tocolor(color),
+                                        (self.X // 45, self.Y // 20), 'left')
+        txt2, txtRect2 = self.create_text('impact', 24, course.CPI, string_tocolor(color),
+                                          (self.X // 200, self.Y // 40), 'left')
+        text3 = '(Length: ' + str(course.length_rank) + '/AP: ' + str(course.AP) + ')'
+        txt3, txtRect3 = self.create_text('avenirnextcondensed', 32, text3, string_tocolor(color),
+                                          (self.X // 45, self.Y // 8.5),'left')
+        texts.append([txt, txtRect])
+        texts.append([txt2, txtRect2])
+        texts.append([txt3, txtRect3])
+        self.write_text(texts)
+        pygame.display.update()
+    def race(self,gp_info):
+        t2 = time.time()
+        time_diff = t2-gp_info.time
+        if time_diff%10 <= 5:
+            self.display_surface.fill((0, 0, 0))
+        else:
+            self.display_surface.fill((255,255,255))
         pygame.display.update()
     def racing_graphics(self,gp_info,sp):
         if not gp_info.started:
             self.course_intro(sp)
         if gp_info.started:
-            self.race()
+            self.race(gp_info)
     def run_graphics(self,gp_info,sp):
         if (gp_info.menu_screen <= 2):
             self.draw_titlescreen()
