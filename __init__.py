@@ -29,6 +29,9 @@ class SpotifyPlayer():
     def max_volume(self):
         if self.support_volume:
             self.spotify.volume(volume_percent=100,device_id=None)
+    def seek_track(self,ms):
+        self.spotify.seek_track(ms)
+        return 42
     def search(self,searchQuery):
         search_results = self.spotify.search(searchQuery, 1, 0, "track")
         tracks_items = search_results['tracks']['items']
@@ -116,7 +119,7 @@ class Course:
 
 class GP_Info():
     def __init__(self,menu_screen=None,player_count=None,players=None,colors=None,read_menu=None,racing=None,
-                 rgb_colors=None,character_stats=None,vehicle_stats=None,started=None):
+                 rgb_colors=None,character_stats=None,vehicle_stats=None,started=None,time=None):
         self.menu_screen = menu_screen
         self.player_count = player_count
         self.players = players
@@ -127,6 +130,7 @@ class GP_Info():
         self.rgb_colors = rgb_colors
         self.character_stats = character_stats
         self.vehicle_stats = vehicle_stats
+        self.time = time
     def model_switching(self,course_index,gp_info):
         if course_index == 0:
             self.read_menu = True
@@ -284,7 +288,7 @@ def create_playerdict(gp_info):
 
 def initialize_gpinfo():
     gp_info = GP_Info(menu_screen=0,player_count=0,colors=["Orange","Blue","Red","Green"],read_menu=False,
-                      rgb_colors=[(255,165,0),(0,128,255),(255,100,50),(50,255,50)],racing=False,started=False)
+                      rgb_colors=[(255,165,0),(0,128,255),(255,100,50),(50,255,50)],racing=False,started=False,time=0)
     gp_info.character_stats = get_attributes(file='nextgenstats/information/characterstats.csv')
     gp_info.vehicle_stats = get_attributes(file='nextgenstats/information/vehiclestats.csv')
     gp_info.players = create_playerdict(gp_info)
