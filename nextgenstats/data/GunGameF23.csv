@@ -35,7 +35,7 @@
 9,Y,1,1,H,JungleParkway,150,Agg,Hard,3,Y,10,Bullet,Toad,A,4,Mach,Mario,M,1,Bullet,Mario,M,3,Mach,Yoshi,A
 9F,1,1,1,H,DesertHillsWaluigi StadiumJungle Parkway,150,Agg,Hard,3,Y,4*,Bullet,Toad,A,2*,Mach,Mario,M,1*,Bullet,Mario,M,3*,Mach,Yoshi,A
 10,N,0,2,H,WaluigiStadium,150,Agg,Hard,3,Y,1,Bullet,Toad,A,3,Mach,Mario,M,2,Bullet,Yoshi,M,5,Mach,Yoshi,A
-10,N,0,2,H,MarioCircuit 3,150,Agg,Hard,3,Y,5,Bullet,Toad,A,3,Mach,Mario,M,12,Bullet,Yoshi,M,1,Mach,Yoshi,A
+10,N,0,2,H,MarioCircuit3,150,Agg,Hard,3,Y,5,Bullet,Toad,A,3,Mach,Mario,M,12,Bullet,Yoshi,M,1,Mach,Yoshi,A
 10,Y,1,2,H,YoshiFalls,150,Agg,Hard,3,Y,3,Bullet,Toad,A,1,Mach,Mario,M,11,Bullet,Yoshi,M,2,Mach,Yoshi,A
 10F,1,1,2,H,WaluigiStadiumMario Circuit 3Yoshi Falls,150,Agg,Hard,3,Y,3*,Bullet,Toad,A,1*,Mach,Mario,M,7*,Bullet,Yoshi,M,2*,Mach,Yoshi,A
 11,N,0,3,H,SherbetLand,150,Agg,Hard,3,Y,2,Bullet,Toad,A,3,Mach,Yoshi,M,5,Bullet,Mario,M,1,Mach,Yoshi,A
@@ -235,7 +235,7 @@
 59,N,0,3,D,LuigiCircuit,150,Agg,Hard,3,Y,1,Mach,Peach,A,4,Mach,Yoshi,M,3,Mach,Mario,M,2,Bullet,Koopa,A
 59F,1,1,3,D,BowsersCastleToad's FactoryLuigi Circuit,150,Agg,Hard,3,Y,2*,Mach,Peach,A,1*,Mach,Yoshi,M,6*,Mach,Mario,M,3*,Bullet,Koopa,A
 60,N,0,4,D,MarioCircuit,150,Agg,Hard,3,Y,1,Mach,Peach,A,8,Flame,Wario,M,2,Mach,Mario,M,3,Bullet,Koopa,A
-60,Y,1,4,D,BowserCastle 3,150,Agg,Hard,3,Y,2,Mach,Peach,A,4,Flame,Wario,M,3,Mach,Mario,M,1,Bullet,Koopa,A
+60,Y,1,4,D,BowserCastle3,150,Agg,Hard,3,Y,2,Mach,Peach,A,4,Flame,Wario,M,3,Mach,Mario,M,1,Bullet,Koopa,A
 60,N,0,4,D,DelfinoSquare,150,Agg,Hard,3,Y,1,Mach,Peach,A,8,Flame,Wario,M,12,Mach,Mario,M,4,Bullet,Koopa,A
 60F,1,1,4,D,MarioCircuitBowser Castle 3Delfino Square,150,Agg,Hard,3,Y,1*,Mach,Peach,A,6*,Flame,Wario,M,4*,Mach,Mario,M,2*,Bullet,Koopa,A
 61,N,0,5,D,DKSummit,150,Agg,Hard,3,Y,2,Mach,Diddy Kong,A,4,Flame,Wario,M,3,Mach,Mario,M,1,Bullet,Koopa,A
@@ -279,7 +279,7 @@
 70,N,0,2,D,CoconutMall,150,Agg,Hard,3,Y,1,Flame,Donkey Kong,A,5,Bullet,Toadette,M,2,Flame,Wario,M,12,Mach,Diddy Kong,A
 70F,1,1,2,D,N64BowsersCastleJungle ParkwayCoconut Mall,150,Agg,Hard,3,Y,1*,Flame,Donkey Kong,A,3*,Bullet,Toadette,M,2*,Flame,Wario,M,4*,Mach,Diddy Kong,A
 71,N,0,3,D,DaisyCircuit,150,Agg,Hard,3,Y,6,Flame,Funky Kong,A,9,Bullet,Toadette,M,1,Flame,Wario,M,8,Mach,Diddy Kong,A
-71,N,0,3,D,MarioCircuit 3,150,Agg,Hard,3,Y,3,Flame,Funky Kong,A,7,Bullet,Toadette,M,1,Flame,Wario,M,11,Mach,Diddy Kong,A
+71,N,0,3,D,MarioCircuit3,150,Agg,Hard,3,Y,3,Flame,Funky Kong,A,7,Bullet,Toadette,M,1,Flame,Wario,M,11,Mach,Diddy Kong,A
 71,Y,1,3,D,MarioRaceway,150,Agg,Hard,3,Y,5,Flame,Funky Kong,A,12,Bullet,Toadette,M,6,Flame,Wario,M,2,Mach,Diddy Kong,A
 71F,1,1,3,D,DaisyCircuitMario Circuit 3Mario Raceway,150,Agg,Hard,3,Y,4*,Flame,Funky Kong,A,10*,Bullet,Toadette,M,2*,Flame,Wario,M,7*,Mach,Diddy Kong,A
 72,N,0,4,D,DKSummit,150,Agg,Hard,3,Y,1,Flame,Funky Kong,A,12,Bullet,Baby Luigi,M,4,Flame,Wario,M,5,Mach,Peach,A

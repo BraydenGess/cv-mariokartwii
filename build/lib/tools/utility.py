@@ -32,3 +32,7 @@ def string_tocolor(color):
     if color.lower() in color_dict:
         return color_dict[color.lower()]
     return color_dict['black']
+
+def get_scoringdict():
+    scoring_dict = {'1':15,'2':12,'3':10,'4':8,'5':7,'6':6,'7':5,'8':4,'9':3,'10':2,'11':1,'12':0}
+    return scoring_dict

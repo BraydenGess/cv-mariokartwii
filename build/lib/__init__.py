@@ -101,12 +101,16 @@ class Coordinates:
         self.go4_coordinates = [294, 694, 200, 360]
 
 class Course:
-    def __init__(self,course_name=None,song_queue=None,fast_staff=None,length_rank=None,AP=None,img=None,txtcolor=None):
+    def __init__(self,course_name=None,song_queue=None,fast_staff=None,length_rank=None,AP=None,CPI=None,
+                 img=None,txtcolor=None,regular=None,elixir=None):
         self.course_name = course_name
         self.song_queue = song_queue
         self.fast_staff = fast_staff
         self.length_rank = length_rank
         self.AP = AP
+        self.CPI = CPI
+        self.regular = regular
+        self.elixir = elixir
         self.img = img
         self.txtcolor = txtcolor
 
@@ -201,8 +205,9 @@ def add_coursedata(course_dict,file_name):
             course_dict[i].fast_staff = data[1]
             course_dict[i].length_rank = data[2]
             course_dict[i].AP = data[3]
-            course_dict[i].img = check_imageexists(courseimage_directory,data[4])
-            course_dict[i].txtcolor = remove_newline(data[5])
+            course_dict[i].CPI = data[4]
+            course_dict[i].img = check_imageexists(courseimage_directory,data[5])
+            course_dict[i].txtcolor = remove_newline(data[6])
         else:
             print(f"Races out of order or misspelled in {file_name} or {course_infofile}")
             sys.exit()
@@ -211,6 +216,7 @@ def add_coursedata(course_dict,file_name):
 
 def make_coursedict(file_name):
     course_dict = dict()
+    course_indexlookup = dict()
     file = 'audio/playlists/' + file_name
     f = open(file, 'r')
     datalines = f.readlines()
@@ -223,10 +229,11 @@ def make_coursedict(file_name):
         q = deque()
         for j in range(len(course_songs)):
             q.append(course_songs[j])
-        course_dict[i - 1] = Course(course_name=course_name, song_queue=q)
+        course_dict[i - 1] = Course(course_name=course_name, song_queue=q,elixir=[],regular=[])
+        course_indexlookup[course_name] = i-1
     f.close()
     course_dict = add_coursedata(course_dict,file_name)
-    return course_dict
+    return course_dict,course_indexlookup
 
 def comma_innamecase(data):
     song_name = ''
@@ -253,7 +260,7 @@ def initialize_playlist(playlist_name):
     course_playlists = os.listdir('audio/playlists/')
     file_name = playlist_name+'.csv'
     if file_name in course_playlists:
-        course_dict = make_coursedict(file_name)
+        course_dict,null = make_coursedict(file_name)
     else:
         raise Exception("Not Valid Playlist")
     return course_dict,songkey_dict
