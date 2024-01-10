@@ -19,10 +19,11 @@ def main():
     spotify_safetycheck(sp)
     cap = cv.VideoCapture(0)
     while cap.isOpened():
-        frame = safe_pull(cap)
-        run_audio(sp,frame,root_model,coordinates,gp_info)
-        character_select(frame,coordinates,root_model,gp_info)
-        nextgenstats(frame, root_model, coordinates, gp_info,sp)
-        graphics.run_graphics(gp_info, sp)
+        ret,frame = cap.read()
+        if ret:
+            run_audio(sp,frame,root_model,coordinates,gp_info)
+            character_select(frame,coordinates,root_model,gp_info)
+            nextgenstats(frame, root_model, coordinates, gp_info,sp)
+        graphics.run_graphics(gp_info,sp,ret)
 
 main()

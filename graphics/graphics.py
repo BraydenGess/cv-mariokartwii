@@ -225,7 +225,15 @@ class Graphics():
             self.course_intro(sp)
         if gp_info.started:
             self.race(gp_info,sp)
-    def run_graphics(self,gp_info,sp):
+    def not_connected(self):
+        txt, txtRect = self.create_text('impact', 192, 'Disconnected',(255,255,255),
+                                        [self.X // 2, self.Y *2 // 5], 'center')
+        self.display_surface.fill((0, 0, 0))
+        self.display_surface.blit(txt, txtRect)
+        pygame.display.update()
+    def run_graphics(self,gp_info,sp,ret):
+        if not ret:
+            self.not_connected()
         if (gp_info.menu_screen <= 2):
             self.draw_titlescreen()
         elif ((gp_info.menu_screen >= 3)and(sp.course_queued==0)):
