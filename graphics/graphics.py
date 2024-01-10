@@ -1,6 +1,8 @@
 import pygame
 from tools.utility import string_tocolor,text_spaces
 import time
+import urllib
+import io
 
 def initialize_graphics(screen_setting):
     pygame.init()
@@ -13,15 +15,17 @@ def initialize_graphics(screen_setting):
         y = y - (y//14)
     caption = "Beerio"
     pygame.display.set_caption(caption)
-    specialeffects_dict= {'TitleScreen':Special_Effects(blue=0,green=0,red=0)}
+    specialeffects_dict= {'TitleScreen':Special_Effects(blue=0,green=0,red=0,count=0),
+                          'SongIntro':Special_Effects(blue=0,green=0,red=0,count=0)}
     graphics = Graphics(display_surface=display_surface,X=x,Y=y,caption=caption,special_effects=specialeffects_dict)
     return graphics
 
 class Special_Effects():
-    def __init__(self,blue=None,green=None,red=None):
+    def __init__(self,blue=None,green=None,red=None,count=None):
         self.blue = blue
         self.green = green
         self.red = red
+        self.count = count
     def FadeIn(self,strength,max_value):
         new_blue = self.blue + strength[2]
         new_green = self.green + strength[1]
@@ -30,6 +34,9 @@ class Special_Effects():
             self.blue = new_blue
             self.green = new_green
             self.red = new_red
+    def count_up(self):
+        if self.count <= 99:
+            self.count += 1
 
 class Graphics():
     def __init__(self,display_surface=None,X=None,Y=None,caption=None,special_effects=None):
@@ -175,19 +182,49 @@ class Graphics():
         texts.append([txt3, txtRect3])
         self.write_text(texts)
         pygame.display.update()
-    def race(self,gp_info):
+    def song_intro(self,sp):
+        self.display_surface.fill((0, 0, 0))
+        width, height = 640, 640
+        x_start, y_start = self.X // 2 - (width // 2), self.Y // 2 - (height // 2)
+        image_file = io.BytesIO(sp.img_str)
+        initial_pic = pygame.image.load(image_file)
+        desired_size = (width,height)
+        pic = pygame.transform.smoothscale(initial_pic, desired_size)
+        txt, txtRect = self.create_text('impact', 74,sp.song_queued.song_name,string_tocolor('white'),
+                                        (self.X // 2, self.Y - self.Y//16),'center')
+        texts = [[txt,txtRect]]
+        self.write_text(texts)
+        self.display_surface.blit(pic, (x_start,y_start))
+        pygame.display.update()
+    def scoreboard(self,sp):
+        self.display_surface.fill((0, 0, 0))
+        width, height = 80, 80
+        x_end, y_end = self.X // 64, self.Y - (self.Y // 64) - height
+        image_file = io.BytesIO(sp.img_str)
+        initial_pic = pygame.image.load(image_file)
+        desired_size = (width, height)
+        pic = pygame.transform.smoothscale(initial_pic, desired_size)
+        txt, txtRect = self.create_text('impact', 24, sp.song_queued.song_name, string_tocolor('white'),
+                                        (x_end+width+width//4,y_end+(height//2)), 'left')
+        texts = [[txt, txtRect]]
+        self.write_text(texts)
+        self.display_surface.blit(pic, (x_end, y_end))
+        pygame.display.update()
+    def race(self,gp_info,sp):
         t2 = time.time()
         time_diff = t2-gp_info.time
-        if time_diff%10 <= 5:
-            self.display_surface.fill((0, 0, 0))
+        if time_diff <= 10:
+            self.song_intro(sp)
+        elif time_diff%10 <= 5:
+            self.scoreboard(sp)
         else:
-            self.display_surface.fill((0,255,0))
+            self.display_surface.fill((0,0,0))
         pygame.display.update()
     def racing_graphics(self,gp_info,sp):
         if not gp_info.started:
             self.course_intro(sp)
         if gp_info.started:
-            self.race(gp_info)
+            self.race(gp_info,sp)
     def run_graphics(self,gp_info,sp):
         if (gp_info.menu_screen <= 2):
             self.draw_titlescreen()

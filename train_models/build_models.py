@@ -78,7 +78,37 @@ def set_gomodel2parameters():
                    opt_function='adam', measure=['accuracy'], batch_size=16, num_epochs=80)
     return model_path, coordinates, training_folder, label_key, binarydata_file, p
 
+def get_playerdict(file):
+    f = open(file, 'r')
+    character_dict = dict()
+    datalines = f.readlines()
+    for i in range(1, len(datalines)):
+        data = datalines[i].split(',')
+        character_name = data[0]
+        character_dict[character_name] = i-1
+    character_dict["None"] = 0
+    return character_dict
 
+def get_coordinates():
+    coordinates = []
+    [x0, x1, y0, y1] = [600, 1100, 73, 149]
+    boxheight = y1 - y0
+    for i in range(12):
+        y2 = y0 + (boxheight * i)
+        y3 = y2 + boxheight
+        coordinates.append([x0,x1,y2,y3])
+    return coordinates
+
+def set_scoringmodelparameters():
+    coordinates = get_coordinates()
+    training_folder = 'train_models/training_images/scoring_trainingimages/'
+    label_key = get_playerdict(file='nextgenstats/information/characterstats.csv')
+    binarydata_file = 'train_models/binary_imagedata/scoringimages.csv'
+    model_path = 'models/scoringdetectionmodel'
+    p = Parameters(layers=[42,28], activations=['relu','relu','softmax'], num_outnodes=len(label_key),
+                   loss_function='sparse_categorical_crossentropy',
+                   opt_function='adam', measure=['accuracy'], batch_size=32, num_epochs=250)
+    return model_path, coordinates, training_folder, label_key, binarydata_file, p
 def write_imgtobinary(f,label,image):
     f.write(str(label))
     f.write(',')
@@ -113,7 +143,6 @@ def build_neuralnetwork(model_path,coordinates, training_folder, label_key, bina
                              num_epochs=p.num_epochs)
     network.construct_model()
 
-
 def main():
     command = sys.argv
     if "home" in command:
@@ -136,8 +165,13 @@ def main():
         if "prepare" in command:
             prepare_data(coordinates, training_folder, label_key, binarydata_file)
         build_neuralnetwork(model_path, coordinates, training_folder, label_key, binarydata_file, p)
-    if 'go2' in command:
+    if 'go' in command:
         model_path, coordinates, training_folder, label_key, binarydata_file, p = set_gomodel2parameters()
+        if "prepare" in command:
+            prepare_data(coordinates, training_folder, label_key, binarydata_file)
+        build_neuralnetwork(model_path, coordinates, training_folder, label_key, binarydata_file, p)
+    if 'scoring' in command:
+        model_path, coordinates, training_folder, label_key, binarydata_file, p = set_scoringmodelparameters()
         if "prepare" in command:
             prepare_data(coordinates, training_folder, label_key, binarydata_file)
         build_neuralnetwork(model_path, coordinates, training_folder, label_key, binarydata_file, p)

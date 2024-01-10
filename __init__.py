@@ -5,9 +5,10 @@ from collections import deque
 from spotify_audio import setup_spotifyobject
 import os
 import sys
+from urllib.request import urlopen
 
 class SpotifyPlayer():
-    def __init__(self,spotify,course_queued,playlist,songkey_dict,song_queued,is_paused,support_volume):
+    def __init__(self,spotify,course_queued,playlist,songkey_dict,song_queued,is_paused,support_volume,img_str):
         self.spotify = spotify
         self.course_queued = course_queued
         self.song_queued = song_queued
@@ -15,6 +16,7 @@ class SpotifyPlayer():
         self.songkey_dict = songkey_dict
         self.is_paused = is_paused
         self.support_volume = support_volume
+        self.img_str = img_str
     def pause(self):
         if self.spotify.current_playback()['is_playing']:
             self.spotify.pause_playback(device_id=None)
@@ -41,13 +43,10 @@ class SpotifyPlayer():
         search_song = Song(song_name=song_name,uri=song_uri,img=image_url)
         return search_song
     def get_song(self,song):
-        print(self.songkey_dict)
         if song in self.songkey_dict:
             song = self.songkey_dict[song]
-            print('y',song.song_name)
         else:
             song = self.search(song)
-            print('X',song.song_name)
         return song
     def queue_song(self,songs):
         for song in songs:
@@ -65,6 +64,7 @@ class SpotifyPlayer():
         self.queue_song(songs=[song_queued,self.get_song(next_song)])
         self.course_queued = course_index
         self.song_queued = song_queued
+        self.img_str = urlopen(song_queued.img).read()
         self.playlist[self.course_queued].song_queue.append(song)
         self.playlist[self.course_queued].song_queue.appendleft(next_song)
     def queue_skip(self):
@@ -84,6 +84,7 @@ class SpotifyPlayer():
             t = self.spotify.track(current_playback)
             current_playback = Song(song_name=t['name'],uri=current_playback,img=t['album']['images'][0]['url'])
             self.song_queued = current_playback
+            self.img_str = urlopen(self.song_queued.img).read()
             self.queue_skip()
 
 class RootModel:
@@ -188,7 +189,7 @@ def audio_setup(genre,credentials_file):
     coordinates = initialize_coordinates()
     course_dict, songkey_dict = initialize_playlist(genre)
     sp = SpotifyPlayer(spotify=spotify, course_queued=None, song_queued=None, playlist=course_dict,
-                       songkey_dict=songkey_dict, is_paused=False, support_volume=False)
+                       songkey_dict=songkey_dict, is_paused=False, support_volume=False,img_str=None)
     return sp,coordinates
 
 def initialize_rootmodel():
@@ -201,7 +202,7 @@ def initialize_rootmodel():
     root_model.char4detect_model = load_model('models/char4detectionmodel')
     root_model.vehicle2detect_model = load_model('models/vehicle2detectionmodel')
     root_model.vehicle4detect_model = load_model('models/vehicle4detectionmodel')
-    root_model.godetect_model = load_model('models/go2detectionmodel')
+    root_model.godetect_model = load_model('models/godetectionmodel')
     return root_model
 
 def initialize_coordinates():
