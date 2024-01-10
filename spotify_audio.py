@@ -41,12 +41,13 @@ def pause_toggle(sp,frame,root_model,coordinates):
 def double_verifycourse(coordinates,root_model,index,alpha):
     cap = cv.VideoCapture(0)
     ret, next_frame = cap.read()
-    if ret:
-        index2, confidence2 = predict(next_frame, coordinates.course_coordinates, root_model.coursedetect_model,
-                                  'imgtobinary')
-        if ((index2==index)and(confidence2>alpha)):
-            return True
+    if not ret:
         return False
+    index2, confidence2 = predict(next_frame, coordinates.course_coordinates, root_model.coursedetect_model,
+                                  'imgtobinary')
+    if ((index2==index)and(confidence2>alpha)):
+         return True
+    return False
 
 def get_course(frame,root_model,coordinates):
     index,confidence = predict(frame,coordinates.course_coordinates,root_model.coursedetect_model,'imgtobinary')
