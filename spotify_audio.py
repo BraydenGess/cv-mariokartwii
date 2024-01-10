@@ -38,19 +38,23 @@ def pause_toggle(sp,frame,root_model,coordinates):
         else:
             sp.pause()
 
-def double_verifycourse(coordinates,root_model,index):
+def double_verifycourse(coordinates,root_model,index,alpha):
     cap = cv.VideoCapture(0)
     ret, next_frame = cap.read()
-    index2, confidence2 = predict(next_frame, coordinates.course_coordinates, root_model.coursedetect_model,
+    if ret:
+        index2, confidence2 = predict(next_frame, coordinates.course_coordinates, root_model.coursedetect_model,
                                   'imgtobinary')
-    if ((index2==index)and(confidence2>0.95)):
-        return True
-    return False
+        if ((index2==index)and(confidence2>alpha)):
+            return True
+        return False
 
 def get_course(frame,root_model,coordinates):
     index,confidence = predict(frame,coordinates.course_coordinates,root_model.coursedetect_model,'imgtobinary')
+    if ((index == 0) and (confidence > 0.87)):
+        if double_verifycourse(coordinates,root_model,index,alpha=0.87):
+            return index,confidence
     if ((index!=33)and(confidence>0.95)):
-        if double_verifycourse(coordinates,root_model,index):
+        if double_verifycourse(coordinates,root_model,index,alpha=0.95):
             return index,confidence
     return 33,0
 
@@ -64,5 +68,4 @@ def run_audio(sp,frame,root_model,coordinates,gp_info):
     pause_toggle(sp,frame,root_model,coordinates)
     if not gp_info.read_menu:
         play_music(frame,root_model,coordinates,sp,gp_info)
-    if sp.is_paused:
-        sp.auto_skip()
+    #sp.auto_skip() - needs some fixing
