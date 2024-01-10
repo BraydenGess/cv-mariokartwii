@@ -30,7 +30,8 @@ def get_tracksfromplaylist(sp,playlist):
             name = remove_comma(track['track']['name'])
         uri = track['track']['uri']
         duration = track['track']['duration_ms']
-        tracks.append([name,uri,duration])
+        img = track['track']['album']['images'][0]['url']
+        tracks.append([name,uri,duration,img])
     return tracks
 
 def get_courses(file):
@@ -90,7 +91,8 @@ def write_newplaylist(courses,target_playlist):
         for i in range(3,len(course)):
             song_name = course[i][0]
             uri = course[i][1]
-            uris.append([song_name,uri])
+            img_path = course[i][3]
+            uris.append([song_name,uri,img_path])
             f.write(song_name)
             if i != len(course)-1:
                 f.write(',')
@@ -106,6 +108,8 @@ def write_newplaylist(courses,target_playlist):
             f.write(element[0])
             f.write(',')
             f.write(element[1])
+            f.write(',')
+            f.write(element[2])
             songkey_dict[element[0]] = element[1]
 
 def make_newplaylist(sp,username,target_playlist):

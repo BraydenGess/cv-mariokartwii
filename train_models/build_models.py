@@ -105,7 +105,7 @@ def set_scoringmodelparameters():
     label_key = get_playerdict(file='nextgenstats/information/characterstats.csv')
     binarydata_file = 'train_models/binary_imagedata/scoringimages.csv'
     model_path = 'models/scoringdetectionmodel'
-    p = Parameters(layers=[28,18], activations=['relu','relu','softmax'], num_outnodes=len(label_key),
+    p = Parameters(layers=[26,14], activations=['relu','relu','softmax'], num_outnodes=len(label_key),
                    loss_function='sparse_categorical_crossentropy',
                    opt_function='adam', measure=['accuracy'], batch_size=32, num_epochs=100)
     return model_path, coordinates, training_folder, label_key, binarydata_file, p
@@ -128,7 +128,6 @@ def prepare_data(coordinates,training_folder,label_key,binarydata_file):
     for image_name in images:
         image_path = training_folder + image_name
         image = cv.imread(image_path)
-        print(image_name)
         for i in range(len(coordinates)):
             [x0,x1,y0,y1] = coordinates[i]
             new_image = image[y0:y1,x0:x1]//255
