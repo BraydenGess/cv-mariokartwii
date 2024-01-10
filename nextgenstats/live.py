@@ -18,7 +18,7 @@ def countdown(frame,root_model,coordinates,gp_info,sp):
             gp_info.time = time.time()
         ### Jump Around - Moonview Case
         if index == 3:
-            if sp.song_queued == 'spotify:track:6JymsaWDHk2Yj4e0yNBIFH':
+            if sp.song_queued.course_name == 'Jump Around':
                 sp.seek_track(ms=5500)
 
 def nextgenstats(frame,root_model,coordinates,gp_info,sp):
