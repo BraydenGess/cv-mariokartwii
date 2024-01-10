@@ -107,7 +107,7 @@ def set_scoringmodelparameters():
     model_path = 'models/scoringdetectionmodel'
     p = Parameters(layers=[42,28], activations=['relu','relu','softmax'], num_outnodes=len(label_key),
                    loss_function='sparse_categorical_crossentropy',
-                   opt_function='adam', measure=['accuracy'], batch_size=32, num_epochs=250)
+                   opt_function='adam', measure=['accuracy'], batch_size=32, num_epochs=100)
     return model_path, coordinates, training_folder, label_key, binarydata_file, p
 def write_imgtobinary(f,label,image):
     f.write(str(label))
