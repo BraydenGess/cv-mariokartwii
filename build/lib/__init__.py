@@ -35,44 +35,51 @@ class SpotifyPlayer():
     def search(self,searchQuery):
         search_results = self.spotify.search(searchQuery, 1, 0, "track")
         tracks_items = search_results['tracks']['items']
-        song_uri = tracks_items[0]['external_urls']['spotify']
-        return song_uri
-    def get_uri(self,song):
+        song_uri = tracks_items[0]['uri']
+        song_name = tracks_items[0]['name']
+        image_url = tracks_items[0]['album']['images'][0]['url']
+        search_song = Song(song_name=song_name,uri=song_uri,img=image_url)
+        return search_song
+    def get_song(self,song):
         if song in self.songkey_dict:
-            song_uri = self.songkey_dict[song]
+            song = self.songkey_dict[song]
         else:
-            song_uri = self.search(song)
-        return song_uri
+            song = self.search(song)
+        return song
     def queue_song(self,songs):
         for song in songs:
-            self.spotify.add_to_queue(uri=song, device_id=None)
+            self.spotify.add_to_queue(uri=song.uri, device_id=None)
         self.min_volume()
         for element in self.spotify.queue()['queue']:
             self.spotify.next_track()
-            if songs[0] == element['uri']:
+            if songs[0].uri == element['uri']:
                 self.max_volume()
                 break
     def queue_newsong(self,course_index):
         song = self.playlist[course_index].song_queue.popleft()
         next_song = self.playlist[course_index].song_queue.popleft()
-        self.queue_song(songs=[self.get_uri(song),self.get_uri(next_song)])
+        song_queued = self.get_song(song)
+        self.queue_song(songs=[song_queued,self.get_song(next_song)])
         self.course_queued = course_index
-        self.song_queued = self.get_uri(song)
+        self.song_queued = song_queued
         self.playlist[self.course_queued].song_queue.append(song)
         self.playlist[self.course_queued].song_queue.appendleft(next_song)
     def queue_skip(self):
         next_song = self.playlist[self.course_queued].song_queue.popleft()
-        if self.get_uri(next_song) == self.song_queued:
+        if next_song == self.song_queued.song_name:
             song = self.playlist[self.course_queued].song_queue.popleft()
-            song_uri = self.get_uri(song)
-            self.spotify.add_to_queue(uri=song_uri, device_id=None)
+            song = self.get_song(song)
+            self.spotify.add_to_queue(uri=song.uri, device_id=None)
             self.playlist[self.course_queued].song_queue.appendleft(song)
             self.playlist[self.course_queued].song_queue.append(next_song)
         else:
             self.playlist[self.course_queued].song_queue.appendleft(next_song)
+
     def auto_skip(self):
         current_playback = self.spotify.current_playback()['item']['uri']
-        if ((current_playback != self.song_queued) and (self.course_queued != None)):
+        if ((current_playback != self.song_queued.uri) and (self.course_queued != None)):
+            t = self.spotify.track(current_playback)
+            current_playback = Song(song_name=t['item']['name'],uri=current_playback,img=t['album']['images'][0])
             self.song_queued = current_playback
             self.queue_skip()
 
@@ -137,6 +144,8 @@ class GP_Info():
             self.racing = False
             gp_info.menu_screen = 0
             self.started = False
+            for color in gp_info.colors:
+                gp_info.players[color].vehicle = None
         else:
             self.read_menu = False
             self.racing = True
@@ -163,6 +172,12 @@ class Stat_Asset():
         self.mt = mt
         self.sigma = sigma
         self.size = size
+
+class Song():
+    def __init__(self,song_name=None,uri=None,img=None):
+        self.song_name = song_name
+        self.uri = uri
+        self.img = img
 
 ### SET UP ###
 def audio_setup(genre,credentials_file):
@@ -254,8 +269,10 @@ def make_songkeydict(file):
     for i in range(1, len(datalines)):
         data = datalines[i].split(',')
         song_name = comma_innamecase(data)
-        song_uri = remove_newline(data[-1])
-        songkey_dict[song_name] = song_uri
+        song_uri = remove_newline(data[1])
+        song_img = remove_newline(data[2])
+        song = Song(song_name=song_name,uri=song_uri,img=song_img)
+        songkey_dict[song_name] = song
     f.close()
     return songkey_dict
 
