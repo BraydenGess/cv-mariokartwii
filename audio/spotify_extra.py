@@ -139,24 +139,17 @@ def check_duplicates(uri_file):
     else:
         print('No Duplicates Detected')
 
-def make_images(sp,uri_file):
+def sort(sp,uri_file):
     songs = []
     f = open(uri_file, 'r')
     datalines = f.readlines()
     count = 0
     for i in range(1,len(datalines)):
         dataline = datalines[i]
-        print(len(datalines)-count)
         song_name = dataline.split(',')[0]
         uri = remove_newline(dataline.split(',')[1])
-        t = sp.track(uri)
-        images = t['album']['images']
-        if len(images) != 0:
-            img_url = images[0]['url']
-        else:
-            img_url = 'None'
-        songs.append([song_name,uri,img_url])
-        count += 1
+        img = remove_newline(dataline.split(',')[2])
+        songs.append([song_name,uri,img])
     songs.sort(key=lambda x:x[0])
     f.close()
     f = open(uri_file,'w')
@@ -168,7 +161,7 @@ def make_images(sp,uri_file):
 def check_integrity(sp):
     uri_file = 'audio/song_uri.csv'
     check_duplicates(uri_file)
-    make_images(sp,uri_file)
+    sort(sp,uri_file)
 
 def get_arguements(argv,sp):
     command = argv[1]
