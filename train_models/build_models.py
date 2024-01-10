@@ -128,6 +128,7 @@ def prepare_data(coordinates,training_folder,label_key,binarydata_file):
     for image_name in images:
         image_path = training_folder + image_name
         image = cv.imread(image_path)
+        print(image_name)
         for i in range(len(coordinates)):
             [x0,x1,y0,y1] = coordinates[i]
             new_image = image[y0:y1,x0:x1]//255
