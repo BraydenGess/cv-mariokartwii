@@ -43,13 +43,10 @@ class SpotifyPlayer():
         search_song = Song(song_name=song_name,uri=song_uri,img=image_url)
         return search_song
     def get_song(self,song):
-        print(self.songkey_dict)
         if song in self.songkey_dict:
             song = self.songkey_dict[song]
-            print('y',song.song_name)
         else:
             song = self.search(song)
-            print('X',song.song_name)
         return song
     def queue_song(self,songs):
         for song in songs:
@@ -192,7 +189,7 @@ def audio_setup(genre,credentials_file):
     coordinates = initialize_coordinates()
     course_dict, songkey_dict = initialize_playlist(genre)
     sp = SpotifyPlayer(spotify=spotify, course_queued=None, song_queued=None, playlist=course_dict,
-                       songkey_dict=songkey_dict, is_paused=False, support_volume=False)
+                       songkey_dict=songkey_dict, is_paused=False, support_volume=False,img_str=None)
     return sp,coordinates
 
 def initialize_rootmodel():
