@@ -23,19 +23,25 @@ def superlightimgtobinary(image):
     out_binary = cv2.threshold(image, 80, 255, cv2.THRESH_BINARY)[1]
     return out_binary
 
-def darkbinary(image):
+def darkbinary(image,thresh):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    out_binary = cv2.threshold(image,225, 255, cv2.THRESH_BINARY)[1]
+    out_binary = cv2.threshold(image,thresh, 255, cv2.THRESH_BINARY)[1]
     return out_binary
 
-def lightbinary(image):
+def lightbinary(image,thresh):
     image = (255-image)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    out_binary = cv2.threshold(image,225,255, cv2.THRESH_BINARY)[1]
+    out_binary = cv2.threshold(image,thresh,255, cv2.THRESH_BINARY)[1]
     return out_binary
 
 def extreme_values(image):
-    dark = darkbinary(image)
-    light = lightbinary(image)
+    dark = darkbinary(image,225)
+    light = lightbinary(image,225)
+    new = (dark+light)
+    return new
+
+def extreme_values2(image):
+    dark = darkbinary(image,165)
+    light = lightbinary(image,165)
     new = (dark+light)
     return new
