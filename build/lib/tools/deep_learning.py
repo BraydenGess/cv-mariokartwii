@@ -37,7 +37,7 @@ class Neural_Network():
                   verbose=1,validation_data=(X_train,Y_train))
         return model
     def evaluate_model(self,model,X_test,Y_test):
-        score = model.evaluate(X_test,Y_test,verbose=0)
+        score = model.evaluate(X_test,Y_test)
         print('Test loss:',score[0])
         print('Test accuracy',score[1])
     def save_model(self,model):
