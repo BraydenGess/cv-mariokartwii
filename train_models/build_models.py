@@ -86,7 +86,7 @@ def get_playerdict(file):
         data = datalines[i].split(',')
         character_name = data[0]
         character_dict[character_name] = i-1
-    character_dict["None"] = 0
+    character_dict["N"] = 25
     return character_dict
 
 def get_coordinates():
@@ -101,14 +101,41 @@ def get_coordinates():
 
 def set_scoringmodelparameters():
     coordinates = get_coordinates()
-    training_folder = 'train_models/training_images/scoring_trainingimages2/'
+    training_folder = 'train_models/training_images/scoring_trainingimages/'
     label_key = get_playerdict(file='nextgenstats/information/characterstats.csv')
     binarydata_file = 'train_models/binary_imagedata/scoringimages.csv'
     model_path = 'models/scoringdetectionmodel'
-    p = Parameters(layers=[22,13], activations=['relu','relu','relu','softmax'], num_outnodes=len(label_key),
+    p = Parameters(layers=[28,25], activations=['relu','relu','softmax'], num_outnodes=len(label_key),
                    loss_function='sparse_categorical_crossentropy',
-                   opt_function='adam', measure=['accuracy'], batch_size=128, num_epochs=100)
+                   opt_function='adam', measure=['accuracy'], batch_size=128, num_epochs=110)
     return model_path, coordinates, training_folder, label_key, binarydata_file, p
+
+def get_pluscoordinates():
+    coordinates = []
+    [x0, x1, x2, x3] = [1210, 1255, 1255, 1300]
+    [y0, y1] = [73, 149]
+    for i in range(12):
+        xc1 = x0
+        xc2 = x1
+        if i >= 3:
+            xc1 = x2
+            xc2 = x3
+        y2 = y0 + ((y1-y0)*i)
+        y3 = y2 + (y1-y0)
+        coordinates.append([xc1,xc2,y2,y3])
+    return coordinates
+
+def set_plusmodelparameters():
+    coordinates = get_pluscoordinates()
+    training_folder = 'train_models/training_images/plus_trainingimages/'
+    label_key = {'N':0,'+':1}
+    binarydata_file = 'train_models/binary_imagedata/plusimages.csv'
+    model_path = 'models/plusdetectionmodel'
+    p = Parameters(layers=[18,10], activations=['relu','relu','softmax'], num_outnodes=len(label_key),
+                   loss_function='sparse_categorical_crossentropy',
+                   opt_function='adam', measure=['accuracy'], batch_size=128, num_epochs=110)
+    return model_path, coordinates, training_folder, label_key, binarydata_file, p
+
 def write_imgtobinary(f,label,image):
     f.write(str(label))
     f.write(',')
@@ -173,6 +200,11 @@ def main():
         build_neuralnetwork(model_path, coordinates, training_folder, label_key, binarydata_file, p)
     if 'scoring' in command:
         model_path, coordinates, training_folder, label_key, binarydata_file, p = set_scoringmodelparameters()
+        if "prepare" in command:
+            prepare_data(coordinates, training_folder, label_key, binarydata_file)
+        build_neuralnetwork(model_path, coordinates, training_folder, label_key, binarydata_file, p)
+    if 'plus' in command:
+        model_path, coordinates, training_folder, label_key, binarydata_file, p = set_plusmodelparameters()
         if "prepare" in command:
             prepare_data(coordinates, training_folder, label_key, binarydata_file)
         build_neuralnetwork(model_path, coordinates, training_folder, label_key, binarydata_file, p)

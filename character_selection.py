@@ -60,6 +60,7 @@ def menu_control(frame,coordinates,root_model,gp_info,alpha):
             get_vehicles(frame,coordinates,root_model,gp_info)
         if index == 6:
             gp_info.read_menu = False
+            gp_info.initialize_scoreboard()
 
 def character_select(frame,coordinates,root_model,gp_info):
     if gp_info.read_menu:

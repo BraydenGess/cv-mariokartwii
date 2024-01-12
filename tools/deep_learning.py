@@ -60,6 +60,8 @@ def filter_frame(frame,coordinates,filter):
         new_frame = lightimgtobinary(new_frame)
     if filter == 'superlightimgtobinary':
         new_frame = superlightimgtobinary(new_frame)
+    if filter == 'extremevalues':
+        new_frame = extreme_values(new_frame)
     return new_frame
 
 def single_conversion(frame):
@@ -70,7 +72,11 @@ def single_conversion(frame):
         for col in range(len(frame[row])):
             data = frame[row][col]
             value = (data * 2) - 1
-            array[0][count] = value
+            if isinstance(value,np.integer):
+                array[0][count] = value
+            else:
+                print(value)
+                array[0][count] = value[0]
             count += 1
     return array
 

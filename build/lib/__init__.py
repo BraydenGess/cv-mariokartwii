@@ -6,6 +6,7 @@ from spotify_audio import setup_spotifyobject
 import os
 import sys
 from urllib.request import urlopen
+from tools.deep_learning import *
 
 class SpotifyPlayer():
     def __init__(self,spotify,course_queued,playlist,songkey_dict,song_queued,is_paused,support_volume,img_str):
@@ -90,7 +91,7 @@ class SpotifyPlayer():
 class RootModel:
     def __init__(self,coursedetect_model=None,homedetect_model=None,menudetect_model=None,playercountdetect_model=None,
                  char2detect_model=None,char4detect_model=None,vehicle2detect_model=None,vehicle4detect_model=None,
-                 godetect_model=None):
+                 godetect_model=None,scoringdetect_model=None):
         self.coursedetect_model = coursedetect_model
         self.homedetect_model = homedetect_model
         self.menudetect_model = menudetect_model
@@ -100,6 +101,7 @@ class RootModel:
         self.vehicle2detect_model = vehicle2detect_model
         self.vehicle4detect_model = vehicle4detect_model
         self.godetect_model = godetect_model
+        self.scoringdetect_model = scoringdetect_model
 
 class Coordinates:
     def __init__(self):
@@ -113,6 +115,14 @@ class Coordinates:
         self.vehicle4_coordinates = [[350,855,450,500],[1053,1558,450,500],[350,855,798,848],[1053,1558,798,848]]
         self.go2_coordinates = [740,1140,200,360]
         self.go4_coordinates = [294, 694, 200, 360]
+        self.scoring_coordinates = []
+    def set_scoringcoordinates(self):
+        [x0, x1, y0, y1] = [610, 1090, 73, 149]
+        boxheight = y1 - y0
+        for i in range(12):
+            y2 = y0 + (boxheight * i)
+            y3 = y2 + boxheight
+            self.scoring_coordinates.append([x0, x1, y2, y3])
 
 class Course:
     def __init__(self,course_name=None,song_queue=None,fast_staff=None,length_rank=None,AP=None,CPI=None,
@@ -130,7 +140,8 @@ class Course:
 
 class GP_Info():
     def __init__(self,menu_screen=None,player_count=None,players=None,colors=None,read_menu=None,racing=None,
-                 rgb_colors=None,character_stats=None,vehicle_stats=None,started=None,time=None):
+                 rgb_colors=None,character_stats=None,vehicle_stats=None,started=None,time=None,
+                 score_read=None,score_scan=None,scoreboard=None):
         self.menu_screen = menu_screen
         self.player_count = player_count
         self.players = players
@@ -142,6 +153,10 @@ class GP_Info():
         self.character_stats = character_stats
         self.vehicle_stats = vehicle_stats
         self.time = time
+        self.score_scan = score_scan
+        self.score_read = score_read
+        self.scoreboard = scoreboard
+        self.score_dict = {1: 15, 2: 12, 3: 10, 4: 8, 5: 7, 6: 6, 7: 5, 8: 4, 9: 3, 10: 2, 11: 1, 12: 0}
     def model_switching(self,course_index,gp_info):
         if course_index == 0:
             self.read_menu = True
@@ -154,7 +169,43 @@ class GP_Info():
             self.read_menu = False
             self.racing = True
             self.started = False
-
+            self.score_scan = True
+    def check_ready(self,frame,root_model,coordinates):
+        index1, confidence1 = predict(frame, coordinates.scoring_coordinates[0], root_model.scoringdetect_model,
+                                      'extremevalues')
+        index2, confidence2 = predict(frame, coordinates.scoring_coordinates[11], root_model.scoringdetect_model,
+                                      'extremevalues')
+        if ((index1!=25)and(index2!=25)):
+            self.score_read = True
+    def read_scoreboard(self,frame,root_model,coordinates):
+        temp_scoreboard = []
+        for i in range(12):
+            index,confidence = predict(frame, coordinates.scoring_coordinates[i], root_model.scoringdetect_model,
+                                          'extremevalues')
+            temp_scoreboard.append(index)
+            if index == 25:
+                break
+        return temp_scoreboard
+    def update_scoreboard(self,temp_scoreboard):
+        self.score_read = False
+        self.score_scan = False
+        for i in range(len(temp_scoreboard)):
+            index = temp_scoreboard[i]
+            for j in range(len(self.scoreboard)):
+                character = self.scoreboard[j][0]
+                if index == character:
+                    self.scoreboard[j][1] += self.score_dict[i]
+    def initialize_scoreboard(self):
+        scoreboard = []
+        for i in range(12):
+            character_index = random.randint(0,24)
+            scoreboard.append([character_index,0])
+        start_index = 12 - self.player_count
+        for i in range(self.player_count):
+            p = self.players[self.colors[i]]
+            index = self.character_stats[p.character]
+            scoreboard[start_index+i][0] = index
+        self.scoreboard = scoreboard
 class Player():
     def __init__(self,name=None,color=None,character=None,vehicle=None,score=None,place=None):
         self.name = name
@@ -203,10 +254,12 @@ def initialize_rootmodel():
     root_model.vehicle2detect_model = load_model('models/vehicle2detectionmodel')
     root_model.vehicle4detect_model = load_model('models/vehicle4detectionmodel')
     root_model.godetect_model = load_model('models/godetectionmodel')
+    root_model.scoringdetect_model = load_model('models/scoringdetectionmodel')
     return root_model
 
 def initialize_coordinates():
     coordinates = Coordinates()
+    coordinates.set_scoringcoordinates()
     return coordinates
 
 def check_imageexists(courseimage_directory,image_path):
@@ -313,6 +366,8 @@ def initialize_gpinfo():
     gp_info.character_stats = get_attributes(file='nextgenstats/information/characterstats.csv')
     gp_info.vehicle_stats = get_attributes(file='nextgenstats/information/vehiclestats.csv')
     gp_info.players = create_playerdict(gp_info)
+    gp_info.score_read = False
+    gp_info.score_scan = False
     return gp_info
 
 

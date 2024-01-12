@@ -37,7 +37,7 @@ class Neural_Network():
                   verbose=1,validation_data=(X_train,Y_train))
         return model
     def evaluate_model(self,model,X_test,Y_test):
-        score = model.evaluate(X_test,Y_test)
+        score = model.evaluate(X_test,Y_test,verbose=True)
         print('Test loss:',score[0])
         print('Test accuracy',score[1])
     def save_model(self,model):
@@ -60,6 +60,10 @@ def filter_frame(frame,coordinates,filter):
         new_frame = lightimgtobinary(new_frame)
     if filter == 'superlightimgtobinary':
         new_frame = superlightimgtobinary(new_frame)
+    if filter == 'extremevalues':
+        new_frame = extreme_values(new_frame)
+    if filter == 'edge_detection':
+        new_frame = edge_detection(new_frame)
     return new_frame
 
 def single_conversion(frame):
@@ -70,7 +74,11 @@ def single_conversion(frame):
         for col in range(len(frame[row])):
             data = frame[row][col]
             value = (data * 2) - 1
-            array[0][count] = value
+            if isinstance(value,np.integer):
+                array[0][count] = value
+            else:
+                print(value)
+                array[0][count] = value[0]
             count += 1
     return array
 
