@@ -11,7 +11,7 @@ def countdown(frame,root_model,coordinates,gp_info,sp):
         new_coordinates = coordinates.go2_coordinates
     index,confidence = predict(frame,new_coordinates,root_model.godetect_model,'superlightimgtobinary')
     if (confidence>0.99):
-        if index == 0:
+        if index in [0,1]:
             gp_info.started = True
             gp_info.time = time.time()
         ### Jump Around - Moonview Case
@@ -20,7 +20,6 @@ def countdown(frame,root_model,coordinates,gp_info,sp):
                 sp.seek_track(ms=5500)
 
 def scoring(frame,root_model,coordinates,gp_info):
-    print(gp_info.scoreboard)
     if ((not gp_info.score_read)and(gp_info.score_scan)):
         gp_info.check_ready(frame,root_model,coordinates)
     elif((gp_info.score_read)and(gp_info.score_scan)):

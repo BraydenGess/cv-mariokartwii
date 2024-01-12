@@ -196,7 +196,35 @@ class Graphics():
         self.write_text(texts)
         self.display_surface.blit(pic, (x_start,y_start))
         pygame.display.update()
-    def scoreboard(self,sp):
+    def scoreboard(self,gp_info):
+        self.display_surface.fill((0, 0, 0))
+        texts = []
+        x_buffer = self.X//64
+        y_buffer = self.Y//16
+        size = (self.Y-(3*y_buffer))/len(gp_info.scoreboard)
+        desired_size = (size,size)
+        img_directory = 'graphics/characterpictures/'
+        labeltxt,labeltxtRect = self.create_text('impact',72,'SCOREBOARD', string_tocolor('white'),
+                                        (self.X//2,y_buffer),'center')
+        texts.append([labeltxt,labeltxtRect])
+        for i in range(len(gp_info.scoreboard)):
+            character_index = gp_info.scoreboard[i][0]
+            character_name = gp_info.character_stats[character_index+1].name
+            character_score = gp_info.scoreboard[i][1]
+            img_path = img_directory+character_name+'.png'
+            pic = pygame.image.load(img_path)
+            pic = pygame.transform.smoothscale(pic, desired_size)
+            top_left = (2*y_buffer)+(size*i)
+            self.display_surface.blit(pic, (x_buffer,top_left))
+            txt,txtRect = self.create_text('impact',32,character_name, string_tocolor('white'),
+                                        ((x_buffer*2)+size,top_left+(size//2)),'left')
+            txt2, txtRect2 = self.create_text('impact', 32, str(character_score), string_tocolor('white'),
+                                            (self.X//3, top_left + (size // 2)), 'left')
+            texts.append([txt,txtRect])
+            texts.append([txt2,txtRect2])
+        self.write_text(texts)
+        pygame.display.update()
+    def song_info(self,sp):
         self.display_surface.fill((0, 0, 0))
         width, height = 80, 80
         x_end, y_end = self.X // 64, self.Y - (self.Y // 64) - height
@@ -216,9 +244,9 @@ class Graphics():
         if time_diff <= 10:
             self.song_intro(sp)
         elif time_diff%10 <= 5:
-            self.scoreboard(sp)
+            self.scoreboard(gp_info)
         else:
-            self.display_surface.fill((0,0,0))
+            self.song_info(sp)
         pygame.display.update()
     def racing_graphics(self,gp_info,sp):
         if not gp_info.started:

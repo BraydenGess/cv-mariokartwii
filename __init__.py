@@ -190,11 +190,9 @@ class GP_Info():
         for i in range(12):
             index, confidence = predict(frame, coordinates.plus_coordinates[i], root_model.plusdetect_model,
                                       'sharpimgtobinary')
-            print(index,confidence)
             if ((index==1)and(confidence>0.9)):
                 plus_count += 1
         if plus_count >= 3:
-            print('------',str(plus_count))
             self.score_read = True
             self.temp_scoreboard = []
             for i in range(12):
@@ -220,12 +218,21 @@ class GP_Info():
                     self.temp_scoreboard[i][0] = index
                     self.temp_scoreboard[i][1] = confidence
     def update_scoreboard(self):
-        for i in range(len(self.temp_scoreboard)):
-            index = self.temp_scoreboard[i][0]
-            for j in range(len(self.scoreboard)):
-                character = self.scoreboard[j][0]
-                if index == character:
-                    self.scoreboard[j][1] += self.score_dict[i+1]
+        if self.scoreboard[0][0] != 0:
+            for i in range(len(self.temp_scoreboard)):
+                index = self.temp_scoreboard[i][0]
+                for j in range(len(self.scoreboard)):
+                    character = self.scoreboard[j][0]
+                    if index == character:
+                        self.scoreboard[j][1] += self.score_dict[i+1]
+        else:
+            for i in range(len(self.temp_scoreboard)):
+                index = self.temp_scoreboard[i][0]
+                self.scoreboard[i][0] = index
+                if index == 25:
+                    self.scoreboard[i][0] = random.randint(0,24)
+                self.scoreboard[i][1] += self.score_dict[i+1]
+        self.scoreboard.sort(key=lambda x:x[1],reverse=True)
     def initialize_scoreboard(self):
         scoreboard = []
         for i in range(12):

@@ -14,6 +14,11 @@ def sharpimgtobinary(image):
     out_binary = cv2.threshold(image, 200, 255, cv2.THRESH_BINARY)[1]
     return out_binary
 
+def supersharpimgtobinary(image):
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    out_binary = cv2.threshold(image, 235, 255, cv2.THRESH_BINARY)[1]
+    return out_binary
+
 def lightimgtobinary(image):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     out_binary = cv2.threshold(image,140,255,cv2.THRESH_BINARY)[1]
@@ -39,44 +44,10 @@ def extreme_values(image):
     dark = darkbinary(image,225)
     light = lightbinary(image,225)
     new = (dark+light)
-    new = edge2(new)
+    new = edge(new)
     return new
-
-def extreme_values2(image):
-    dark = darkbinary(image,245)
-    light = lightbinary(image,245)
-    new = (dark+light)
-    return new
-
-def edge_detection(image):
-    dark = darkbinary(image, 165)
-    light = lightbinary(image, 165)
-    new = (dark + light)
-    new_frame = edge(new)
-    return new_frame
-
-def checkwhite(pix):
-    if pix != 255:
-        return False
-    return True
-
-def checkblack(pix):
-    if pix != 0:
-        return False
-    return True
 
 def edge(frame):
-    new_frame = frame.copy()
-    for row in range(1,len(frame)-1):
-        for col in range(1,len(frame[row])-1):
-            window = frame[row-1:row+2,col-1:col+2]
-            filter = np.ones([3,3],dtype=int)
-            x = np.sum(np.multiply(window,filter))
-            if x <= (255*4):
-                new_frame[row][col] = 255
-    return new_frame
-
-def edge2(frame):
     new_frame = frame.copy()
     for row in range(5, len(frame) - 4):
         for col in range(5, len(frame[row]) - 4):

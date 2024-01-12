@@ -91,7 +91,7 @@ class SpotifyPlayer():
 class RootModel:
     def __init__(self,coursedetect_model=None,homedetect_model=None,menudetect_model=None,playercountdetect_model=None,
                  char2detect_model=None,char4detect_model=None,vehicle2detect_model=None,vehicle4detect_model=None,
-                 godetect_model=None,scoringdetect_model=None):
+                 godetect_model=None,scoringdetect_model=None,plusdetect_model=None):
         self.coursedetect_model = coursedetect_model
         self.homedetect_model = homedetect_model
         self.menudetect_model = menudetect_model
@@ -102,6 +102,7 @@ class RootModel:
         self.vehicle4detect_model = vehicle4detect_model
         self.godetect_model = godetect_model
         self.scoringdetect_model = scoringdetect_model
+        self.plusdetect_model = plusdetect_model
 
 class Coordinates:
     def __init__(self):
@@ -116,6 +117,7 @@ class Coordinates:
         self.go2_coordinates = [740,1140,200,360]
         self.go4_coordinates = [294, 694, 200, 360]
         self.scoring_coordinates = []
+        self.plus_coordinates = []
     def set_scoringcoordinates(self):
         [x0, x1, y0, y1] = [610, 1090, 73, 149]
         boxheight = y1 - y0
@@ -123,6 +125,18 @@ class Coordinates:
             y2 = y0 + (boxheight * i)
             y3 = y2 + boxheight
             self.scoring_coordinates.append([x0, x1, y2, y3])
+    def set_pluscoordinates(self):
+        [x0, x1, x2, x3] = [1210, 1255, 1255, 1300]
+        [y0, y1] = [73, 149]
+        for i in range(12):
+            xc1 = x0
+            xc2 = x1
+            if i >= 3:
+                xc1 = x2
+                xc2 = x3
+            y2 = y0 + ((y1 - y0) * i)
+            y3 = y2 + (y1 - y0)
+            self.plus_coordinates.append([xc1, xc2, y2, y3])
 
 class Course:
     def __init__(self,course_name=None,song_queue=None,fast_staff=None,length_rank=None,AP=None,CPI=None,
@@ -141,7 +155,7 @@ class Course:
 class GP_Info():
     def __init__(self,menu_screen=None,player_count=None,players=None,colors=None,read_menu=None,racing=None,
                  rgb_colors=None,character_stats=None,vehicle_stats=None,started=None,time=None,
-                 score_read=None,score_scan=None,scoreboard=None):
+                 score_read=None,score_scan=None,scoreboard=None,temp_scoreboard=None):
         self.menu_screen = menu_screen
         self.player_count = player_count
         self.players = players
@@ -156,6 +170,7 @@ class GP_Info():
         self.score_scan = score_scan
         self.score_read = score_read
         self.scoreboard = scoreboard
+        self.temp_scoreboard = temp_scoreboard
         self.score_dict = {1: 15, 2: 12, 3: 10, 4: 8, 5: 7, 6: 6, 7: 5, 8: 4, 9: 3, 10: 2, 11: 1, 12: 0}
     def model_switching(self,course_index,gp_info):
         if course_index == 0:
@@ -171,30 +186,53 @@ class GP_Info():
             self.started = False
             self.score_scan = True
     def check_ready(self,frame,root_model,coordinates):
-        index1, confidence1 = predict(frame, coordinates.scoring_coordinates[0], root_model.scoringdetect_model,
-                                      'extremevalues')
-        index2, confidence2 = predict(frame, coordinates.scoring_coordinates[11], root_model.scoringdetect_model,
-                                      'extremevalues')
-        if ((index1!=25)and(index2!=25)):
+        plus_count = 0
+        for i in range(12):
+            index, confidence = predict(frame, coordinates.plus_coordinates[i], root_model.plusdetect_model,
+                                      'sharpimgtobinary')
+            if ((index==1)and(confidence>0.9)):
+                plus_count += 1
+        if plus_count >= 3:
             self.score_read = True
+            self.temp_scoreboard = []
+            for i in range(12):
+                self.temp_scoreboard.append([25,0])
+    def quit_ready(self,frame,root_model,coordinates):
+        plus_count = 0
+        for i in range(12):
+            index, confidence = predict(frame, coordinates.plus_coordinates[i], root_model.plusdetect_model,
+                                        'sharpimgtobinary')
+            if ((index == 1) and (confidence > 0.9)):
+                plus_count += 1
+        if plus_count <= 1:
+            self.score_read = False
+            self.score_scan = False
+            return True
+        return False
     def read_scoreboard(self,frame,root_model,coordinates):
-        temp_scoreboard = []
         for i in range(12):
             index,confidence = predict(frame, coordinates.scoring_coordinates[i], root_model.scoringdetect_model,
                                           'extremevalues')
-            temp_scoreboard.append(index)
-            if index == 25:
-                break
-        return temp_scoreboard
-    def update_scoreboard(self,temp_scoreboard):
-        self.score_read = False
-        self.score_scan = False
-        for i in range(len(temp_scoreboard)):
-            index = temp_scoreboard[i]
-            for j in range(len(self.scoreboard)):
-                character = self.scoreboard[j][0]
-                if index == character:
-                    self.scoreboard[j][1] += self.score_dict[i]
+            if index != 25:
+                if confidence >= self.temp_scoreboard[i][1]:
+                    self.temp_scoreboard[i][0] = index
+                    self.temp_scoreboard[i][1] = confidence
+    def update_scoreboard(self):
+        if self.scoreboard[0][0] != 0:
+            for i in range(len(self.temp_scoreboard)):
+                index = self.temp_scoreboard[i][0]
+                for j in range(len(self.scoreboard)):
+                    character = self.scoreboard[j][0]
+                    if index == character:
+                        self.scoreboard[j][1] += self.score_dict[i+1]
+        else:
+            for i in range(len(self.temp_scoreboard)):
+                index = self.temp_scoreboard[i][0]
+                self.scoreboard[i][0] = index
+                if index == 25:
+                    self.scoreboard[i][0] = random.randint(0,24)
+                self.scoreboard[i][1] += self.score_dict[i+1]
+        self.scoreboard.sort(key=lambda x:x[1],reverse=True)
     def initialize_scoreboard(self):
         scoreboard = []
         for i in range(12):
@@ -203,8 +241,8 @@ class GP_Info():
         start_index = 12 - self.player_count
         for i in range(self.player_count):
             p = self.players[self.colors[i]]
-            index = self.character_stats[p.character]
-            scoreboard[start_index+i][0] = index
+            character_index = self.character_stats[p.character].index
+            scoreboard[start_index+i][0] = character_index
         self.scoreboard = scoreboard
 class Player():
     def __init__(self,name=None,color=None,character=None,vehicle=None,score=None,place=None):
@@ -216,8 +254,9 @@ class Player():
         self.place = place
 
 class Stat_Asset():
-    def __init__(self,name=None,sp=None,wt=None,ac=None,hn=None,dr=None,off=None,mt=None,sigma=None,size=None):
+    def __init__(self,name=None,index = None,sp=None,wt=None,ac=None,hn=None,dr=None,off=None,mt=None,sigma=None,size=None):
         self.name = name
+        self.index = index
         self.sp = sp
         self.wt = wt
         self.ac = ac
@@ -255,11 +294,13 @@ def initialize_rootmodel():
     root_model.vehicle4detect_model = load_model('models/vehicle4detectionmodel')
     root_model.godetect_model = load_model('models/godetectionmodel')
     root_model.scoringdetect_model = load_model('models/scoringdetectionmodel')
+    root_model.plusdetect_model = load_model('models/plusdetectionmodel')
     return root_model
 
 def initialize_coordinates():
     coordinates = Coordinates()
     coordinates.set_scoringcoordinates()
+    coordinates.set_pluscoordinates()
     return coordinates
 
 def check_imageexists(courseimage_directory,image_path):
@@ -349,7 +390,7 @@ def get_attributes(file):
     asset_stats = dict()
     for i in range(1,len(datalines)):
         data = datalines[i].split(',')
-        c = Stat_Asset(name=data[0],sp=data[1],wt=data[2],ac=data[3],hn=data[4],dr=data[5],off=data[6],mt=data[7],
+        c = Stat_Asset(name=data[0],index=i-1,sp=data[1],wt=data[2],ac=data[3],hn=data[4],dr=data[5],off=data[6],mt=data[7],
                       sigma=data[8],size=remove_newline(data[9]))
         asset_stats[i] = c
     return asset_stats

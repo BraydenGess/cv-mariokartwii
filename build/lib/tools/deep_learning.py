@@ -62,8 +62,6 @@ def filter_frame(frame,coordinates,filter):
         new_frame = superlightimgtobinary(new_frame)
     if filter == 'extremevalues':
         new_frame = extreme_values(new_frame)
-    if filter == 'edge_detection':
-        new_frame = edge_detection(new_frame)
     return new_frame
 
 def single_conversion(frame):
