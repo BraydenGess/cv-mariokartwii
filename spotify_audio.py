@@ -66,7 +66,7 @@ def play_music(frame,root_model,coordinates,sp,gp_info):
         gp_info.model_switching(course_index,gp_info)
 
 def run_audio(sp,frame,root_model,coordinates,gp_info):
-    pause_toggle(sp,frame,root_model,coordinates)
+    #pause_toggle(sp,frame,root_model,coordinates)
     if not gp_info.read_menu:
         play_music(frame,root_model,coordinates,sp,gp_info)
     #sp.auto_skip() - needs some fixing

@@ -19,7 +19,19 @@ def countdown(frame,root_model,coordinates,gp_info,sp):
             if sp.song_queued.song_name == 'Jump Around':
                 sp.seek_track(ms=5500)
 
+def scoring(frame,root_model,coordinates,gp_info):
+    print(gp_info.scoreboard)
+    if ((not gp_info.score_read)and(gp_info.score_scan)):
+        gp_info.check_ready(frame,root_model,coordinates)
+    elif((gp_info.score_read)and(gp_info.score_scan)):
+        action =gp_info.quit_ready(frame, root_model, coordinates)
+        if action:
+            gp_info.update_scoreboard()
+        else:
+            gp_info.read_scoreboard(frame,root_model,coordinates)
+
 def nextgenstats(frame,root_model,coordinates,gp_info,sp):
     if ((gp_info.racing) and (not gp_info.started)):
         countdown(frame,root_model,coordinates,gp_info,sp)
+    scoring(frame, root_model, coordinates, gp_info)
     return 42

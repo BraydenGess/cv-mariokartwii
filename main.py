@@ -8,7 +8,7 @@ from nextgenstats.live import nextgenstats
 def main():
     sp, coordinates = audio_setup(genre='Rock', credentials_file='credentials.txt')
     root_model,gp_info = initialize_rootmodel(),initialize_gpinfo()
-    graphics = initialize_graphics(screen_setting='fullscreen')
+    #graphics = initialize_graphics(screen_setting='fullscreenx')
     spotify_safetycheck(sp)
     cap = cv.VideoCapture(0)
     while cap.isOpened():
@@ -17,6 +17,6 @@ def main():
             run_audio(sp,frame,root_model,coordinates,gp_info)
             character_select(frame,coordinates,root_model,gp_info)
             nextgenstats(frame, root_model, coordinates, gp_info,sp)
-        graphics.run_graphics(gp_info,sp,ret)
+        #graphics.run_graphics(gp_info,sp,ret)
 
 main()

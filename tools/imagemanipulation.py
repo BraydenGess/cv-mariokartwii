@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 
 def imgtobinary(image):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -11,6 +12,11 @@ def imgtobinary(image):
 def sharpimgtobinary(image):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     out_binary = cv2.threshold(image, 200, 255, cv2.THRESH_BINARY)[1]
+    return out_binary
+
+def supersharpimgtobinary(image):
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    out_binary = cv2.threshold(image, 235, 255, cv2.THRESH_BINARY)[1]
     return out_binary
 
 def lightimgtobinary(image):
@@ -38,10 +44,16 @@ def extreme_values(image):
     dark = darkbinary(image,225)
     light = lightbinary(image,225)
     new = (dark+light)
+    new = edge(new)
     return new
 
-def extreme_values2(image):
-    dark = darkbinary(image,245)
-    light = lightbinary(image,245)
-    new = (dark+light)
-    return new
+def edge(frame):
+    new_frame = frame.copy()
+    for row in range(5, len(frame) - 4):
+        for col in range(5, len(frame[row]) - 4):
+            window = frame[row - 4:row + 4, col - 4:col + 4]
+            filter = np.ones([8, 8], dtype=int)
+            x = np.sum(np.multiply(window, filter))
+            if x >= (255 * 54):
+                new_frame[row][col] = 0
+    return new_frame
