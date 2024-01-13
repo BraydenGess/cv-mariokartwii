@@ -1,8 +1,9 @@
 import spotipy
-from spotipy.oauth2 import SpotifyClientCredentials,SpotifyOAuth
-from tools.utility import *
-from tools.deep_learning import predict
+import sys
 import cv2 as cv
+from tools.utility import *
+from spotipy.oauth2 import SpotifyClientCredentials,SpotifyOAuth
+from tools.deep_learning import predict
 
 def spotify_safetycheck(sp):
     warning = False
@@ -37,24 +38,26 @@ def pause_toggle(sp,frame,root_model,coordinates):
             if not sp.is_paused:
                 sp.pause()
 
-def double_verifycourse(coordinates,root_model,index,alpha):
+def get_newframe():
     cap = cv.VideoCapture(0)
     ret, next_frame = cap.read()
     if not ret:
-        return False
-    index2, confidence2 = predict(next_frame, coordinates.course_coordinates, root_model.coursedetect_model,
-                                  'imgtobinary')
-    if ((index2==index)and(confidence2>alpha)):
-         return True
-    return False
+        print('Disconnected')
+        sys.exit()
+    return next_frame
+
+def scan_course(frame,root_model,coordinates):
+    index, confidence = predict(frame, coordinates.course_coordinates, root_model.coursedetect_model, 'imgtobinary')
+    if (((index == 0) and (confidence > 0.87))or((index!=33)and(confidence>0.95))):
+        return True,index,confidence
+    return False,index,confidence
 
 def get_course(frame,root_model,coordinates):
-    index,confidence = predict(frame,coordinates.course_coordinates,root_model.coursedetect_model,'imgtobinary')
-    if ((index == 0) and (confidence > 0.87)):
-        if double_verifycourse(coordinates,root_model,index,alpha=0.87):
-            return index,confidence
-    if ((index!=33)and(confidence>0.95)):
-        if double_verifycourse(coordinates,root_model,index,alpha=0.95):
+    valid,index,confidence = scan_course(frame,root_model,coordinates)
+    if valid:
+        next_frame = get_newframe()
+        double_valid, double_index, double_confidence = scan_course(next_frame, root_model, coordinates)
+        if ((double_valid)and(double_index==index)):
             return index,confidence
     return 33,0
 
