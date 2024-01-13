@@ -62,6 +62,8 @@ def filter_frame(frame,coordinates,filter):
         new_frame = superlightimgtobinary(new_frame)
     if filter == 'extremevalues':
         new_frame = extreme_values(new_frame)
+    if filter == 'switch':
+        new_frame = switch(new_frame)
     return new_frame
 
 def single_conversion(frame):
@@ -87,3 +89,9 @@ def predict(frame,coordinates,model,filter):
     index = np.argmax(prediction[0])
     confidence = prediction[0][index]
     return index,confidence
+
+def full_predict(frame,coordinates,model,filter):
+    new_frame = filter_frame(frame,coordinates,filter)
+    binary_array = single_conversion(new_frame)
+    prediction = model.predict(binary_array,verbose=False)
+    return prediction

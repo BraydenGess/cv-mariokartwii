@@ -21,7 +21,7 @@ class SpotifyPlayer():
     def pause(self):
         if self.spotify.current_playback()['is_playing']:
             self.spotify.pause_playback(device_id=None)
-            self.is_pause = True
+            self.is_paused = True
     def resume(self):
         if not self.spotify.current_playback()['is_playing']:
             self.spotify.start_playback(device_id=None)
@@ -196,7 +196,7 @@ class GP_Info():
             self.score_read = True
             self.temp_scoreboard = []
             for i in range(12):
-                self.temp_scoreboard.append([25,0])
+                self.temp_scoreboard.append([25,-1])
     def quit_ready(self,frame,root_model,coordinates):
         plus_count = 0
         for i in range(12):
@@ -204,16 +204,25 @@ class GP_Info():
                                         'sharpimgtobinary')
             if ((index == 1) and (confidence > 0.9)):
                 plus_count += 1
-        if plus_count <= 1:
+        if plus_count <= 3:
             self.score_read = False
             self.score_scan = False
             return True
         return False
     def read_scoreboard(self,frame,root_model,coordinates):
+        print(self.temp_scoreboard)
         for i in range(12):
-            index,confidence = predict(frame, coordinates.scoring_coordinates[i], root_model.scoringdetect_model,
-                                          'extremevalues')
+            prediction = full_predict(frame, coordinates.scoring_coordinates[i], root_model.scoringdetect_model,
+                                          'switch')
+            index = np.argmax(prediction[0])
+            confidence = prediction[0][index]
             if index != 25:
+                if confidence >= self.temp_scoreboard[i][1]:
+                    self.temp_scoreboard[i][0] = index
+                    self.temp_scoreboard[i][1] = confidence
+            else:
+                index = np.argmax(prediction[0][:-1])
+                confidence = prediction[0][index]
                 if confidence >= self.temp_scoreboard[i][1]:
                     self.temp_scoreboard[i][0] = index
                     self.temp_scoreboard[i][1] = confidence
@@ -293,7 +302,7 @@ def initialize_rootmodel():
     root_model.vehicle2detect_model = load_model('models/vehicle2detectionmodel')
     root_model.vehicle4detect_model = load_model('models/vehicle4detectionmodel')
     root_model.godetect_model = load_model('models/godetectionmodel')
-    root_model.scoringdetect_model = load_model('models/scoringdetectionmodel')
+    root_model.scoringdetect_model = load_model('models/scoringdetectionmodel2')
     root_model.plusdetect_model = load_model('models/plusdetectionmodel')
     return root_model
 

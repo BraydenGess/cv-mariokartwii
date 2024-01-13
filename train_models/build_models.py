@@ -72,10 +72,10 @@ def set_gomodel2parameters():
     training_folder = 'train_models/training_images/go_trainingimages2/'
     label_key = {'GO':0,'1':1,'2':2,'3':3,'ANone':4}
     binarydata_file = 'train_models/binary_imagedata/go2images.csv'
-    model_path = 'models/go2detectionmodel'
-    p = Parameters(layers=[22,14], activations=['relu', 'relu', 'softmax'], num_outnodes=len(label_key),
+    model_path = 'models/godetectionmodel'
+    p = Parameters(layers=[64,48], activations=['relu', 'relu', 'softmax'], num_outnodes=len(label_key),
                    loss_function='sparse_categorical_crossentropy',
-                   opt_function='adam', measure=['accuracy'], batch_size=16, num_epochs=80)
+                   opt_function='adam', measure=['accuracy'], batch_size=32, num_epochs=80)
     return model_path, coordinates, training_folder, label_key, binarydata_file, p
 
 def get_playerdict(file):
@@ -101,10 +101,10 @@ def get_coordinates():
 
 def set_scoringmodelparameters():
     coordinates = get_coordinates()
-    training_folder = 'train_models/training_images/scoring_trainingimages/'
+    training_folder = 'train_models/training_images/scoring_trainingimages2/'
     label_key = get_playerdict(file='nextgenstats/information/characterstats.csv')
-    binarydata_file = 'train_models/binary_imagedata/scoringimages.csv'
-    model_path = 'models/scoringdetectionmodel'
+    binarydata_file = 'train_models/binary_imagedata/scoringimages2.csv'
+    model_path = 'models/scoringdetectionmodel2'
     p = Parameters(layers=[28,25], activations=['relu','relu','softmax'], num_outnodes=len(label_key),
                    loss_function='sparse_categorical_crossentropy',
                    opt_function='adam', measure=['accuracy'], batch_size=128, num_epochs=110)

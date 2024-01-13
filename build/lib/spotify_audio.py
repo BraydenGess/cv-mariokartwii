@@ -34,9 +34,11 @@ def pause_toggle(sp,frame,root_model,coordinates):
     index,confidence = predict(frame,coordinates.home_coordinates,root_model.homedetect_model,'imgtobinary')
     if confidence >= 0.8:
         if index == 0:
-            sp.resume()
+            if sp.is_paused:
+                sp.resume()
         else:
-            sp.pause()
+            if not sp.is_paused:
+                sp.pause()
 
 def double_verifycourse(coordinates,root_model,index,alpha):
     cap = cv.VideoCapture(0)
@@ -67,6 +69,6 @@ def play_music(frame,root_model,coordinates,sp,gp_info):
 
 def run_audio(sp,frame,root_model,coordinates,gp_info):
     pause_toggle(sp,frame,root_model,coordinates)
-    if not gp_info.read_menu:
+    if (not gp_info.read_menu):
         play_music(frame,root_model,coordinates,sp,gp_info)
     #sp.auto_skip() - needs some fixing

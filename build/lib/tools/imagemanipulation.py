@@ -57,3 +57,9 @@ def edge(frame):
             if x >= (255 * 54):
                 new_frame[row][col] = 0
     return new_frame
+
+def switch(frame):
+    dark = supersharpimgtobinary(frame)
+    light = supersharpimgtobinary(255-frame)
+    new = (dark + light)
+    return new
