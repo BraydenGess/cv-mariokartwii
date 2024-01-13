@@ -207,7 +207,7 @@ class GP_Info():
                 return True
         return False
     def read_scoreboard(self,frame,root_model,coordinates):
-        for i in range(12):
+        for i in range(len(coordinates.scoring_coordinates)):
             prediction = full_predict(frame, coordinates.scoring_coordinates[i], root_model.scoringdetect_model,
                                           'switch')
             index = np.argmax(prediction[0][:-1])
@@ -232,16 +232,21 @@ class GP_Info():
                 self.scoreboard[i][1] += self.score_dict[i+1]
         self.scoreboard.sort(key=lambda x:x[1],reverse=True)
     def initialize_scoreboard(self):
-        scoreboard = []
-        for i in range(12):
-            character_index = random.randint(0,24)
-            scoreboard.append([character_index,0])
-        start_index = 12 - self.player_count
+        cpu_scoreboard = []
+        player_scoreboard = []
+        available_players = []
+        for i in range(24):
+            available_players.append(i)
         for i in range(self.player_count):
             p = self.players[self.colors[i]]
             character_index = self.character_stats[p.character].index
-            scoreboard[start_index+i][0] = character_index
-        self.scoreboard = scoreboard
+            player_scoreboard.append([character_index,0])
+            if character_index in available_players:
+                available_players.remove(character_index)
+        random.shuffle(available_players)
+        for i in range(12-self.player_count):
+            cpu_scoreboard.append([available_players[i],0])
+        self.scoreboard = cpu_scoreboard+player_scoreboard
 class Player():
     def __init__(self,name=None,color=None,character=None,vehicle=None,score=None,place=None):
         self.name = name
@@ -350,14 +355,6 @@ def make_coursedict(file_name):
     course_dict = add_coursedata(course_dict,file_name)
     return course_dict,course_indexlookup
 
-def comma_innamecase(data):
-    song_name = ''
-    for i in range(len(data)-1):
-        song_name += data[i]
-        if i != len(data) - 2:
-            song_name += ','
-    return song_name
-
 def make_songkeydict(file):
     songkey_dict = dict()
     f = open(file, 'r')
@@ -376,10 +373,9 @@ def initialize_playlist(playlist_name):
     songkey_dict = make_songkeydict(file = 'audio/song_uri.csv')
     course_playlists = os.listdir('audio/playlists/')
     file_name = playlist_name+'.csv'
-    if file_name in course_playlists:
-        course_dict,null = make_coursedict(file_name)
-    else:
+    if file_name not in course_playlists:
         raise Exception("Not Valid Playlist")
+    course_dict,null = make_coursedict(file_name)
     return course_dict,songkey_dict
 
 def get_attributes(file):

@@ -16,17 +16,14 @@ def add_objectolist(gp_info,frame,coordinates,model,filter,alpha):
             objects.append(index)
     return objects
 def get_objects(frame,coordinates2,coordinates4,model2,model4,gp_info,alpha,filter):
-    coordinates = None
+    coordinates = coordinates4
+    model = model4
     if gp_info.player_count == 2:
         coordinates = coordinates2
         model = model2
-    if gp_info.player_count >= 3:
-        coordinates = coordinates4
-        model = model4
-    if coordinates != None:
-        objects = add_objectolist(gp_info, frame, coordinates, model, filter, alpha)
-        if len(objects) == gp_info.player_count:
-            return True,objects
+    objects = add_objectolist(gp_info, frame, coordinates, model, filter, alpha)
+    if len(objects) == gp_info.player_count:
+        return True,objects
     return False,None
 
 def get_characters(frame,coordinates,root_model,gp_info):
