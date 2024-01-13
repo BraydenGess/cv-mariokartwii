@@ -21,9 +21,9 @@ def countdown(frame,root_model,coordinates,gp_info,sp):
 
 def scoring(frame,root_model,coordinates,gp_info):
     if ((not gp_info.score_read)and(gp_info.score_scan)):
-        gp_info.check_ready(frame,root_model,coordinates)
+        gp_info.control_scan(frame,root_model,coordinates)
     elif((gp_info.score_read)and(gp_info.score_scan)):
-        action = gp_info.quit_ready(frame, root_model, coordinates)
+        action = gp_info.control_scan(frame, root_model, coordinates)
         if action:
             gp_info.update_scoreboard()
         else:

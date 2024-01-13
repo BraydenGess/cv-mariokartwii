@@ -6,15 +6,12 @@ import cv2 as cv
 
 def spotify_safetycheck(sp):
     warning = False
-    safe = False
-    while not safe:
-        if sp.spotify.current_playback() != None:
-            safe = True
-            sp.support_volume = sp.spotify.current_playback()['device']['supports_volume']
-            print('Supports Volume')
-        elif not warning:
+    while sp.spotify.current_playback() == None:
+        if not warning:
             print('Activate Device')
             warning = True
+    sp.support_volume = sp.spotify.current_playback()['device']['supports_volume']
+    print(f'Supports Volume: {sp.support_volume}')
     print('Ready')
 
 def setup_spotifyobject(file):

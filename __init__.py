@@ -1,10 +1,10 @@
+import os
 import random
+import sys
 from keras.models import load_model
 from tools.utility import remove_newline
 from collections import deque
 from spotify_audio import setup_spotifyobject
-import os
-import sys
 from urllib.request import urlopen
 from tools.deep_learning import *
 
@@ -34,35 +34,34 @@ class SpotifyPlayer():
             self.spotify.volume(volume_percent=100,device_id=None)
     def seek_track(self,ms):
         self.spotify.seek_track(ms)
-        return 42
     def search(self,searchQuery):
         search_results = self.spotify.search(searchQuery, 1, 0, "track")
         tracks_items = search_results['tracks']['items']
-        song_uri = tracks_items[0]['uri']
-        song_name = tracks_items[0]['name']
+        song_uri,song_name = tracks_items[0]['uri'],tracks_items[0]['name']
         image_url = tracks_items[0]['album']['images'][0]['url']
         search_song = Song(song_name=song_name,uri=song_uri,img=image_url)
         return search_song
     def get_song(self,song):
         if song in self.songkey_dict:
-            song = self.songkey_dict[song]
-        else:
-            song = self.search(song)
-        return song
-    def queue_song(self,songs):
-        for song in songs:
-            self.spotify.add_to_queue(uri=song.uri, device_id=None)
+            return self.songkey_dict[song]
+        return self.search(song)
+    def skip_tosong(self,song_uri):
         self.min_volume()
-        for element in self.spotify.queue()['queue']:
+        user_queue = self.spotify.queue()['queue']
+        for element in user_queue:
             self.spotify.next_track()
-            if songs[0].uri == element['uri']:
+            if song_uri == element['uri']:
                 self.max_volume()
                 break
+    def queue_songs(self,songs):
+        for song in songs:
+            self.spotify.add_to_queue(uri=song.uri, device_id=None)
+        self.skip_tosong(song_uri=songs[0].uri)
     def queue_newsong(self,course_index):
         song = self.playlist[course_index].song_queue.popleft()
         next_song = self.playlist[course_index].song_queue.popleft()
         song_queued = self.get_song(song)
-        self.queue_song(songs=[song_queued,self.get_song(next_song)])
+        self.queue_songs(songs=[song_queued,self.get_song(next_song)])
         self.course_queued = course_index
         self.song_queued = song_queued
         self.img_str = urlopen(song_queued.img).read()
@@ -174,58 +173,48 @@ class GP_Info():
         self.score_dict = {1: 15, 2: 12, 3: 10, 4: 8, 5: 7, 6: 6, 7: 5, 8: 4, 9: 3, 10: 2, 11: 1, 12: 0}
     def model_switching(self,course_index,gp_info):
         if course_index == 0:
-            self.read_menu = True
             self.racing = False
-            gp_info.menu_screen = 0
             self.started = False
+            self.read_menu = True
+            gp_info.menu_screen = 0
             for color in gp_info.colors:
                 gp_info.players[color].vehicle = None
         else:
             self.read_menu = False
-            self.racing = True
             self.started = False
+            self.racing = True
             self.score_scan = True
-    def check_ready(self,frame,root_model,coordinates):
+    def get_pluscount(self,frame,root_model,coordinates):
         plus_count = 0
         for i in range(12):
             index, confidence = predict(frame, coordinates.plus_coordinates[i], root_model.plusdetect_model,
                                       'sharpimgtobinary')
             if ((index==1)and(confidence>0.9)):
                 plus_count += 1
-        if plus_count >= 3:
-            self.score_read = True
-            self.temp_scoreboard = []
-            for i in range(12):
-                self.temp_scoreboard.append([25,-1])
-    def quit_ready(self,frame,root_model,coordinates):
-        plus_count = 0
-        for i in range(12):
-            index, confidence = predict(frame, coordinates.plus_coordinates[i], root_model.plusdetect_model,
-                                        'sharpimgtobinary')
-            if ((index == 1) and (confidence > 0.9)):
-                plus_count += 1
-        if plus_count <= 3:
-            self.score_read = False
-            self.score_scan = False
-            return True
+        return plus_count
+    def control_scan(self,frame,root_model,coordinates):
+        plus_count = self.get_pluscount(frame,root_model,coordinates)
+        if not self.score_read:
+            if plus_count >= 3:
+                self.score_read = True
+                self.temp_scoreboard = []
+                for i in range(12):
+                    self.temp_scoreboard.append([25, -1])
+        else:
+            if plus_count <= 3:
+                self.score_read = False
+                self.score_scan = False
+                return True
         return False
     def read_scoreboard(self,frame,root_model,coordinates):
-        print(self.temp_scoreboard)
         for i in range(12):
             prediction = full_predict(frame, coordinates.scoring_coordinates[i], root_model.scoringdetect_model,
                                           'switch')
-            index = np.argmax(prediction[0])
+            index = np.argmax(prediction[0][:-1])
             confidence = prediction[0][index]
-            if index != 25:
-                if confidence >= self.temp_scoreboard[i][1]:
-                    self.temp_scoreboard[i][0] = index
-                    self.temp_scoreboard[i][1] = confidence
-            else:
-                index = np.argmax(prediction[0][:-1])
-                confidence = prediction[0][index]
-                if confidence >= self.temp_scoreboard[i][1]:
-                    self.temp_scoreboard[i][0] = index
-                    self.temp_scoreboard[i][1] = confidence
+            if confidence >= self.temp_scoreboard[i][1]:
+                self.temp_scoreboard[i][0] = index
+                self.temp_scoreboard[i][1] = confidence
     def update_scoreboard(self):
         if self.scoreboard[0][1] != 0:
             for i in range(len(self.temp_scoreboard)):
