@@ -42,9 +42,8 @@ def get_newframe():
     cap = cv.VideoCapture(0)
     ret, next_frame = cap.read()
     if not ret:
-        print('Disconnected')
-        sys.exit()
-    return next_frame
+        return ret,ret
+    return next_frame,ret
 
 def scan_course(frame,root_model,coordinates):
     index, confidence = predict(frame, coordinates.course_coordinates, root_model.coursedetect_model, 'imgtobinary')
@@ -55,10 +54,11 @@ def scan_course(frame,root_model,coordinates):
 def get_course(frame,root_model,coordinates):
     valid,index,confidence = scan_course(frame,root_model,coordinates)
     if valid:
-        next_frame = get_newframe()
-        double_valid, double_index, double_confidence = scan_course(next_frame, root_model, coordinates)
-        if ((double_valid)and(double_index==index)):
-            return index,confidence
+        next_frame,ret = get_newframe()
+        if ret:
+            double_valid, double_index, double_confidence = scan_course(next_frame, root_model, coordinates)
+            if ((double_valid)and(double_index==index)):
+                return index,confidence
     return 33,0
 
 def play_music(frame,root_model,coordinates,sp,gp_info):

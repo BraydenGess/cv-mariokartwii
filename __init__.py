@@ -237,7 +237,7 @@ class GP_Info():
         available_players = []
         for i in range(24):
             available_players.append(i)
-        for i in range(self.player_count):
+        for i in range(self.player_count-1,-1,-1):
             p = self.players[self.colors[i]]
             character_index = self.character_stats[p.character].index
             player_scoreboard.append([character_index,0])
