@@ -154,7 +154,7 @@ class Course:
 class GP_Info():
     def __init__(self,menu_screen=None,player_count=None,players=None,colors=None,read_menu=None,racing=None,
                  rgb_colors=None,character_stats=None,vehicle_stats=None,started=None,time=None,
-                 score_read=None,score_scan=None,scoreboard=None,temp_scoreboard=None):
+                 score_read=None,score_scan=None,scoreboard=None,temp_scoreboard=None,gp_courses=None):
         self.menu_screen = menu_screen
         self.player_count = player_count
         self.players = players
@@ -166,24 +166,28 @@ class GP_Info():
         self.character_stats = character_stats
         self.vehicle_stats = vehicle_stats
         self.time = time
+        ### Scoreboard Assets
         self.score_scan = score_scan
         self.score_read = score_read
         self.scoreboard = scoreboard
         self.temp_scoreboard = temp_scoreboard
         self.score_dict = {1: 15, 2: 12, 3: 10, 4: 8, 5: 7, 6: 6, 7: 5, 8: 4, 9: 3, 10: 2, 11: 1, 12: 0}
-    def model_switching(self,course_index,gp_info):
+        self.gp_courses = gp_courses
+    def model_switching(self,course_index):
         if course_index == 0:
             self.racing = False
             self.started = False
             self.read_menu = True
-            gp_info.menu_screen = 0
-            for color in gp_info.colors:
-                gp_info.players[color].vehicle = None
+            self.menu_screen = 0
+            for color in self.colors:
+                self.players[color].vehicle = None
+            self.gp_courses = []
         else:
             self.read_menu = False
             self.started = False
             self.racing = True
             self.score_scan = True
+            self.gp_courses.append(course_index)
     def get_pluscount(self,frame,root_model,coordinates):
         plus_count = 0
         for i in range(12):

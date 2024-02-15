@@ -46,8 +46,8 @@ def get_newframe():
     return next_frame,ret
 
 def scan_course(frame,root_model,coordinates):
-    index, confidence = predict(frame, coordinates.course_coordinates, root_model.coursedetect_model, 'imgtobinary')
-    if (((index == 0) and (confidence > 0.87))or((index!=33)and(confidence>0.95))):
+    index, confidence = predict(frame, coordinates.course_coordinates, root_model.coursedetect_model,'imgtobinary')
+    if ((index!=33)and(confidence>0.95)):
         return True,index,confidence
     return False,index,confidence
 
@@ -65,7 +65,7 @@ def play_music(frame,root_model,coordinates,sp,gp_info):
     course_index,confidence = get_course(frame,root_model,coordinates)
     if ((course_index != 33)and(course_index != sp.course_queued)):
         sp.queue_newsong(course_index)
-        gp_info.model_switching(course_index,gp_info)
+        gp_info.model_switching(course_index)
 
 def run_audio(sp,frame,root_model,coordinates,gp_info):
     pause_toggle(sp,frame,root_model,coordinates)

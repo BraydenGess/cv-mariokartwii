@@ -1,0 +1,36 @@
+1,N,0,1,D,DelfinoSquare,150,Agg,Hard,3,Y,3,Baby Mario,Bullet,A,2,Baby Mario,Bullet,M,1,Baby Mario,Bullet,M,5,Baby Mario,Bullet,A
+1,Y,1,1,D,CoconutMall,150,Agg,Hard,3,Y,8,Baby Mario,Bullet,A,1,Baby Mario,Bullet,M,3,Baby Mario,Bullet,M,2,Baby Mario,Bullet,A
+1,N,0,1,D,N64BowsersCastle,150,Agg,Hard,3,Y,3,Baby Mario,Bullet,A,2,Baby Mario,Bullet,M,4,Baby Mario,Bullet,M,1,Baby Mario,Bullet,A
+1F,N,1,1,D,Delfino SquareCoconut MallN64 Bowser's Castle,150,Agg,Hard,3,Y,4*,Baby Mario,Bullet,A,1*,Baby Mario,Bullet,M,3*,Baby Mario,Bullet,M,2*,Baby Mario,Bullet,A
+2,N,0,2,D,MapleTreeway,150,Agg,Hard,3,Y,1,Baby Mario,Bullet,A,3,Toad,Bullet,M,10,Baby Mario,Bullet,M,6,Baby Mario,Bullet,A
+2,Y,1,2,D,BowsersCastle,150,Agg,Hard,3,Y,2,Baby Mario,Bullet,A,5,Toad,Bullet,M,1,Baby Mario,Bullet,M,3,Baby Mario,Bullet,A
+2,N,0,2,D,ShyGuyBeach,150,Agg,Hard,3,Y,1,Baby Mario,Bullet,A,7,Toad,Bullet,M,2,Baby Mario,Bullet,M,4,Baby Mario,Bullet,A
+2F,N,1,2,D,Maple TreewayBowser's CastleShy Guy Beach,150,Agg,Hard,3,Y,1*,Baby Mario,Bullet,A,5*,Toad,Bullet,M,2*,Baby Mario,Bullet,M,4*,Baby Mario,Bullet,A
+3,N,0,3,D,GCNMarioCircuit,150,Agg,Hard,3,Y,4,Toad,Bullet,A,5,Toad,Bullet,M,3,Baby Mario,Bullet,M,1,Baby Mario,Bullet,A
+3,Y,1,3,D,BowserCastle3,150,Agg,Hard,3,Y,1,Toad,Bullet,A,6,Toad,Bullet,M,4,Baby Mario,Bullet,M,3,Baby Mario,Bullet,A
+3,N,0,3,D,ShyGuyBeach,150,Agg,Hard,3,Y,2,Toad,Bullet,A,1,Toad,Bullet,M,4,Baby Mario,Bullet,M,3,Baby Mario,Bullet,A
+3F,N,1,3,D,GCNMarioCircuitBowser Castle 3Shy Guy Beach,150,Agg,Hard,3,Y,1*,Toad,Bullet,A,3*,Toad,Bullet,M,4*,Baby Mario,Bullet,M,2*,Baby Mario,Bullet,A
+4,N,0,4,D,LuigiCircuit,150,Agg,Hard,3,Y,2,Mario,Mach,A,1,Toad,Bullet,M,3,Baby Mario,Bullet,M,4,Baby Mario,Bullet,A
+4,Y,1,4,D,MooMooMeadows,150,Agg,Hard,3,Y,1,Mario,Mach,A,7,Toad,Bullet,M,2,Baby Mario,Bullet,M,4,Baby Mario,Bullet,A
+4,N,0,4,D,DelfinoSquare,150,Agg,Hard,3,Y,2,Mario,Mach,A,1,Toad,Bullet,M,4,Baby Mario,Bullet,M,3,Baby Mario,Bullet,A
+4F,N,1,4,D,Luigi CircuitMoo Moo MeadowsDelfino Square,150,Agg,Hard,3,Y,1*,Mario,Mach,A,2*,Toad,Bullet,M,3*,Baby Mario,Bullet,M,4*,Baby Mario,Bullet,A
+5,N,0,5,D,DesertHills,150,Agg,Hard,3,Y,1,Yoshi,Mach,A,3,Toad,Bullet,M,2,Baby Mario,Bullet,M,4,Baby Mario,Bullet,A
+5,Y,1,5,D,BowserCastle3,150,Agg,Hard,3,Y,5,Yoshi,Mach,A,2,Toad,Bullet,M,3,Baby Mario,Bullet,M,1,Baby Mario,Bullet,A
+5,N,0,5,D,LuigiCircuit,150,Agg,Hard,3,Y,10,Yoshi,Mach,A,5,Toad,Bullet,M,1,Baby Mario,Bullet,M,8,Baby Mario,Bullet,A
+5F,N,1,5,D,DesertHillsBowser Castle 3Luigi Circuit,150,Agg,Hard,3,Y,4*,Yoshi,Mach,A,2*,Toad,Bullet,M,1*,Baby Mario,Bullet,M,3*,Baby Mario,Bullet,A
+6,N,0,1,H,ToadsFactory,150,Agg,Hard,3,Y,1,Yoshi,Mach,A,3,Toad,Bullet,M,2,Toad,Bullet,M,4,Baby Mario,Bullet,A
+6,Y,1,1,H,BowsersCastle,150,Agg,Hard,3,Y,3,Yoshi,Mach,A,1,Toad,Bullet,M,5,Toad,Bullet,M,2,Baby Mario,Bullet,A
+6,N,0,1,H,DesertHills,150,Agg,Hard,3,Y,2,Yoshi,Mach,A,5,Toad,Bullet,M,3,Toad,Bullet,M,1,Baby Mario,Bullet,A
+6F,N,1,1,H,Toad's FactoryBowser's CastleDesert Hills,150,Agg,Hard,3,Y,1*,Yoshi,Mach,A,3*,Toad,Bullet,M,4*,Toad,Bullet,M,2*,Baby Mario,Bullet,A
+7,N,0,2,H,BowsersCastle,150,Agg,Hard,3,Y,1,Wario,Flame,A,7,Toad,Bullet,M,6,Toad,Bullet,M,2,Baby Mario,Bullet,A
+7,Y,1,2,H,GrumbleVolcano,150,Agg,Hard,3,Y,1,Wario,Flame,A,5,Toad,Bullet,M,3,Toad,Bullet,M,2,Baby Mario,Bullet,A
+7,N,0,2,H,MooMooMeadows,150,Agg,Hard,3,Y,5,Wario,Flame,A,1,Toad,Bullet,M,2,Toad,Bullet,M,4,Baby Mario,Bullet,A
+7F,N,1,2,H,Bowser's CastleGrumble VolcanoMoo Moo Meadows,150,Agg,Hard,3,Y,1*,Wario,Flame,A,4*,Toad,Bullet,M,3*,Toad,Bullet,M,2*,Baby Mario,Bullet,A
+8,N,0,3,H,MarioCircuit,150,Agg,Hard,3,Y,10,King Boo,Flame,A,2,Toad,Bullet,M,4,Toad,Bullet,M,1,Baby Mario,Bullet,A
+8,Y,1,3,H,YoshiFalls,150,Agg,Hard,3,Y,8,King Boo,Flame,A,1,Toad,Bullet,M,12,Toad,Bullet,M,3,Baby Mario,Bullet,A
+8,N,0,3,H,GCNMarioCircuit,150,Agg,Hard,3,Y,1,King Boo,Flame,A,2,Toad,Bullet,M,3,Toad,Bullet,M,4,Baby Mario,Bullet,A
+8F,N,1,3,H,Mario CircuitYoshi FallsGCN Mario Circuit,150,Agg,Hard,3,Y,4*,King Boo,Flame,A,1*,Toad,Bullet,M,5*,Toad,Bullet,M,2*,Baby Mario,Bullet,A
+9,N,0,4,H,DryDryRuins,150,Agg,Hard,3,Y,1,King Boo,Flame,A,2,Toad,Bullet,M,5,Mario,Mach,M,4,Baby Mario,Bullet,A
+9,Y,1,4,H,DKSummit,150,Agg,Hard,3,Y,1,King Boo,Flame,A,4,Toad,Bullet,M,11,Mario,Mach,M,6,Baby Mario,Bullet,A
+9,N,0,4,H,SherbetLand,150,Agg,Hard,3,Y,3,King Boo,Flame,A,4,Toad,Bullet,M,1,Mario,Mach,M,2,Baby Mario,Bullet,A
+9F,N,1,4,H,Dry Dry RuinsDK SummitSherbet Land,150,Agg,Hard,3,Y,1*,King Boo,Flame,A,2*,Toad,Bullet,M,5*,Mario,Mach,M,3*,Baby Mario,Bullet,A

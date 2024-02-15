@@ -196,7 +196,7 @@ class Graphics():
         self.write_text(texts)
         self.display_surface.blit(pic, (x_start,y_start))
         pygame.display.update()
-    def scoreboard(self,gp_info):
+    def scoreboard(self,gp_info,sp):
         self.display_surface.fill((0, 0, 0))
         texts = []
         x_buffer = self.X//64
@@ -222,6 +222,18 @@ class Graphics():
                                             (self.X//3, top_left + (size // 2)), 'left')
             texts.append([txt,txtRect])
             texts.append([txt2,txtRect2])
+        ### Course History
+        length,height = self.X//2-(2*x_buffer),(self.Y-(3*y_buffer))//8
+        for i in range(len(gp_info.gp_courses)):
+            course_index = gp_info.gp_courses[i]
+            img_path,course_name = sp.playlist[course_index].img,sp.playlist[course_index].course_name
+            pic = pygame.image.load(img_path)
+            pic = pygame.transform.smoothscale(pic,(length,height))
+            x0,y0 = self.X//2+x_buffer,(height*i)+(2*y_buffer)
+            self.display_surface.blit(pic, (x0,y0))
+            txt,txtRect = self.create_text('impact',48,text_spaces(course_name),string_tocolor('white'),
+                                        (x0 + length//2,y0 + height//2),'center')
+            texts.append([txt,txtRect])
         self.write_text(texts)
         pygame.display.update()
     def song_info(self,sp):
@@ -244,7 +256,7 @@ class Graphics():
         if time_diff <= 10:
             self.song_intro(sp)
         elif time_diff%10 <= 5:
-            self.scoreboard(gp_info)
+            self.scoreboard(gp_info,sp)
         else:
             self.song_info(sp)
         pygame.display.update()
