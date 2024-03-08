@@ -76,4 +76,6 @@ def calculate_CPI():
             course.CPI = 'NR'
     write_tofile(information_file, course_dict)
 
-calculate_CPI()
+
+
+#calculate_CPI()

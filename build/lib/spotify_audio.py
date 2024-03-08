@@ -1,20 +1,18 @@
 import spotipy
-from spotipy.oauth2 import SpotifyClientCredentials,SpotifyOAuth
-from tools.utility import *
-from tools.deep_learning import predict
+import sys
 import cv2 as cv
+from tools.utility import *
+from spotipy.oauth2 import SpotifyClientCredentials,SpotifyOAuth
+from tools.deep_learning import predict
 
 def spotify_safetycheck(sp):
     warning = False
-    safe = False
-    while not safe:
-        if sp.spotify.current_playback() != None:
-            safe = True
-            sp.support_volume = sp.spotify.current_playback()['device']['supports_volume']
-            print('Supports Volume')
-        elif not warning:
+    while sp.spotify.current_playback() == None:
+        if not warning:
             print('Activate Device')
             warning = True
+    sp.support_volume = sp.spotify.current_playback()['device']['supports_volume']
+    print(f'Supports Volume: {sp.support_volume}')
     print('Ready')
 
 def setup_spotifyobject(file):
@@ -40,32 +38,34 @@ def pause_toggle(sp,frame,root_model,coordinates):
             if not sp.is_paused:
                 sp.pause()
 
-def double_verifycourse(coordinates,root_model,index,alpha):
+def get_newframe():
     cap = cv.VideoCapture(0)
     ret, next_frame = cap.read()
     if not ret:
-        return False
-    index2, confidence2 = predict(next_frame, coordinates.course_coordinates, root_model.coursedetect_model,
-                                  'imgtobinary')
-    if ((index2==index)and(confidence2>alpha)):
-         return True
-    return False
+        return ret,ret
+    return next_frame,ret
+
+def scan_course(frame,root_model,coordinates):
+    index, confidence = predict(frame, coordinates.course_coordinates, root_model.coursedetect_model,'imgtobinary')
+    if ((index!=33)and(confidence>0.95)):
+        return True,index,confidence
+    return False,index,confidence
 
 def get_course(frame,root_model,coordinates):
-    index,confidence = predict(frame,coordinates.course_coordinates,root_model.coursedetect_model,'imgtobinary')
-    if ((index == 0) and (confidence > 0.87)):
-        if double_verifycourse(coordinates,root_model,index,alpha=0.87):
-            return index,confidence
-    if ((index!=33)and(confidence>0.95)):
-        if double_verifycourse(coordinates,root_model,index,alpha=0.95):
-            return index,confidence
+    valid,index,confidence = scan_course(frame,root_model,coordinates)
+    if valid:
+        next_frame,ret = get_newframe()
+        if ret:
+            double_valid, double_index, double_confidence = scan_course(next_frame, root_model, coordinates)
+            if ((double_valid)and(double_index==index)):
+                return index,confidence
     return 33,0
 
 def play_music(frame,root_model,coordinates,sp,gp_info):
     course_index,confidence = get_course(frame,root_model,coordinates)
     if ((course_index != 33)and(course_index != sp.course_queued)):
         sp.queue_newsong(course_index)
-        gp_info.model_switching(course_index,gp_info)
+        gp_info.model_switching(course_index)
 
 def run_audio(sp,frame,root_model,coordinates,gp_info):
     pause_toggle(sp,frame,root_model,coordinates)
