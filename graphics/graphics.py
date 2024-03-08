@@ -1,8 +1,10 @@
 import pygame
-from tools.utility import string_tocolor,text_spaces
+from tools.utility import string_tocolor,text_spaces,int_tostring
 import time
-import urllib
 import io
+import cv2 as cv
+import urllib
+from graphics.video import play_clip
 
 def initialize_graphics(screen_setting):
     pygame.init()
@@ -16,8 +18,11 @@ def initialize_graphics(screen_setting):
     caption = "Beerio"
     pygame.display.set_caption(caption)
     specialeffects_dict= {'TitleScreen':Special_Effects(blue=0,green=0,red=0,count=0),
-                          'SongIntro':Special_Effects(blue=0,green=0,red=0,count=0)}
-    graphics = Graphics(display_surface=display_surface,X=x,Y=y,caption=caption,special_effects=specialeffects_dict)
+                          'SongIntro':Special_Effects(blue=0,green=0,red=0,count=0),
+                          'CountdownScreen':Special_Effects(blue=255,green=255,red=255,count=0)}
+    countdown_songs = [line.strip().split(',') for line in open('audio/playlists/countdown.csv')][0]
+    graphics = Graphics(display_surface=display_surface,X=x,Y=y,caption=caption,special_effects=specialeffects_dict,
+                        time = time.time(),volume=100,songs=countdown_songs)
     return graphics
 
 class Special_Effects():
@@ -27,9 +32,9 @@ class Special_Effects():
         self.red = red
         self.count = count
     def FadeIn(self,strength,max_value):
-        new_blue = self.blue + strength[2]
-        new_green = self.green + strength[1]
-        new_red = self.red + strength[0]
+        new_blue = max(0,self.blue + strength[2])
+        new_green = max(0,self.green + strength[1])
+        new_red = max(0,self.red + strength[0])
         if max(new_blue,new_green,new_red) < max_value:
             self.blue = new_blue
             self.green = new_green
@@ -39,12 +44,15 @@ class Special_Effects():
             self.count += 1
 
 class Graphics():
-    def __init__(self,display_surface=None,X=None,Y=None,caption=None,special_effects=None):
+    def __init__(self,display_surface=None,X=None,Y=None,caption=None,special_effects=None,time=None,volume=None,songs=None):
         self.display_surface = display_surface
         self.X = X
         self.Y = Y
         self.caption = caption
         self.special_effect = special_effects
+        self.time = time
+        self.volume = volume
+        self.songs = songs
     def create_text(self,font,font_size,text,color,coordinates,anchor):
         font = pygame.font.SysFont(font,font_size)
         txt = font.render(text,True,color)
@@ -281,6 +289,77 @@ class Graphics():
         elif (gp_info.racing and not gp_info.read_menu):
             self.racing_graphics(gp_info,sp)
         self.exit()
+    def play_movie(self):
+        play_clip(video_file="/Users/bradygess/Documents/SigEpGunGame.mp4",x = self.X,y = self.Y)
+    def countdown_audio(self,sp,time_left):
+        switch = [12,10,8,6,4,3,.5,0]
+        song = sp.song_queued
+        for i in range(len(switch)-1):
+            if (switch[i]*60)>time_left>(switch[i+1]*60):
+                new_song = sp.get_song(self.songs[i])
+                if song != new_song:
+                    sp.spotify.add_to_queue(uri=new_song.uri, device_id=None)
+                    sp.song_queued = new_song
+                    sp.skip_tosong(new_song.uri)
+    def countdown(self,sp):
+        quit = False
+        t1 = time.time()
+        time_left = ((12.2*60) - (t1 - self.time))
+        self.countdown_audio(sp, time_left)
+        if time_left > 1:
+            fill_color = (255,255,255)
+            txt_color = (0,0,0)
+            text_size = 192
+            if time_left < 10:
+                text_size = int(192 + (1000*(time_left-int(time_left))))
+            texts = []
+            txt, txtRect = self.create_text('impact', 172, 'Sig Ep Gun Game', txt_color,
+                                            (self.X // 2, self.Y*2//10), 'center')
+            texts.append([txt, txtRect])
+            txt, txtRect = self.create_text('impact', 68, 'A Tier Finals', txt_color,
+                                            (self.X * 7.5 // 10, self.Y*3.5 // 10), 'center')
+            texts.append([txt, txtRect])
+            txt, txtRect = self.create_text('impact', text_size, int_tostring(time_left),txt_color,
+                                        [self.X // 2, self.Y * 6 // 10], 'center')
+            texts.append([txt, txtRect])
+            self.display_surface.fill(fill_color)
+            self.write_text(texts)
+        elif -6 <= time_left <= 1:
+            if self.volume == 100:
+                sp.spotify.volume(volume_percent=50,device_id=None)
+                self.volume = 50
+            txt_color = (0,0,0)
+            texts = []
+            txt, txtRect = self.create_text('impact', 172, 'Sig Ep Gun Game', txt_color,
+                                            (self.X // 2, self.Y * 2 // 10), 'center')
+            texts.append([txt, txtRect])
+            txt, txtRect = self.create_text('impact', 68, 'A Tier Finals', txt_color,
+                                            (self.X * 7.5 // 10, self.Y * 3.5 // 10), 'center')
+            texts.append([txt, txtRect])
+            color = self.special_effect['CountdownScreen']
+            color.FadeIn(strength=[-1,-1,-1], max_value=255)
+            time.sleep(0.01)
+            fill_color = (color.red,color.green,color.blue)
+            self.display_surface.fill(fill_color)
+            self.write_text(texts)
+            pygame.display.update()
+            if ((fill_color == (0,0,0)) and (self.volume == 50)):
+                sp.min_volume()
+                self.volume = 0
+        else:
+            if self.volume != 0:
+                sp.min_volume()
+            self.play_movie()
+            sp.max_volume()
+            quit = True
+        pygame.display.update()
+        return quit
+    def final_graphics(self,sp):
+        quit = self.countdown(sp)
+        self.exit()
+        if quit:
+            return True
+        return False
     def exit(self):
         for event in pygame.event.get():
             if (event.type == pygame.QUIT):

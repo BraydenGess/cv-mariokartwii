@@ -16,11 +16,9 @@ def add_objectolist(gp_info,frame,coordinates,model,filter,alpha):
             objects.append(index)
     return objects
 def get_objects(frame,coordinates2,coordinates4,model2,model4,gp_info,alpha,filter):
-    coordinates = coordinates4
-    model = model4
+    coordinates,model = coordinates4,model4
     if gp_info.player_count == 2:
-        coordinates = coordinates2
-        model = model2
+        coordinates,model = coordinates2,model2
     objects = add_objectolist(gp_info, frame, coordinates, model, filter, alpha)
     if len(objects) == gp_info.player_count:
         return True,objects
