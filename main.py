@@ -16,7 +16,8 @@ def main():
     root_model,gp_info = initialize_rootmodel(),initialize_gpinfo()
     graphics = initialize_graphics(screen_setting='fullscreen')
     spotify_safetycheck(sp)
-    final_graphics(graphics,sp)
+    if False:
+        final_graphics(graphics,sp)
     cap = cv.VideoCapture(0)
     while cap.isOpened():
         ret,frame = cap.read()
