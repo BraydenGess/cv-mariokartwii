@@ -251,6 +251,7 @@ class GP_Info():
         for i in range(12-self.player_count):
             cpu_scoreboard.append([available_players[i],0])
         self.scoreboard = cpu_scoreboard+player_scoreboard
+
 class Player():
     def __init__(self,name=None,color=None,character=None,vehicle=None,score=None,place=None):
         self.name = name
