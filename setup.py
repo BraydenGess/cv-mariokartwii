@@ -5,4 +5,4 @@ setup(name='cv-mariokartwii',
       description = 'Computer Vision MarioKart Wii Music and Stats',
       packages=find_packages(),
       py_modules=['train_models','tools/deep_learning','tools/imagemanipulation','tools/utility','spotify_audio',
-                  '__init__'])
+                  '__init__','ffmpeg'])
