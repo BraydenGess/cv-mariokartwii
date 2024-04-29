@@ -1,6 +1,7 @@
 import os
 import random
 import sys
+import time
 from keras.models import load_model
 from tools.utility import remove_newline
 from collections import deque
@@ -48,11 +49,13 @@ class SpotifyPlayer():
     def skip_tosong(self,song_uri):
         self.min_volume()
         user_queue = self.spotify.queue()['queue']
+        time.sleep(0.05)
         for element in user_queue:
             self.spotify.next_track()
             if song_uri == element['uri']:
                 self.max_volume()
                 break
+        self.max_volume()
     def queue_songs(self,songs):
         for song in songs:
             self.spotify.add_to_queue(uri=song.uri, device_id=None)
@@ -77,7 +80,6 @@ class SpotifyPlayer():
             self.playlist[self.course_queued].song_queue.append(next_song)
         else:
             self.playlist[self.course_queued].song_queue.appendleft(next_song)
-
     def auto_skip(self):
         current_playback = self.spotify.current_playback()['item']['uri']
         if ((self.course_queued != None) and (current_playback != self.song_queued.uri)):

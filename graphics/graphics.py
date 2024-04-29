@@ -292,7 +292,7 @@ class Graphics():
     def play_movie(self):
         play_clip(video_file="/Users/bradygess/Documents/SigEpGunGame.mp4",x = self.X,y = self.Y)
     def countdown_audio(self,sp,time_left):
-        switch = [12,10,8,6,4,3,.5,0]
+        switch = [13.5,11.5,9.5,7,5,3,.5,0]
         song = sp.song_queued
         for i in range(len(switch)-1):
             if (switch[i]*60)>time_left>(switch[i+1]*60):
@@ -304,7 +304,7 @@ class Graphics():
     def countdown(self,sp):
         quit = False
         t1 = time.time()
-        time_left = ((12.2*60) - (t1 - self.time))
+        time_left = ((.4*60) - (t1 - self.time))
         self.countdown_audio(sp, time_left)
         if time_left > 1:
             fill_color = (255,255,255)
